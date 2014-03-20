@@ -3,6 +3,8 @@ Vacation::Application.routes.draw do
   root "welcome#index"
 
   namespace :api do
-    resources :groups, except: [:new, :edit, :show]
+    resources :groups, shallow: true, except: [:new, :edit, :show] do
+      resources :employees, except: [:new, :edit, :show]
+    end
   end
 end
