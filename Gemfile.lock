@@ -30,10 +30,13 @@ GEM
     angular-rails-templates (0.0.7)
       railties (>= 3.1)
       sprockets
+    angular-ui-bootstrap-rails (0.10.0)
     angularjs-rails (1.2.14)
     arel (4.0.2)
     atomic (1.1.16)
     bcrypt (3.1.7)
+    bootstrap-sass (3.1.1.0)
+      sass (~> 3.2)
     builder (3.1.4)
     cancan (1.6.10)
     coffee-rails (4.0.1)
@@ -118,7 +121,9 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   angular-rails-templates
+  angular-ui-bootstrap-rails
   angularjs-rails
+  bootstrap-sass
   cancan
   coffee-rails (~> 4.0.0)
   devise
