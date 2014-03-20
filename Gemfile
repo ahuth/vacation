@@ -9,3 +9,5 @@ group :development, :test do
   gem 'sqlite3'
   gem 'figaro'
 end
+
+gem 'devise'
