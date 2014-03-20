@@ -3,9 +3,9 @@ Vacation::Application.routes.draw do
   root "welcome#index"
 
   namespace :api do
-    resources :groups, shallow: true, except: [:new, :edit, :show] do
-      resources :employees, except: [:new, :edit, :show] do
-        resources :requests, except: [:new, :edit, :show, :update] do
+    resources :groups, shallow: true, only: [:index, :create, :update, :destroy] do
+      resources :employees, only: [:index, :create, :update, :destroy] do
+        resources :requests, only: [:index, :create, :destroy] do
           patch "toggle", on: :member
         end
       end
