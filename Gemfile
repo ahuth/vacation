@@ -12,3 +12,4 @@ end
 
 gem 'devise'
 gem 'cancan'
+gem 'active_model_serializers'
