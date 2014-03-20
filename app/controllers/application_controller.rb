@@ -9,4 +9,10 @@ class ApplicationController < ActionController::Base
     errors = ["#{exception}"]
     render json: { errors: errors }, status: :unprocessable_entity
   end
+
+  # Rescue from AccessDenied, which happens when a user does not have
+  # authorization to interact with a resource.
+  rescue_from(CanCan::AccessDenied) do |exception|
+    render nothing: true, status: :forbidden
+  end
 end
