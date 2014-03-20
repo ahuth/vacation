@@ -13,3 +13,9 @@ end
 gem 'devise'
 gem 'cancan'
 gem 'active_model_serializers'
+
+gem 'angularjs-rails'
+gem 'angular-rails-templates'
+
+gem 'bootstrap-sass'
+gem 'angular-ui-bootstrap-rails'
