@@ -2,7 +2,7 @@ class Api::RequestsController < ApplicationController
   respond_to :json
   before_filter :authenticate_user!
   before_filter :set_employee, only: [:index, :create]
-  before_filter :set_request, only: [:destroy]
+  before_filter :set_request, only: [:destroy, :toggle]
 
   def index
     authorize! :read, @employee
@@ -26,6 +26,17 @@ class Api::RequestsController < ApplicationController
     authorize! :destroy, @request
     @request.destroy
     render nothing: true
+  end
+
+  def toggle
+    authorize! :update, @request
+    @request.approved = !@request.approved
+
+    if @request.save
+      render json: @request
+    else
+      render json: { errors: @request.errors.full_messages }, status: :bad_request
+    end
   end
 
   private

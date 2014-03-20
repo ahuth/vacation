@@ -42,6 +42,12 @@ class Api::RequestsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should toggle request approval" do
+    assert Request.first.approved
+    patch :toggle, id: @requested
+    assert_not Request.first.approved
+  end
+
   test "deny index if user is not authorized" do
     sign_out users(:one)
     sign_in users(:two)
@@ -67,6 +73,16 @@ class Api::RequestsControllerTest < ActionController::TestCase
     assert_difference("Request.count", 0) do
       delete :destroy, id: @requested
     end
+    assert_response :forbidden
+  end
+
+  test "deny toggle if user is not authorized" do
+    sign_out users(:one)
+    sign_in users(:two)
+
+    assert Request.first.approved
+    patch :toggle, id: @requested
+    assert Request.first.approved
     assert_response :forbidden
   end
 end
