@@ -3,7 +3,7 @@
 <head>
   <title>Vacation</title>
   <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application" if user_signed_in? %>
   <%= csrf_meta_tags %>
 </head>
 <body>
