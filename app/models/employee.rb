@@ -1,5 +1,6 @@
 class Employee < ActiveRecord::Base
   belongs_to :group
+  has_many :requests, dependent: :destroy
 
   validates :name, presence: true
   validates :hired, presence: true
