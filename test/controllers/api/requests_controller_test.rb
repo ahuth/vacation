@@ -48,6 +48,27 @@ class Api::RequestsControllerTest < ActionController::TestCase
     assert_not Request.first.approved
   end
 
+  test "should create many requests" do
+    assert_difference("Request.count", 2) do
+      post :create_many, employee_id: @employee.id, requests: @new_dates
+    end
+    assert_response :success
+  end
+
+  test "should not create many if missing parameters" do
+    assert_difference("Request.count", 0) do
+      post :create_many, employee_id: @employee.id, requests: {}
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should not create many if model validations fail" do
+    assert_difference("Request.count", 0) do
+      post :create_many, employee_id: @employee.id, requests: [1.week.from_now.to_date, Date.today.to_date]
+    end
+    assert_response :bad_request
+  end
+
   test "deny index if user is not authorized" do
     sign_out users(:one)
     sign_in users(:two)
@@ -83,6 +104,16 @@ class Api::RequestsControllerTest < ActionController::TestCase
     assert Request.first.approved
     patch :toggle, id: @requested
     assert Request.first.approved
+    assert_response :forbidden
+  end
+
+  test "deny create many if user is not authroized" do
+    sign_out users(:one)
+    sign_in users(:two)
+
+    assert_difference("Request.count", 0) do
+      post :create_many, employee_id: @employee.id, requests: @new_dates
+    end
     assert_response :forbidden
   end
 end
