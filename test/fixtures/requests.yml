@@ -1,0 +1,4 @@
+one:
+  date: <%= Date.today.to_date %>
+  approved: true
+  employee: one
