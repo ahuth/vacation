@@ -3,4 +3,9 @@
 
 angular.module("app").config(["$routeProvider", function ($routeProvider) {
   "use strict";
+  $routeProvider
+    .when("/", {
+      templateUrl: "pages/groups/groups.tmpl.html",
+      controller: "groups"
+    });
 }]);
