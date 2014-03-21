@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("pages.groups").controller("groups", ["$scope", "groupData", "nameModal", function ($scope, groupData, nameModal) {
+angular.module("pages.index").controller("index", ["$scope", "groupData", "nameModal", function ($scope, groupData, nameModal) {
   "use strict";
   $scope.groups = groupData.all();
   $scope.newGroup = function () {
