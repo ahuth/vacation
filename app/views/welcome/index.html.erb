@@ -1,1 +1,12 @@
-<h1>Welcome</h1>
+<% if user_signed_in? %>
+
+  <script>
+    var App = App || {};
+    App.data = <%= @preload.html_safe %>
+  </script>
+
+<% else %>
+
+  <h1>Welcome</h1>
+
+<% end %>
