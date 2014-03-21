@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
-/*global App, $ */
+/*global angular, $ */
 
-App.Application.config(["$httpProvider", function ($httpProvider) {
+angular.module("app").config(["$httpProvider", function ($httpProvider) {
   "use strict";
 
   var csrfToken = $("meta[name=\"csrf-token\"]").attr("content");
