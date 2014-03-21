@@ -6,13 +6,13 @@
   <%= javascript_include_tag "application" if user_signed_in? %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body <%= "ng-app=app" if user_signed_in? %>>
 
   <header>
     <%= render "layouts/header" %>
   </header>
 
-  <main>
+  <main <%= "ng-view" if user_signed_in? %>>
     <%= yield %>
   </main>
 
