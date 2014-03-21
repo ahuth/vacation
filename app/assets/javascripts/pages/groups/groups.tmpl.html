@@ -1,1 +1,9 @@
-<p>Hello {{ hello }}</p>
+<ul>
+  <li ng-repeat="group in groups">
+    <span>{{ group.name }}</span>
+    <button class="btn btn-warning" ng-click="editGroup(group)">Edit</button>
+    <button class="btn btn-danger" ng-click="removeGroup(group)">Delete</button>
+  </li>
+</ul>
+
+<button class="btn btn-success" ng-click="newGroup()">New</button>
