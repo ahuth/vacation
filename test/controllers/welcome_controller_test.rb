@@ -11,7 +11,10 @@ class WelcomeControllerTest < ActionController::TestCase
     get :index
 
     group = groups(:one)
-    assert_equal assigns(:preload), %Q{{"groups":[{"id":#{group.id},"name":"one"}]}}
+    employee = employees(:one)
+    requested = requests(:one)
+
+    assert_equal assigns(:preload), %Q{{"groups":[{"id":#{group.id},"name":"one","employees":[{"id":#{employee.id},"name":"one","hired":"#{employee.hired}","requests":[{"id":#{requested.id},"date":"#{requested.date}","approved":true}]}]}]}}
   end
 
   test "should not have preload when signed out" do
