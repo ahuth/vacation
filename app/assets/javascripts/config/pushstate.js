@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
-/*global App */
+/*global angular */
 
-App.Application.config(["$locationProvider", function ($locationProvider) {
+angular.module("app").config(["$locationProvider", function ($locationProvider) {
   "use strict";
 
   $locationProvider.html5Mode(true);
