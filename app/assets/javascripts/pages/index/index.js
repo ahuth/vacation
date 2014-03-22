@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("pages.index").controller("index", ["$scope", "groupData", "nameModal", function ($scope, groupData, nameModal) {
+angular.module("pages.index").controller("index", ["$scope", "groupData", "nameModal", "confirmModal", function ($scope, groupData, nameModal, confirmModal) {
   "use strict";
   $scope.groups = groupData.all();
   $scope.newGroup = function () {
@@ -15,6 +15,8 @@ angular.module("pages.index").controller("index", ["$scope", "groupData", "nameM
     });
   };
   $scope.removeGroup = function (group) {
-    groupData.destroy(group.id);
+    confirmModal.open().then(function () {
+      return groupData.destroy(group.id);
+    });
   };
 }]);
