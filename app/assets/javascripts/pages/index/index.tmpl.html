@@ -7,10 +7,11 @@
         <span>{{ group.name }}</span>
         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
       </accordion-heading>
-      <ul class="actions">
-        <li><a href ng-click="editGroup(group)">Edit</a></li>
-        <li><a href ng-click="removeGroup(group)">Delete</a></li>
-      </ul>
+      <div class="actions">
+        <button class="btn btn-default btn-sm" ng-click="editGroup(group)">Edit group</button>
+        <button class="btn btn-default btn-sm" ng-click="removeGroup(group)">Delete group</button>
+        <button class="btn btn-default btn-sm pull-right">New person</button>
+      </div>
       <table class="employees table">
         <tr ng-repeat="employee in group.employees">
           <td>{{ employee.name }}</td>

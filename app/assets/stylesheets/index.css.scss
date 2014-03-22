@@ -10,13 +10,15 @@
   }
 
   .actions {
-    list-style: none;
-    padding-left: 0;
-    border-bottom: 1px solid grey;
-    padding-bottom: 10px;
-
-    li {
-      display: inline-block;
+    button {
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+    button:first-child {
+      margin-left: 0px;
+    }
+    button:last-child {
+      margin-right: 0px;
     }
   }
 
