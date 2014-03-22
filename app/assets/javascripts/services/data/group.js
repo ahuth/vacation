@@ -4,7 +4,19 @@
 angular.module("services.data").factory("groupData", ["$http", "$q", function ($http, $q) {
   "use strict";
 
-  var data = App.data.groups;
+  // Compare two 'groups' to alphabetize them in an array.
+  function comparator(a, b) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  }
+
+  // Internal data cache, alphabetized.
+  var data = App.data.groups.sort(comparator);
 
   // Return data for all of the groups.
   function all() {
@@ -22,7 +34,12 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
       url: "/api/groups",
       data: { name: name }
     }).then(function (response) {
+      // Assign the correct id from the server.
       data[data.length - 1].id = response.data.group.id;
+
+      // Alphabetize the groups.
+      data.sort(comparator);
+
       deferred.resolve();
     }, function (response) {
       deferred.reject(response);
@@ -48,6 +65,9 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
       }
       return true;
     });
+
+    // Alphabetize the groups.
+    data.sort(comparator);
 
     // Make the server request and return a promise, but only if we actually
     // modified a group.

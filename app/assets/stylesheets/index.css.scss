@@ -1,3 +1,40 @@
 .groups {
   width: 33%;
+
+  .heading {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 4px;
+    height: 30px;
+    display: inline-block;
+  }
+
+  .actions {
+    button {
+      margin-left: 4px;
+      margin-right: 4px;
+    }
+    button:first-child {
+      margin-left: 0px;
+    }
+    button:last-child {
+      margin-right: 0px;
+    }
+  }
+
+  .employees {
+    margin-top: 15px;
+
+    td:first-child {
+      padding-left: 0;
+    }
+
+    td:last-child {
+      padding-right: 0;
+    }
+
+    .actions {
+      text-align: right;
+    }
+  }
 }
