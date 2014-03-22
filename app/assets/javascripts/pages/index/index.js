@@ -5,12 +5,12 @@ angular.module("pages.index").controller("index", ["$scope", "groupData", "nameM
   "use strict";
   $scope.groups = groupData.all();
   $scope.newGroup = function () {
-    nameModal.open().then(function (name) {
+    nameModal.open({ title: "New group", placeholder: "Name" }).then(function (name) {
       return groupData.create(name);
     });
   };
   $scope.editGroup = function (group) {
-    nameModal.open(group.name).then(function (name) {
+    nameModal.open({ title: "Edit group", placeholder: group.name }).then(function (name) {
       return groupData.update(group.id, { name: name });
     });
   };
