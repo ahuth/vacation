@@ -1,6 +1,14 @@
 .groups {
   width: 33%;
 
+  .heading {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 4px;
+    height: 30px;
+    display: inline-block;
+  }
+
   .actions {
     list-style: none;
     padding-left: 0;
