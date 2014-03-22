@@ -22,6 +22,7 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
       url: "/api/groups",
       data: { name: name }
     }).then(function (response) {
+      // Assign the correct id from the server.
       data[data.length - 1].id = response.data.group.id;
       deferred.resolve();
     }, function (response) {
