@@ -9,6 +9,11 @@
         <li><a href ng-click="editGroup(group)">Edit</a></li>
         <li><a href ng-click="removeGroup(group)">Delete</a></li>
       </ul>
+      <ul class="employees">
+        <li ng-repeat="employee in group.employees">
+          <span>{{ employee.name }}</span>
+        </li>
+      </ul>
     </accordion-group>
   </accordion>
 </div>
