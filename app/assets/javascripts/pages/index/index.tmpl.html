@@ -5,10 +5,10 @@
         <span>{{ group.name }}</span>
         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>
       </accordion-heading>
-      <div class="group-actions">
-        <a href ng-click="editGroup(group)">Edit</a>
-        <a href ng-click="removeGroup(group)">Delete</a>
-      </div>
+      <ul class="actions">
+        <li><a href ng-click="editGroup(group)">Edit</a></li>
+        <li><a href ng-click="removeGroup(group)">Delete</a></li>
+      </ul>
     </accordion-group>
   </accordion>
 </div>
