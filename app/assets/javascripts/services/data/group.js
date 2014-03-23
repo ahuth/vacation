@@ -85,7 +85,7 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
   function update(id, options) {
     var deferred = $q.defer();
 
-    var errors = validate(name);
+    var errors = validate(options.name);
     if (errors) {
       deferred.reject(errors);
       return deferred.promise;
