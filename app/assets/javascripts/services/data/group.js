@@ -36,7 +36,7 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     }
 
     if (errors.length > 0) {
-      return errors;
+      return { data: { errors: errors }};
     }
     return false;
   }
