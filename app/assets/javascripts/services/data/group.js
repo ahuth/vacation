@@ -25,10 +25,18 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     });
   }
 
-  // Determine if a group name is valid or not.
-  function isValid(name) {
-    if (name && isUniqueName(name)) {
-      return true;
+  // Determine if a group is valid or not, and return any errors.
+  function validate(name) {
+    var errors = [];
+
+    if (!name) {
+      errors.push("No name given");
+    } else if (!isUniqueName(name)) {
+      errors.push("Name already taken");
+    }
+
+    if (errors.length > 0) {
+      return errors;
     }
     return false;
   }
@@ -45,8 +53,9 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
 
     // If the created group will not be valid, reject the promise and exit
     // early.
-    if (!isValid(name)) {
-      deferred.reject({ errors: ["Invalid name"] });
+    var errors = validate(name);
+    if (errors) {
+      deferred.reject(errors);
       return deferred.promise;
     }
 
@@ -76,8 +85,9 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
   function update(id, options) {
     var deferred = $q.defer();
 
-    if (!isValid(options.name)) {
-      deferred.reject();
+    var errors = validate(name);
+    if (errors) {
+      deferred.reject(errors);
       return deferred.promise;
     }
 
