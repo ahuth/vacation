@@ -4,6 +4,8 @@
 angular.module("services.data").factory("groupData", ["$http", "$q", function ($http, $q) {
   "use strict";
 
+  var data = App.data.groups;
+
   // Compare two 'groups' to alphabetize them in an array.
   function comparator(a, b) {
     if (a.name < b.name) {
@@ -14,9 +16,6 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     }
     return 0;
   }
-
-  // Internal data cache, alphabetized.
-  var data = App.data.groups.sort(comparator);
 
   // Determine if a name has already been taken.
   function isUniqueName(name) {
@@ -143,6 +142,9 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
       return $http({ method: "DELETE", url: "/api/groups/" + id});
     }
   }
+
+  // Sort the initial groups.
+  data.sort(comparator);
 
   return {
     all: all,
