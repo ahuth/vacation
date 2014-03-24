@@ -143,9 +143,6 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     }
   }
 
-  // Sort the initial groups.
-  data.sort(comparator);
-
   return {
     all: all,
     create: create,
