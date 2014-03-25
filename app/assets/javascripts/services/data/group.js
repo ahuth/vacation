@@ -17,29 +17,6 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     return 0;
   }
 
-  // Determine if a name has already been taken.
-  function isUniqueName(name) {
-    return data.every(function (element, index) {
-      return element.name.toLowerCase() !== name.toLowerCase();
-    });
-  }
-
-  // Determine if a group is valid or not, and return any errors.
-  function validate(name) {
-    var errors = [];
-
-    if (!name) {
-      errors.push("No name given");
-    } else if (!isUniqueName(name)) {
-      errors.push("Name already taken");
-    }
-
-    if (errors.length > 0) {
-      return { data: { errors: errors }};
-    }
-    return false;
-  }
-
   // Return data for all of the groups.
   function all() {
     return data;
@@ -49,14 +26,6 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
   // one, and return a promise indicating if the server action was completed.
   function create(name) {
     var deferred = $q.defer();
-
-    // If the created group will not be valid, reject the promise and exit
-    // early.
-    var errors = validate(name);
-    if (errors) {
-      deferred.reject(errors);
-      return deferred.promise;
-    }
 
     data.push({ name: name });
 
@@ -83,12 +52,6 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
   // return a promise indicating if the server action was completed.
   function update(id, options) {
     var deferred = $q.defer();
-
-    var errors = validate(options.name);
-    if (errors) {
-      deferred.reject(errors);
-      return deferred.promise;
-    }
 
     // Find the group we want to edit. Use an `every` loop instead of
     // `forEach` so that we can break out of the loop once we've found the
