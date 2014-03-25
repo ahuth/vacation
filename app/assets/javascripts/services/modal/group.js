@@ -4,8 +4,8 @@
 angular.module("services.modal").controller("groupModalController", ["$scope", "$modalInstance", "title", "placeholder", function ($scope, $modalInstance, title, placeholder) {
   "use strict";
   $scope.name = { text: "" };
-  $scope.title = title || "Name";
-  $scope.placeholder = placeholder || "";
+  $scope.title = title;
+  $scope.placeholder = placeholder;
   $scope.ok = function () {
     $modalInstance.close($scope.name.text);
   };
@@ -17,20 +17,20 @@ angular.module("services.modal").controller("groupModalController", ["$scope", "
 angular.module("services.modal").factory("groupModal", ["$modal", "utils", function ($modal, utils) {
   "use strict";
 
-  function open(opts) {
-    var title, placeholder;
+  function open(options) {
+    var defaults = {
+      title: "Group",
+      placeholder: "Name"
+    };
 
-    if (opts !== null && typeof opts === "object") {
-      title = opts.title;
-      placeholder = opts.placeholder;
-    }
+    var attributes = utils.merge(defaults, options);
 
     return $modal.open({
       templateUrl: "services/modal/group.tmpl.html",
       controller: "groupModalController",
       resolve: {
-        title: function () { return title; },
-        placeholder: function () { return placeholder; }
+        title: function () { return attributes.title; },
+        placeholder: function () { return attributes.placeholder; }
       }
     }).result;
   }
