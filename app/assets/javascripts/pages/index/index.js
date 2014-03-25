@@ -4,6 +4,9 @@
 angular.module("pages.index").controller("index", ["$scope", "groupData", "nameModal", "confirmModal", function ($scope, groupData, nameModal, confirmModal) {
   "use strict";
   $scope.groups = groupData.all();
+  $scope.setGroup = function (group) {
+    $scope.group = group;
+  };
   $scope.newGroup = function () {
     nameModal.open({ title: "New group", placeholder: "Name" }).then(function (name) {
       return groupData.create(name);
