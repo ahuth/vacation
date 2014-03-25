@@ -9,17 +9,17 @@ angular.module("pages.index").controller("index", ["$scope", "groupData", "nameM
   };
   $scope.newGroup = function () {
     nameModal.open({ title: "New group", placeholder: "Name" }).then(function (name) {
-      return groupData.create(name);
+      return groupData.create({ name: name });
     });
   };
   $scope.editGroup = function (group) {
     nameModal.open({ title: "Edit group", placeholder: group.name }).then(function (name) {
-      return groupData.update(group.id, { name: name });
+      return groupData.update(group, { name: name });
     });
   };
   $scope.removeGroup = function (group) {
     confirmModal.open().then(function () {
-      return groupData.destroy(group.id);
+      return groupData.destroy(group);
     });
   };
 }]);
