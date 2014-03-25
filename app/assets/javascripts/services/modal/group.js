@@ -14,7 +14,7 @@ angular.module("services.modal").controller("groupModalController", ["$scope", "
   };
 }]);
 
-angular.module("services.modal").factory("groupModal", ["$modal", function ($modal) {
+angular.module("services.modal").factory("groupModal", ["$modal", "utils", function ($modal, utils) {
   "use strict";
 
   function open(opts) {
