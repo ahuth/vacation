@@ -18,7 +18,7 @@ angular.module("pages.index").controller("index", ["$scope", "groupData", "group
     });
   };
   $scope.removeGroup = function (group) {
-    confirmModal.open().then(function () {
+    confirmModal.open({ title: "Delete " + group.name + "?"}).then(function () {
       return groupData.destroy(group);
     });
   };
