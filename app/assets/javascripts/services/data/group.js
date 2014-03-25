@@ -17,29 +17,6 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     return 0;
   }
 
-  // Determine if a name has already been taken.
-  function isUniqueName(name) {
-    return data.every(function (element, index) {
-      return element.name.toLowerCase() !== name.toLowerCase();
-    });
-  }
-
-  // Determine if a group is valid or not, and return any errors.
-  function validate(name) {
-    var errors = [];
-
-    if (!name) {
-      errors.push("No name given");
-    } else if (!isUniqueName(name)) {
-      errors.push("Name already taken");
-    }
-
-    if (errors.length > 0) {
-      return { data: { errors: errors }};
-    }
-    return false;
-  }
-
   // Return data for all of the groups.
   function all() {
     return data;
@@ -47,26 +24,19 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
 
   // Create a group in the client, send a request to the server to create a new
   // one, and return a promise indicating if the server action was completed.
-  function create(name) {
+  function create(attributes) {
     var deferred = $q.defer();
 
-    // If the created group will not be valid, reject the promise and exit
-    // early.
-    var errors = validate(name);
-    if (errors) {
-      deferred.reject(errors);
-      return deferred.promise;
-    }
-
-    data.push({ name: name });
+    var group = { name: attributes.name };
+    data.push(group);
 
     $http({
       method: "POST",
       url: "/api/groups",
-      data: { name: name }
+      data: { name: attributes.name }
     }).then(function (response) {
       // Assign the correct id from the server.
-      data[data.length - 1].id = response.data.group.id;
+      group.id = response.data.group.id;
 
       // Alphabetize the groups.
       data.sort(comparator);
@@ -81,27 +51,10 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
 
   // Update a group in the client, send a server request to update it, and
   // return a promise indicating if the server action was completed.
-  function update(id, options) {
+  function update(group, attributes) {
     var deferred = $q.defer();
 
-    var errors = validate(options.name);
-    if (errors) {
-      deferred.reject(errors);
-      return deferred.promise;
-    }
-
-    // Find the group we want to edit. Use an `every` loop instead of
-    // `forEach` so that we can break out of the loop once we've found the
-    // group.
-    data.every(function (group, index) {
-      if (group.id === id) {
-        if (options.name && options.name !== group.name) {
-          data[index].name = options.name;
-        }
-        return false;
-      }
-      return true;
-    });
+    group.name = attributes.name;
 
     // Alphabetize the groups.
     data.sort(comparator);
@@ -110,8 +63,8 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     // modified a group.
     $http({
       method: "PATCH",
-      url: "/api/groups/" + id,
-      data: { name: options.name }
+      url: "/api/groups/" + group.id,
+      data: { name: attributes.name }
     }).then(function () {
       deferred.resolve();
     }, function (response) {
@@ -123,24 +76,26 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
 
   // Delete a group from the client, send a server request to delete it, and
   // return a promise indicating if the server action was completed.
-  function destroy(id) {
-    var deleted = false;
-    // Find the group we want to delete. Use `every` instead of `forEach` so
-    // that we can break out of the loop early.
-    data.every(function (group, index) {
-      if (group.id === id) {
-        data.splice(index, 1);
-        deleted = true;
-        return false;
-      }
-      return true;
-    });
+  function destroy(group) {
+    var deferred = $q.defer();
 
-    // Make the server request and return a promise, but only if we found the
-    // group we want to delete.
-    if (deleted) {
-      return $http({ method: "DELETE", url: "/api/groups/" + id});
+    var index = data.indexOf(group);
+
+    // index will be -1 if `group` is not found in the array. If that's the
+    // case, reject the promise with an error. Otherwise, delete it.
+    if (index < 0) {
+      deferred.reject({ errors: ["Group does not exist"] });
+    } else {
+      deferred = null;
+      data.splice(index, 1);
+
+      return $http({
+        method: "DELETE",
+        url: "/api/groups/" + group.id
+      });
     }
+
+    return deferred.promise;
   }
 
   return {
