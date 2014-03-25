@@ -1,22 +1,34 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").factory("confirmModal", ["$modal", function ($modal) {
+angular.module("services.modal").controller("confirmModalController", ["$scope", "$modalInstance", "title", function ($scope, $modalInstance, title) {
+  "use strict";
+  $scope.title = title;
+
+  $scope.ok = function () {
+    $modalInstance.close(true);
+  };
+  $scope.cancel = function () {
+    $modalInstance.dismiss(false);
+  };
+}]);
+
+angular.module("services.modal").factory("confirmModal", ["$modal", "utils", function ($modal, utils) {
   "use strict";
 
-  function confirmController($scope, $modalInstance) {
-    $scope.ok = function () {
-      $modalInstance.close(true);
+  function open(options) {
+    var defaults = {
+      title: "Are you really really sure?"
     };
-    $scope.cancel = function () {
-      $modalInstance.dismiss(false);
-    };
-  }
 
-  function open() {
+    var attributes = utils.merge(defaults, options);
+
     return $modal.open({
       templateUrl: "services/modal/confirm.tmpl.html",
-      controller: confirmController
+      controller: "confirmModalController",
+      resolve: {
+        title: function () { return attributes.title; }
+      }
     }).result;
   }
 
