@@ -1,10 +1,10 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").factory("nameModal", ["$modal", function ($modal) {
+angular.module("services.modal").factory("groupModal", ["$modal", function ($modal) {
   "use strict";
 
-  function nameController($scope, $modalInstance, title, placeholder) {
+  function groupController($scope, $modalInstance, title, placeholder) {
     $scope.name = { text: "" };
     $scope.title = title || "Name";
     $scope.placeholder = placeholder || "";
@@ -25,8 +25,8 @@ angular.module("services.modal").factory("nameModal", ["$modal", function ($moda
     }
 
     return $modal.open({
-      templateUrl: "services/modal/name.tmpl.html",
-      controller: nameController,
+      templateUrl: "services/modal/group.tmpl.html",
+      controller: groupController,
       resolve: {
         title: function () { return title; },
         placeholder: function () { return placeholder; }
