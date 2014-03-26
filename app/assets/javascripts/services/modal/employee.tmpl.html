@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h3>{{ title }}</h3>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <label for="employee-name">Name</label>
+    <input type="text" id="employee-name" class="form-control" placeholder="{{ name }}" ng-model="data.name">
+  </div>
+  <div class="form-group">
+    <label for="employee-hired">Hired</label>
+    <input type="date" id="employee-hired" class="form-control" placeholder="{{ hired }}" ng-model="data.hired">
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

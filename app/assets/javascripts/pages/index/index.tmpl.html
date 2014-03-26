@@ -12,14 +12,14 @@
       <div class="actions">
         <button class="btn btn-default btn-sm" ng-click="editGroup(group)">Edit group</button>
         <button class="btn btn-default btn-sm" ng-click="removeGroup(group)">Delete group</button>
-        <button class="btn btn-default btn-sm pull-right">New person</button>
+        <button class="btn btn-default btn-sm pull-right" ng-click="newEmployee()">New person</button>
       </div>
       <table class="employees table">
         <tr ng-repeat="employee in group.employees">
           <td>{{ employee.name }}</td>
           <td class="actions">
-            <button class="btn btn-default btn-xs">Edit</button>
-            <button class="btn btn-default btn-xs">Delete</button>
+            <button class="btn btn-default btn-xs" ng-click="editEmployee(employee)">Edit</button>
+            <button class="btn btn-default btn-xs" ng-click="removeEmployee(employee)">Delete</button>
           </td>
         </tr>
       </table>
