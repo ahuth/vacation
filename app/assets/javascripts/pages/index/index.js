@@ -13,13 +13,13 @@ angular.module("pages.index").controller("index", ["$scope", "groupData", "emplo
   // Group actions
 
   $scope.newGroup = function () {
-    groupModal.open({ title: "New group", placeholder: "Name" }).then(function (name) {
-      return groupData.create({ name: name });
+    groupModal.open({ title: "New group" }).then(function (attributes) {
+      return groupData.create(attributes);
     });
   };
   $scope.editGroup = function (group) {
-    groupModal.open({ title: "Edit group", placeholder: group.name }).then(function (name) {
-      return groupData.update(group, { name: name });
+    groupModal.open({ title: "Edit group", name: group.name }).then(function (attributes) {
+      return groupData.update(group, attributes);
     });
   };
   $scope.removeGroup = function (group) {
