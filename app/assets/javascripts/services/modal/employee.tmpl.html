@@ -3,12 +3,12 @@
     <h3>{{ title }}</h3>
   </div>
   <div class="modal-body">
-    <div class="form-group" ng-class="{'has-error': form.employee.name.$invalid && form.employee.$dirty}">
+    <div class="form-group" ng-class="{'has-error': form.employee.name.$invalid && form.employee.name.$dirty}">
       <label for="employee-name">Name</label>
       <input type="text" id="employee-name" name="name" class="form-control" placeholder="{{ name }}" ng-model="data.name" required>
       <span class="help-block" ng-show="form.employee.name.$error.required && form.employee.name.$dirty">Name is required.</span>
     </div>
-    <div class="form-group" ng-class="{'has-error': form.employee.hired.$invalid && form.employee.$dirty}" required>
+    <div class="form-group" ng-class="{'has-error': form.employee.hired.$invalid && form.employee.hired.$dirty}" required>
       <label for="employee-hired">Hired</label>
       <input type="date" id="employee-hired" name="hired" class="form-control" placeholder="{{ hired }}" ng-model="data.hired" required>
       <span class="help-block" ng-show="form.employee.hired.$error.required && form.employee.hired.$dirty">Hired date required.</span>
