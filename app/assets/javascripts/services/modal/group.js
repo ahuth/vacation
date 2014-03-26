@@ -1,13 +1,12 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").controller("groupModalController", ["$scope", "$modalInstance", "title", "placeholder", function ($scope, $modalInstance, title, placeholder) {
+angular.module("services.modal").controller("groupModalController", ["$scope", "$modalInstance", "title", "name", function ($scope, $modalInstance, title, name) {
   "use strict";
-  $scope.name = { text: "" };
+  $scope.data = { name: name };
   $scope.title = title;
-  $scope.placeholder = placeholder;
   $scope.ok = function () {
-    $modalInstance.close($scope.name.text);
+    $modalInstance.close($scope.data);
   };
   $scope.cancel = function () {
     $modalInstance.dismiss("cancel");
@@ -20,7 +19,7 @@ angular.module("services.modal").factory("groupModal", ["$modal", "utils", funct
   function open(options) {
     var defaults = {
       title: "Group",
-      placeholder: "Name"
+      name: ""
     };
 
     var attributes = utils.merge(defaults, options);
@@ -30,7 +29,7 @@ angular.module("services.modal").factory("groupModal", ["$modal", "utils", funct
       controller: "groupModalController",
       resolve: {
         title: function () { return attributes.title; },
-        placeholder: function () { return attributes.placeholder; }
+        name: function () { return attributes.name; }
       }
     }).result;
   }
