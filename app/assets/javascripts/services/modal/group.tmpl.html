@@ -1,13 +1,16 @@
-<div class="modal-header">
-  <h3>{{ title }}</h3>
-</div>
-<div class="modal-body">
-  <div class="form-group">
-    <label for="group-name">Name</label>
-    <input type="text" id="group-name" class="form-control" ng-model="data.name">
+<form name="form.group" novalidate>
+  <div class="modal-header">
+    <h3>{{ title }}</h3>
   </div>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()">OK</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-</div>
+  <div class="modal-body">
+    <div class="form-group" ng-class="{'has-error': form.group.name.$invalid && form.group.$dirty}">
+      <label for="group-name">Name</label>
+      <input type="text" id="group-name" name="name" class="form-control" ng-model="data.name" required>
+      <span class="help-block" ng-show="form.group.name.$error.required && form.group.name.$dirty">Name is required.</span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" ng-click="ok()" ng-disabled="form.group.$invalid">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+</form>

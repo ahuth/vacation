@@ -5,6 +5,8 @@ angular.module("services.modal").controller("groupModalController", ["$scope", "
   "use strict";
   $scope.data = { name: name };
   $scope.title = title;
+  $scope.form = {};
+
   $scope.ok = function () {
     $modalInstance.close($scope.data);
   };
