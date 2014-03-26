@@ -5,6 +5,7 @@ angular.module("services.modal").controller("employeeModalController", ["$scope"
   "use strict";
   $scope.data = { name: name, hired: hired };
   $scope.title = title;
+  $scope.form = {};
   $scope.ok = function () {
     $modalInstance.close($scope.data);
   };
