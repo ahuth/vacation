@@ -43,7 +43,7 @@ angular.module("pages.index").controller("index", ["$scope", "groupData", "emplo
       hired: employee.hired
     };
     employeeModal.open(options).then(function (attributes) {
-      return employeeData.update(employee, attributes);
+      return employeeData.update($scope.group, employee, attributes);
     });
   };
   $scope.removeEmployee = function (employee) {

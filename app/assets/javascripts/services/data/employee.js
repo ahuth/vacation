@@ -4,6 +4,17 @@
 angular.module("services.data").factory("employeeData", ["$http", "$q", function ($http, $q) {
   "use strict";
 
+  // Compare two employees to sort them in an array.
+  function comparator(a, b) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  }
+
   // Create an employee on the client, send a request to the server to create
   // one, return a promise which indicates if the server action was successful.
   function create(group, attributes) {
@@ -20,6 +31,9 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
       // Assign the correct id from the server.
       employee.id = response.data.employee.id;
 
+      // Alphabetize the employees.
+      group.employees.sort(comparator);
+
       deferred.resolve();
     }, function (response) {
       deferred.reject(response);
@@ -30,11 +44,14 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
 
   // Update an employee in the client, send a server request to update it, and
   // return a promise indicating if the server action was successful.
-  function update(employee, attributes) {
+  function update(group, employee, attributes) {
     var deferred = $q.defer();
 
     employee.name = attributes.name;
     employee.hired = attributes.hired;
+
+    // Alphabetize the employees.
+    group.employees.sort(comparator);
 
     $http({
       method: "PATCH",
