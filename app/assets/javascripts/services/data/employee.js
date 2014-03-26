@@ -19,7 +19,7 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
   // one, return a promise which indicates if the server action was successful.
   function create(group, attributes) {
     var deferred = $q.defer();
-    var employee = { name: attributes.name, hired: attributes.hired };
+    var employee = { name: attributes.name, hired: attributes.hired, requests: [] };
 
     group.employees.push(employee);
 

@@ -27,7 +27,7 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
   function create(attributes) {
     var deferred = $q.defer();
 
-    var group = { name: attributes.name };
+    var group = { name: attributes.name, employees: [] };
     data.push(group);
 
     $http({
