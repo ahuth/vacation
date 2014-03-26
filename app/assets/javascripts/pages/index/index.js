@@ -4,9 +4,14 @@
 angular.module("pages.index").controller("index", ["$scope", "groupData", "employeeData", "groupModal", "employeeModal", "confirmModal", function ($scope, groupData, employeeData, groupModal, employeeModal, confirmModal) {
   "use strict";
   $scope.groups = groupData.all();
+
   $scope.setGroup = function (group) {
     $scope.group = group;
   };
+
+  // *************
+  // Group actions
+
   $scope.newGroup = function () {
     groupModal.open({ title: "New group", placeholder: "Name" }).then(function (name) {
       return groupData.create({ name: name });
@@ -22,6 +27,10 @@ angular.module("pages.index").controller("index", ["$scope", "groupData", "emplo
       return groupData.destroy(group);
     });
   };
+
+  // ****************
+  // Employee actions
+
   $scope.newEmployee = function () {
     employeeModal.open({ title: "New person" }).then(function (attributes) {
       return employeeData.create($scope.group, attributes);
