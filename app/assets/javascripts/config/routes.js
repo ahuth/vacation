@@ -5,8 +5,18 @@ angular.module("app").config(["$stateProvider", "$urlRouterProvider", function (
   "use strict";
   $stateProvider
     .state("index", {
+      abstract: true,
       url: "/",
       templateUrl: "pages/index/index.tmpl.html",
       controller: "index"
+    })
+    .state("index.main", {
+      url: "",
+      views: {
+        "groups": {
+          templateUrl: "components/groups/groups.tmpl.html",
+          controller: "groupsController"
+        }
+      }
     });
 }]);
