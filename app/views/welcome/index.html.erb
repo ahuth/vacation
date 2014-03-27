@@ -1,12 +1,16 @@
-<% if user_signed_in? %>
+<main <%= "ng-view" if user_signed_in? %>>
 
-  <script>
-    var App = App || {};
-    App.data = <%= @preload.html_safe %>;
-  </script>
+  <% if user_signed_in? %>
 
-<% else %>
+    <script>
+      var App = App || {};
+      App.data = <%= @preload.html_safe %>;
+    </script>
 
-  <h1>Welcome</h1>
+  <% else %>
 
-<% end %>
+    <h1>Welcome</h1>
+
+  <% end %>
+
+</main>
