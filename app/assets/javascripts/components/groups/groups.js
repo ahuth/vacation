@@ -5,8 +5,9 @@ angular.module("components.groups").controller("groupsController", ["$scope", "g
   "use strict";
   $scope.groups = groupData.all();
 
+  // Tell any listeners what group is currently selected.
   $scope.setGroup = function (group) {
-    $scope.$parent.group = group;
+    $scope.$emit("set-group", group);
   };
 
   // *************
