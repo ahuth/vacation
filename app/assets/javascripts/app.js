@@ -1,10 +1,9 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("utils", []);
-
 angular.module("services.data", []);
-angular.module("services.modal", ["utils"]);
+angular.module("services.modal", ["services.utils"]);
+angular.module("services.utils", []);
 
 angular.module("components.groups", ["services.data", "services.modal"]);
 
