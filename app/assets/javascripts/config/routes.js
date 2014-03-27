@@ -6,6 +6,6 @@ angular.module("app").config(["$routeProvider", function ($routeProvider) {
   $routeProvider
     .when("/", {
       templateUrl: "pages/index/index.tmpl.html",
-      controller: "index"
+      controller: "indexController"
     });
 }]);
