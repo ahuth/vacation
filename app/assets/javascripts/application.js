@@ -13,7 +13,7 @@
 //= require jquery-2.1.0
 //= require jquery_ujs
 //= require angular
-//= require angular-ui-router
+//= require angular-route
 //= require angular-ui-bootstrap-tpls
 //= require app
 //= require_tree .
