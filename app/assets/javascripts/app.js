@@ -9,4 +9,4 @@ angular.module("services.modal", ["utils"]);
 angular.module("pages", ["pages.index"]);
 angular.module("pages.index", ["services.data", "services.modal"]);
 
-angular.module("app", ["templates", "ngRoute", "ui.bootstrap", "pages"]);
+angular.module("app", ["templates", "ui.router", "ui.bootstrap", "pages"]);
