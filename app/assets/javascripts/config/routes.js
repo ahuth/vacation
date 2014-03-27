@@ -8,7 +8,7 @@ angular.module("app").config(["$stateProvider", "$urlRouterProvider", function (
       abstract: true,
       url: "/",
       templateUrl: "pages/index/index.tmpl.html",
-      controller: "index"
+      controller: "indexController"
     })
     .state("index.main", {
       url: "",
