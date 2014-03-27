@@ -12,7 +12,7 @@
     <%= render "layouts/header" %>
   </header>
 
-  <main <%= "ui-view" if user_signed_in? %>>
+  <main <%= "ng-view" if user_signed_in? %>>
     <%= yield %>
   </main>
 

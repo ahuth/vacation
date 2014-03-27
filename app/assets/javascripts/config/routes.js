@@ -1,22 +1,11 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("app").config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
+angular.module("app").config(["$routeProvider", function ($routeProvider) {
   "use strict";
-  $stateProvider
-    .state("index", {
-      abstract: true,
-      url: "/",
-      templateUrl: "pages/index/index.tmpl.html",
+  $routeProvider
+    .when("/", {
+      templateUrl: "pages/index/template.html",
       controller: "indexController"
-    })
-    .state("index.main", {
-      url: "",
-      views: {
-        "groups": {
-          templateUrl: "components/groups/groups.tmpl.html",
-          controller: "groupsController"
-        }
-      }
     });
 }]);

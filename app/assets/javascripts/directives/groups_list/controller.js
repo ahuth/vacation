@@ -1,13 +1,12 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("components.groups").controller("groupsController", ["$scope", "groupData", "employeeData", "groupModal", "employeeModal", "confirmModal", function ($scope, groupData, employeeData, groupModal, employeeModal, confirmModal) {
+angular.module("directives.groups-list").controller("groupsListController", ["$scope", "groupData", "employeeData", "groupModal", "employeeModal", "confirmModal", function ($scope, groupData, employeeData, groupModal, employeeModal, confirmModal) {
   "use strict";
   $scope.groups = groupData.all();
 
-  // Tell any listeners what group is currently selected.
   $scope.setGroup = function (group) {
-    $scope.$emit("set-group", group);
+    $scope.active = group;
   };
 
   // *************
@@ -34,7 +33,7 @@ angular.module("components.groups").controller("groupsController", ["$scope", "g
 
   $scope.newEmployee = function () {
     employeeModal.open({ title: "New person" }).then(function (attributes) {
-      return employeeData.create($scope.group, attributes);
+      return employeeData.create($scope.active, attributes);
     });
   };
   $scope.editEmployee = function (employee) {
@@ -44,12 +43,12 @@ angular.module("components.groups").controller("groupsController", ["$scope", "g
       hired: employee.hired
     };
     employeeModal.open(options).then(function (attributes) {
-      return employeeData.update($scope.group, employee, attributes);
+      return employeeData.update($scope.active, employee, attributes);
     });
   };
   $scope.removeEmployee = function (employee) {
     confirmModal.open({ title: "Delete " + employee.name + "?" }).then(function () {
-      return employeeData.destroy($scope.group, employee);
+      return employeeData.destroy($scope.active, employee);
     });
   };
 }]);
