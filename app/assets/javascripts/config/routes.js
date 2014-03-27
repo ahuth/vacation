@@ -5,7 +5,7 @@ angular.module("app").config(["$routeProvider", function ($routeProvider) {
   "use strict";
   $routeProvider
     .when("/", {
-      templateUrl: "pages/index/index.tmpl.html",
+      templateUrl: "pages/index/template.html",
       controller: "indexController"
     });
 }]);
