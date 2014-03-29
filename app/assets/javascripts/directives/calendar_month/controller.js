@@ -66,9 +66,13 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
     return splitWeeks(objects);
   }
 
-  $scope.$watch("month", function (newValue, oldValue) {
-    $scope.date = moment($scope.year + "-" + newValue + "-1");
+  // Update the calendar with the current scope variables year and month.
+  function updateCalendar() {
+    $scope.date = moment([$scope.year, $scope.month - 1, 1]);
     $scope.monthName = $scope.date.format("MMM");
     $scope.weeks = buildWeeks();
-  });
+  }
+
+  $scope.$watch("month", updateCalendar);
+  $scope.$watch("year", updateCalendar);
 }]);
