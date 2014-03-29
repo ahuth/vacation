@@ -67,7 +67,7 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
   }
 
   $scope.$watch("month", function (newValue, oldValue) {
-    $scope.date = moment($scope.year + "-" + newValue);
+    $scope.date = moment($scope.year + "-" + newValue + "-1");
     $scope.monthName = $scope.date.format("MMM");
     $scope.weeks = buildWeeks();
   });
