@@ -53,6 +53,8 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
     });
   }
 
+  // Build an array of weeks for the current month. Each week is an array of
+  // days.
   function buildWeeks() {
     // The first and last date to display. These may or may not be in the month
     // we're showing.
