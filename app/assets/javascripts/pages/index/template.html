@@ -1,4 +1,12 @@
 <groups-list class="groups" active="group"></groups-list>
-<button ng-click="prevMonth()"><</button>
-<button ng-click="nextMonth()">></button>
-<calendar-month year="2014" month="{{ month }}" class="month"></calendar-month>
+<div class="year-controls">
+  <h4>Year</h4>
+  <button ng-click="prevYear()"><</button>
+  <button ng-click="nextYear()">></button>
+</div>
+<div class="month-controls">
+  <h4>Month</h4>
+  <button ng-click="prevMonth()"><</button>
+  <button ng-click="nextMonth()">></button>
+</div>
+<calendar-month year="{{ year }}" month="{{ month }}" class="month"></calendar-month>
