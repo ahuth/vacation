@@ -12,7 +12,7 @@
     </tr>
     <tbody>
       <tr ng-repeat="week in weeks">
-        <td ng-repeat="day in week">
+        <td ng-class="{notmonth: day.notmonth, weekend: day.weekend}" ng-repeat="day in week">
           <span>{{ day.day }}</span>
         </td>
       </tr>
