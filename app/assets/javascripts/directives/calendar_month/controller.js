@@ -42,7 +42,7 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
   }
 
   // Encode our dates with the information they need to be rendered properly.
-  function objectivize(dates) {
+  function objectify(dates) {
     return dates.map(function (date) {
       return {
         date: date,
@@ -63,7 +63,7 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
     // Create an array of dates.
     var dates = createRange(firstDay, lastDay);
     // Convert our dates into objects representing those dates.
-    var objects = objectivize(dates);
+    var objects = objectify(dates);
 
     return splitWeeks(objects);
   }
