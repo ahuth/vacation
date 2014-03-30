@@ -26,10 +26,10 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
   // findLastDay calculates the last date we need to show on our calendar. This
   // could be in the next month.
   function findLastDay(date) {
-    var numDays = date.daysInMonth();
-    var lastDay = date.clone().add("days", numDays - 1);
-    var dayOfWeek = lastDay.day();
-    var daysToDisplay = numDays + (6 - dayOfWeek);
+    var daysInMonth = date.daysInMonth();
+    var lastDayInMonth = date.clone().add("days", daysInMonth - 1);
+    var dayOfWeek = lastDayInMonth.day();
+    var daysToDisplay = daysInMonth + (6 - dayOfWeek);
     return date.clone().add("days", daysToDisplay - 1);
   }
 
