@@ -1,6 +1,13 @@
+main {
+  position: relative;
+  min-width: 825px;
+}
+
 .groups {
-  display: block;
+  display: inline-block;
   width: 33%;
+  position: absolute;
+  top: 0;
 
   .heading {
     padding-left: 15px;
