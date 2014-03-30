@@ -58,12 +58,12 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
   }
 
   // buildWeeks creates an array of weeks for the current month.
-  function buildWeeks() {
+  function buildWeeks(date) {
     // The first and last date to display. These may or may not be in the month
     // we're showing.
-    var firstDay = findFirstDay($scope.date);
-    var lastDay = findLastDay($scope.date);
-    // Create an array of dates.
+    var firstDay = findFirstDay(date);
+    var lastDay = findLastDay(date);
+    // Create an array of the dates we need to show on the calendar.
     var dates = createRange(firstDay, lastDay);
     // Convert our dates into objects representing those dates.
     var objects = objectify(dates);
@@ -76,7 +76,7 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
   function updateCalendar() {
     $scope.date = moment([$scope.year, $scope.month - 1, 1]);
     $scope.monthName = $scope.date.format("MMM");
-    $scope.weeks = buildWeeks();
+    $scope.weeks = buildWeeks($scope.date);
   }
 
   $scope.$watch("month", updateCalendar);
