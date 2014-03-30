@@ -27,9 +27,10 @@ angular.module("directives.calendar-month").controller("calendarMonthController"
   // could be in the next month.
   function findLastDay(date) {
     var numDays = date.daysInMonth();
-    var dayOfWeek = date.clone().add("days", numDays).day();
+    var lastDay = date.clone().add("days", numDays - 1);
+    var dayOfWeek = lastDay.day();
     var daysToDisplay = numDays + (6 - dayOfWeek);
-    return date.clone().add("days", daysToDisplay);
+    return date.clone().add("days", daysToDisplay - 1);
   }
 
   // splitWeeks converts an array of dates into an array of weeks. Each week is
