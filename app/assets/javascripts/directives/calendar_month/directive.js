@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.calendar-month").directive("calendarMonth", function () {
+angular.module("directives.calendarMonth").directive("calendarMonth", function () {
   "use strict";
   return {
     restrict: "AE",

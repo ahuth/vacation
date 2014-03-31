@@ -1,12 +1,10 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.calendar-month", []);
-angular.module("directives.calendar-year", ["directives.calendar-month"]);
-angular.module("directives.groups-list", ["services.data", "services.modal"]);
+angular.module("directives.calendarMonth", []);
 
 angular.module("pages", ["pages.index"]);
-angular.module("pages.index", ["directives.calendar-year", "directives.groups-list"]);
+angular.module("pages.index", []);
 
 angular.module("services.data", []);
 angular.module("services.modal", ["services.utils"]);

@@ -3,5 +3,4 @@
 
 angular.module("pages.index").controller("indexController", ["$scope", function ($scope) {
   "use strict";
-  $scope.group = "";
 }]);
