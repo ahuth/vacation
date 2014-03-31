@@ -2,6 +2,7 @@
 /*global angular */
 
 angular.module("directives.calendarMonth", ["services.vendor"]);
+angular.module("directives.groupsList", ["services.data", "services.modal"]);
 
 angular.module("pages", ["pages.index"]);
 angular.module("pages.index", []);
