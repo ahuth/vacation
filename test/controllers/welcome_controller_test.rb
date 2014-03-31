@@ -18,7 +18,6 @@ class WelcomeControllerTest < ActionController::TestCase
       groups:    [{ id: group.id, name: "one", employee_ids: [employee.id] }],
       employees: [{ id: employee.id, name: "one", hired: "2014-02-18", group_id: group.id, request_ids: [request.id] }],
       requests:  [{ id: request.id, date: "2014-03-31", approved: true, employee_id: employee.id }],
-      preload:   { group_ids: [group.id] }
     }
 
     assert_equal preload.to_json, assigns(:preload)
