@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.calendar-month", []);
+angular.module("directives.calendarMonth", []);
 
 angular.module("pages", ["pages.index"]);
 angular.module("pages.index", []);

@@ -3,4 +3,4 @@
 
 // Declare the great Moment.js library as an Angular constant. This allows us
 // to inject it into our directive.
-angular.module("directives.calendar-month").constant("moment", window.moment);
+angular.module("directives.calendarMonth").constant("moment", window.moment);

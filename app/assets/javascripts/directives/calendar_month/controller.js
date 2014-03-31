@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.calendar-month").controller("calendarMonthController", ["$scope", "moment", function ($scope, moment) {
+angular.module("directives.calendarMonth").controller("calendarMonthController", ["$scope", "moment", function ($scope, moment) {
   "use strict";
   // createRange creates an array of dates that are between and include the
   // start and end dates.
