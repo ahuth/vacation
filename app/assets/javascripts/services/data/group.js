@@ -4,30 +4,51 @@
 angular.module("services.data").factory("groupData", ["$http", "$q", function ($http, $q) {
   "use strict";
 
-  var data = App.data.groups;
-
-  // Compare two 'groups' to alphabetize them in an array.
-  function comparator(a, b) {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
+  // Constructor for our Group objects.
+  function Group(attributes) {
+    this.id = attributes.id;
+    this.name = attributes.name;
+    this.employee_ids = attributes.employee_ids;
   }
 
-  // Return data for all of the groups.
+  // Convert json data from the server into Group objects.
+  function processPreload(groups) {
+    return groups.map(function (group) {
+      return new Group(group);
+    });
+  }
+
+  // Internal store of all Groups.
+  var data = processPreload(App.data.groups);
+
+  // Return all Groups.
   function all() {
     return data;
   }
 
-  // Create a group in the client, send a request to the server to create a new
-  // one, and return a promise indicating if the server action was completed.
+  // Search for and return a Group by id.
+  function find(id) {
+    var output;
+    // Use .every() instead of .forEach() so that we can break out of the loop
+    // early.
+    data.every(function (group) {
+      if (group.id === id) {
+        output = group;
+        return false;
+      }
+      return true;
+    });
+    return output;
+  }
+
+  // Create a new Group on the client and send a request to the server. Returns
+  // a promise indicating if the server action was successful.
   function create(attributes) {
     var deferred = $q.defer();
 
-    var group = { name: attributes.name, employees: [] };
+    // Create a new group with no id and no employees. The id will be filled in
+    // once the server responds.
+    var group = new Group({ name: attributes.name, employee_ids: [] });
     data.push(group);
 
     $http({
@@ -37,9 +58,6 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     }).then(function (response) {
       // Assign the correct id from the server.
       group.id = response.data.group.id;
-
-      // Alphabetize the groups.
-      data.sort(comparator);
 
       deferred.resolve();
     }, function (response) {
@@ -51,19 +69,14 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
 
   // Update a group in the client, send a server request to update it, and
   // return a promise indicating if the server action was completed.
-  function update(group, attributes) {
+  Group.prototype.update = function (attributes) {
     var deferred = $q.defer();
 
-    group.name = attributes.name;
+    this.name = attributes.name;
 
-    // Alphabetize the groups.
-    data.sort(comparator);
-
-    // Make the server request and return a promise, but only if we actually
-    // modified a group.
     $http({
       method: "PATCH",
-      url: "/api/groups/" + group.id,
+      url: "/api/groups/" + this.id,
       data: { name: attributes.name }
     }).then(function () {
       deferred.resolve();
@@ -72,36 +85,33 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
     });
 
     return deferred.promise;
-  }
+  };
 
-  // Delete a group from the client, send a server request to delete it, and
-  // return a promise indicating if the server action was completed.
-  function destroy(group) {
-    var deferred = $q.defer();
+  // Delete a group from the client and send a server request. Returns a
+  // promise indicating if the group was deleted from the server.
+  Group.prototype.destroy = function () {
+    var deferred;
+    var index = data.indexOf(this);
 
-    var index = data.indexOf(group);
-
-    // index will be -1 if `group` is not found in the array. If that's the
-    // case, reject the promise with an error. Otherwise, delete it.
+    // If index is -1, then `group` is not in the data array.
     if (index < 0) {
+      deferred = $q.defer();
       deferred.reject({ errors: ["Group does not exist"] });
-    } else {
-      deferred = null;
-      data.splice(index, 1);
-
-      return $http({
-        method: "DELETE",
-        url: "/api/groups/" + group.id
-      });
+      return deferred.promise;
     }
 
-    return deferred.promise;
-  }
+    // Remove the group from the data array.
+    data.splice(index, 1);
+
+    return $http({
+      method: "DELETE",
+      url: "/api/groups/" + this.id
+    });
+  };
 
   return {
     all: all,
-    create: create,
-    update: update,
-    destroy: destroy
+    find: find,
+    create: create
   };
 }]);
