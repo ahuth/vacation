@@ -1,0 +1,9 @@
+<h4 class="heading">Groups</h4>
+<button ng-click="newGroup()">New group</button>
+<ul class="groups">
+  <li ng-repeat="group in groups">
+    <span ng-click="setGroup(group)">{{ group.name }}</span>
+    <button ng-click="editGroup(group)">Edit</button>
+    <button ng-click="removeGroup(group)">Delete</button>
+  </li>
+</ul>
