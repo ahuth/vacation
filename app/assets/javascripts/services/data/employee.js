@@ -5,17 +5,18 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
   "use strict";
 
   // Constructor for our Employee objects.
-  function Employee(name, hired, request_ids, id) {
-    this.id = id;
-    this.name = name;
-    this.hired = hired;
-    this.requests = [];
+  function Employee(attributes) {
+    this.id = attributes.id;
+    this.name = attributes.name;
+    this.hired = attributes.hired;
+    this.request_ids = attributes.request_ids;
+    this.group_id = attributes.group_id;
   }
 
   // Convert json data from the server into Employee objects.
   function processPreload(employees) {
     return employees.map(function (employee) {
-      return new Employee(employee.name, employee.hired, employee.request_ids, employee.id);
+      return new Employee(employee);
     });
   }
 
@@ -46,15 +47,14 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
   // Returns a promise indicating if the server action was successful.
   function create(group, attributes) {
     var deferred = $q.defer();
-    var employee = new Employee(attributes.name, attributes.hired, []);
+    var employee = new Employee({ name: attributes.name, hired: attributes.hired, group_id: attributes.group_id, request_ids: [] });
 
     data.push(employee);
-    group.employees.push(employee);
 
     $http({
       method: "POST",
       url: "/api/groups/" + group.id + "/employees",
-      data: employee
+      data: { name: attributes.name, hired: attributes.hired }
     }).then(function (response) {
       // Assign the correct id from the server.
       employee.id = response.data.employee.id;
@@ -70,14 +70,22 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
   // Update an employee in the client, send a server request to update it, and
   // return a promise indicating if the server action was completed.
   Employee.prototype.update = function (attributes) {
+    var deferred = $q.defer();
+
     this.name = attributes.name;
     this.hired = attributes.hired;
 
-    return $http({
+    $http({
       method: "PATCH",
       url: "/api/employees/" + this.id,
       data: { name: attributes.name, hired: attributes.hired }
+    }).then(function () {
+      deferred.resolve();
+    }, function (response) {
+      deferred.reject();
     });
+
+    return deferred.promise;
   };
 
   // Delete an employee from the client and send a server request. Returns a

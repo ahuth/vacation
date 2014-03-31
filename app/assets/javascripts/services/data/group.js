@@ -1,22 +1,20 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular, App */
 
-angular.module("services.data").factory("groupData", ["$http", "$q", "employeeData", function ($http, $q, employeeData) {
+angular.module("services.data").factory("groupData", ["$http", "$q", function ($http, $q) {
   "use strict";
 
   // Constructor for our Group objects.
-  function Group(name, employee_ids, id) {
-    this.id = id;
-    this.name = name;
-    this.employees = employee_ids.map(function (id) {
-      return employeeData.find(id);
-    });
+  function Group(attributes) {
+    this.id = attributes.id;
+    this.name = attributes.name;
+    this.employee_ids = attributes.employee_ids;
   }
 
   // Convert json data from the server into Group objects.
   function processPreload(groups) {
     return groups.map(function (group) {
-      return new Group(group.name, group.employee_ids, group.id);
+      return new Group(group);
     });
   }
 
@@ -50,7 +48,7 @@ angular.module("services.data").factory("groupData", ["$http", "$q", "employeeDa
 
     // Create a new group with no id and no employees. The id will be filled in
     // once the server responds.
-    var group = new Group(attributes.name, []);
+    var group = new Group({ name: attributes.name, employee_ids: [] });
     data.push(group);
 
     $http({
@@ -72,13 +70,21 @@ angular.module("services.data").factory("groupData", ["$http", "$q", "employeeDa
   // Update a group in the client, send a server request to update it, and
   // return a promise indicating if the server action was completed.
   Group.prototype.update = function (attributes) {
+    var deferred = $q.defer();
+
     this.name = attributes.name;
 
-    return $http({
+    $http({
       method: "PATCH",
       url: "/api/groups/" + this.id,
       data: { name: attributes.name }
+    }).then(function () {
+      deferred.resolve();
+    }, function (response) {
+      deferred.reject(response);
     });
+
+    return deferred.promise;
   };
 
   // Delete a group from the client and send a server request. Returns a
