@@ -1,8 +1,6 @@
 class GroupSerializer < ActiveModel::Serializer
+  embed :ids, include: true
+
   attributes :id, :name
   has_many :employees
-
-  def employees
-    object.employees.order(:name)
-  end
 end
