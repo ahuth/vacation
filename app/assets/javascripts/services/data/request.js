@@ -20,7 +20,6 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
 
   // Internal store of all Requests.
   var data = processPreload(App.data.requests);
-  console.log(data);
 
   // Return all Requests.
   function all() {
