@@ -1,0 +1,9 @@
+<h4 class="heading">People</h4>
+<button ng-hide="noGroup" ng-click="newEmployee()">New person</button>
+<ul class="employees">
+  <li ng-repeat="employee in employees | filter:isFromGroup">
+    <span ng-click="setEmployee(employee)">{{ employee.name }}</span>
+    <button ng-click="editEmployee(employee)">Edit</button>
+    <button ng-click="removeEmployee(employee)">Delete</button>
+  </li>
+</ul>

@@ -45,7 +45,7 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
 
   // Create a new Employee on the client and send a request to the server.
   // Returns a promise indicating if the server action was successful.
-  function create(group, attributes) {
+  function create(attributes) {
     var deferred = $q.defer();
     var employee = new Employee({ name: attributes.name, hired: attributes.hired, group_id: attributes.group_id, request_ids: [] });
 
@@ -53,7 +53,7 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
 
     $http({
       method: "POST",
-      url: "/api/groups/" + group.id + "/employees",
+      url: "/api/groups/" + employee.group_id + "/employees",
       data: { name: attributes.name, hired: attributes.hired }
     }).then(function (response) {
       // Assign the correct id from the server.
