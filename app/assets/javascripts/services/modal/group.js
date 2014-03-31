@@ -14,7 +14,7 @@ angular.module("services.modal").controller("groupModalController", ["$scope", "
   };
 }]);
 
-angular.module("services.modal").factory("groupModal", ["$modal", "utils", function ($modal, utils) {
+angular.module("services.modal").factory("groupModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
   "use strict";
 
   function open(options) {
@@ -23,7 +23,7 @@ angular.module("services.modal").factory("groupModal", ["$modal", "utils", funct
       name: ""
     };
 
-    var attributes = utils.merge(defaults, options);
+    var attributes = objectUtils.merge(defaults, options);
 
     return $modal.open({
       templateUrl: "services/modal/group.tmpl.html",

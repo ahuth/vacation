@@ -14,7 +14,7 @@ angular.module("services.modal").controller("employeeModalController", ["$scope"
   };
 }]);
 
-angular.module("services.modal").factory("employeeModal", ["$modal", "utils", function ($modal, utils) {
+angular.module("services.modal").factory("employeeModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
   "use strict";
 
   function open(options) {
@@ -24,7 +24,7 @@ angular.module("services.modal").factory("employeeModal", ["$modal", "utils", fu
       hired: ""
     };
 
-    var attributes = utils.merge(defaults, options);
+    var attributes = objectUtils.merge(defaults, options);
 
     return $modal.open({
       templateUrl: "services/modal/employee.tmpl.html",
