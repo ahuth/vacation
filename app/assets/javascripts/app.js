@@ -2,10 +2,9 @@
 /*global angular */
 
 angular.module("directives.calendar-month", []);
-angular.module("directives.calendar-year", ["directives.calendar-month"]);
 
 angular.module("pages", ["pages.index"]);
-angular.module("pages.index", ["directives.calendar-year"]);
+angular.module("pages.index", []);
 
 angular.module("services.data", []);
 angular.module("services.modal", ["services.utils"]);
