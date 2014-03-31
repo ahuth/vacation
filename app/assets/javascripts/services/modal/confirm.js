@@ -13,7 +13,7 @@ angular.module("services.modal").controller("confirmModalController", ["$scope",
   };
 }]);
 
-angular.module("services.modal").factory("confirmModal", ["$modal", "utils", function ($modal, utils) {
+angular.module("services.modal").factory("confirmModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
   "use strict";
 
   function open(options) {
@@ -21,7 +21,7 @@ angular.module("services.modal").factory("confirmModal", ["$modal", "utils", fun
       title: "Are you really really sure?"
     };
 
-    var attributes = utils.merge(defaults, options);
+    var attributes = objectUtils.merge(defaults, options);
 
     return $modal.open({
       templateUrl: "services/modal/confirm.tmpl.html",
