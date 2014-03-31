@@ -1,6 +1,4 @@
 class EmployeeSerializer < ActiveModel::Serializer
-  embed :ids, include: true
-
   attributes :id, :name, :hired, :group_id
-  has_many :requests
+  has_many :requests, embed: :ids
 end
