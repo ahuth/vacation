@@ -1,26 +1,54 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
-/*global angular */
+/*global angular, App */
 
 angular.module("services.data").factory("employeeData", ["$http", "$q", function ($http, $q) {
   "use strict";
 
-  // Compare two employees to sort them in an array.
-  function comparator(a, b) {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
+  // Constructor for our Employee objects.
+  function Employee(name, hired, request_ids, id) {
+    this.id = id;
+    this.name = name;
+    this.hired = hired;
+    this.requests = [];
   }
 
-  // Create an employee on the client, send a request to the server to create
-  // one, return a promise which indicates if the server action was successful.
+  // Convert json data from the server into Employee objects.
+  function processPreload(employees) {
+    return employees.map(function (employee) {
+      return new Employee(employee.name, employee.hired, employee.request_ids, employee.id);
+    });
+  }
+
+  // Internal store of all Employees.
+  var data = processPreload(App.data.employees);
+
+  // Return all Employees.
+  function all() {
+    return data;
+  }
+
+  // Search for and return an Employee by id.
+  function find(id) {
+    var output;
+    // Use .every() instead of .forEach() so that we can break out of the loop
+    // early.
+    data.every(function (employee) {
+      if (employee.id === id) {
+        output = employee;
+        return false;
+      }
+      return true;
+    });
+    return output;
+  }
+
+  // Create a new Employee on the client and send a request to the server.
+  // Returns a promise indicating if the server action was successful.
   function create(group, attributes) {
     var deferred = $q.defer();
-    var employee = { name: attributes.name, hired: attributes.hired, requests: [] };
+    var employee = new Employee(attributes.name, attributes.hired, []);
 
+    data.push(employee);
     group.employees.push(employee);
 
     $http({
@@ -31,9 +59,6 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
       // Assign the correct id from the server.
       employee.id = response.data.employee.id;
 
-      // Alphabetize the employees.
-      group.employees.sort(comparator);
-
       deferred.resolve();
     }, function (response) {
       deferred.reject(response);
@@ -43,56 +68,43 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
   }
 
   // Update an employee in the client, send a server request to update it, and
-  // return a promise indicating if the server action was successful.
-  function update(group, employee, attributes) {
-    var deferred = $q.defer();
+  // return a promise indicating if the server action was completed.
+  Employee.prototype.update = function (attributes) {
+    this.name = attributes.name;
+    this.hired = attributes.hired;
 
-    employee.name = attributes.name;
-    employee.hired = attributes.hired;
-
-    // Alphabetize the employees.
-    group.employees.sort(comparator);
-
-    $http({
+    return $http({
       method: "PATCH",
-      url: "/api/employees/" + employee.id,
+      url: "/api/employees/" + this.id,
       data: { name: attributes.name, hired: attributes.hired }
-    }).then(function (response) {
-      deferred.resolve();
-    }, function (response) {
-      deferred.reject(response);
     });
+  };
 
-    return deferred.promise;
-  }
+  // Delete an employee from the client and send a server request. Returns a
+  // promise indicating if the employee was deleted from the server.
+  Employee.prototype.destroy = function () {
+    var deferred;
+    var index = data.indexOf(this);
 
-  // Delete an employee from the client, send a server request to delete it,
-  // and return a promise indicating if the server action was successful.
-  function destroy(group, employee) {
-    var deferred = $q.defer();
-    var employees = group.employees;
-    var index = employees.indexOf(employee);
-
-    // index will be -1 if `group` is not found in the array. If that's the
-    // case, reject the promise with an error. Otherwise, delete it.
+    // If index is -1, then `group` is not in the data array.
     if (index < 0) {
+      deferred = $q.defer();
       deferred.reject({ errors: ["Employee does not exist"] });
-    } else {
-      deferred = null;
-      employees.splice(index, 1);
-
-      return $http({
-        method: "DELETE",
-        url: "/api/employees/" + employee.id
-      });
+      return deferred.promise;
     }
 
-    return deferred.promise;
-  }
+    // Remove the group from the data array.
+    data.splice(index, 1);
+
+    return $http({
+      method: "DELETE",
+      url: "/api/employees/" + this.id
+    });
+  };
 
   return {
-    create: create,
-    update: update,
-    destroy: destroy
+    all: all,
+    find: find,
+    create: create
   };
 }]);
