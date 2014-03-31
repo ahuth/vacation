@@ -44,15 +44,15 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
 
   // Create a new Request on the client and send a request to the server.
   // Returns a promise indicating if the server action was successful.
-  function create(employee, attributes) {
+  function create(attributes) {
     var deferred = $q.defer();
-    var request = new Request({ date: attributes.date });
+    var request = new Request({ date: attributes.date, employee_id: attributes.employee_id });
 
     data.push(request);
 
     $http({
       method: "POST",
-      url: "/api/employees/" + employee.id + "/requests",
+      url: "/api/employees/" + request.employee_id + "/requests",
       data: { date: attributes.date }
     }).then(function (response) {
       // Assign the correct id from the server.
