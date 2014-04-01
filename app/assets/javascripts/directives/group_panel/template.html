@@ -1,0 +1,11 @@
+<h4 class="heading">{{ group.name }}</h4>
+<button ng-click="editGroup(group)">Edit</button>
+<button ng-click="removeGroup(group)">Delete</button>
+<table>
+  <tbody>
+    <tr>
+      <td>Employees</td>
+      <td>{{ group.employee_ids.length }}</td>
+    </tr>
+  </tbody>
+</table>
