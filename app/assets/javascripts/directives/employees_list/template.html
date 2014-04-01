@@ -3,7 +3,5 @@
 <ul class="employees">
   <li ng-repeat="employee in employees | filter:isFromGroup">
     <span ng-click="setEmployee(employee)">{{ employee.name }}</span>
-    <button ng-click="editEmployee(employee)">Edit</button>
-    <button ng-click="removeEmployee(employee)">Delete</button>
   </li>
 </ul>
