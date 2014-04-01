@@ -59,6 +59,9 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
 
   // For each date object, add events that happen on the same date.
   function addEvents(objects, events) {
+    if (!Array.isArray(events)) {
+      return objects;
+    }
     return objects.map(function (object) {
       object.events = events.filter(function (event) {
         return object.date.isSame(event.date, "day");
@@ -88,7 +91,7 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
   function updateCalendar() {
     $scope.date = moment([$scope.year, $scope.month - 1, 1]);
     $scope.monthName = $scope.date.format("MMM");
-    $scope.weeks = buildWeeks($scope.date, $scope.events || []);
+    $scope.weeks = buildWeeks($scope.date, $scope.events);
   }
 
   $scope.$watch("month", updateCalendar);
