@@ -56,21 +56,8 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     });
   }
 
-  // Add corresponding events to each date object in an array of date objects.
-  function addEvents(objects, events) {
-    if (!Array.isArray(events)) {
-      return objects;
-    }
-    return objects.map(function (object) {
-      object.events = events.filter(function (event) {
-        return object.date.isSame(event.date, "day");
-      });
-      return object;
-    });
-  }
-
   // Build an array of weeks for the current month.
-  function buildWeeks(date, events) {
+  function buildWeeks(date) {
     // The first and last date to display. These may or may not be in the month
     // we're showing.
     var firstDay = findFirstDay(date);
@@ -79,20 +66,31 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     var dates = createRange(firstDay, lastDay);
     // Convert our dates into objects representing those dates.
     var objects = objectify(dates);
-    // Add any relevant events to the dates.
-    var objectsWithEvents = addEvents(objects, events);
     // Split the array of objects into weeks.
-    return splitWeeks(objectsWithEvents);
+    return splitWeeks(objects);
   }
 
   // Update the calendar with the current month and year scope variables.
   function updateCalendar() {
     $scope.date = moment([$scope.year, $scope.month - 1, 1]);
     $scope.monthName = $scope.date.format("MMM");
-    $scope.weeks = buildWeeks($scope.date, $scope.events);
+    $scope.weeks = buildWeeks($scope.date);
+  }
+
+  // Update the events for each day of the calendar. This is seperate from
+  // `updateCalendar` so that we don't have to rebuild the entire calendar
+  // every time the events change.
+  function updateEvents() {
+    $scope.weeks.forEach(function (week) {
+      week.forEach(function (day) {
+        day.events = $scope.events.filter(function (event) {
+          return day.date.isSame(event.date, "day");
+        });
+      });
+    });
   }
 
   $scope.$watch("month", updateCalendar);
   $scope.$watch("year", updateCalendar);
-  $scope.$watch("events", updateCalendar);
+  $scope.$watch("events", updateEvents);
 }]);
