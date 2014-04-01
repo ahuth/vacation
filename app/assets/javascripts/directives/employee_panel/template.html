@@ -1,0 +1,15 @@
+<h4 class="heading">{{ employee.name }}</h4>
+<button ng-click="editEmployee(employee)">Edit</button>
+<button ng-click="removeEmployee(employee)">Delete</button>
+<table>
+  <tbody>
+    <tr>
+      <td>Hired</td>
+      <td>{{ employee.hired }}</td>
+    </tr>
+    <tr>
+      <td>Vacation days used</td>
+      <td>{{ employee.request_ids.length }}</td>
+    </tr>
+  </tbody>
+</table>

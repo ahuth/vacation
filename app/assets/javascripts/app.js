@@ -4,6 +4,7 @@
 angular.module("directives.calendarMonth", ["services.vendor"]);
 angular.module("directives.calendarYear", ["directives.calendarMonth", "services.data", "services.vendor"]);
 angular.module("directives.employeesList", ["services.data", "services.modal"]);
+angular.module("directives.employeePanel", ["services.data", "services.modal"]);
 angular.module("directives.groupsList", ["services.data", "services.modal"]);
 
 angular.module("pages", ["pages.index"]);
