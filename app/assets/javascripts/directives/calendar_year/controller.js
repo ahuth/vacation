@@ -11,21 +11,33 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     var date = moment([$scope.year, num - 1]);
     return {
       date: date,
-      month: date.month() + 1
+      month: date.month() + 1,
+      requests: []
     };
   });
 
-  // When the active group changes, add a `requests` array to each `month`
-  // object.
-  $scope.$watch("group", function (group) {
+  // Take a list of requests and assign them to their corresponding month.
+  function assignRequests(requests) {
     $scope.months.forEach(function (month) {
-      if (!group) {
-        month.requests = [];
-        return;
-      }
-      month.requests = requestData.forGroup(group.id).filter(function (request) {
+      month.requests = requests.filter(function (request) {
         return month.date.isSame(request.date, "month");
       });
     });
+  }
+
+  $scope.$watch("group", function (group) {
+    if (!group) {
+      return;
+    }
+    var groupRequests = requestData.forGroup(group.id);
+    assignRequests(groupRequests);
+  });
+
+  $scope.$watch("employee", function (employee) {
+    if (!employee) {
+      return;
+    }
+    var employeeRequests = requestData.forEmployee(employee.id);
+    assignRequests(employeeRequests);
   });
 }]);
