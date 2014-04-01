@@ -67,6 +67,13 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     return deferred.promise;
   }
 
+  // Get an array of all requests for a given employee id.
+  function forEmployee(id) {
+    return data.filter(function (request) {
+      return request.employee_id === id;
+    });
+  }
+
   // Get an array of all requests for a given group id.
   function forGroup(id) {
     return data.filter(function (request) {
@@ -100,6 +107,7 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     all: all,
     find: find,
     create: create,
+    forEmployee: forEmployee,
     forGroup: forGroup
   };
 }]);
