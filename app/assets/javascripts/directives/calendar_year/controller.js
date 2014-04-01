@@ -16,7 +16,8 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     };
   });
 
-  function updateRequests(requests) {
+  // Take a list of requests and assign them to their corresponding month.
+  function assignRequests(requests) {
     $scope.months.forEach(function (month) {
       month.requests = requests.filter(function (request) {
         return month.date.isSame(request.date, "month");
@@ -29,7 +30,7 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
       return;
     }
     var groupRequests = requestData.forGroup(group.id);
-    updateRequests(groupRequests);
+    assignRequests(groupRequests);
   });
 
   $scope.$watch("employee", function (employee) {
@@ -37,6 +38,6 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
       return;
     }
     var employeeRequests = requestData.forEmployee(employee.id);
-    updateRequests(employeeRequests);
+    assignRequests(employeeRequests);
   });
 }]);
