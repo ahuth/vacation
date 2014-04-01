@@ -14,6 +14,7 @@ angular.module("directives.employeePanel").controller("employeePanelController",
       return employee.update(attributes);
     });
   };
+
   $scope.removeEmployee = function (employee) {
     confirmModal.open({ title: "Delete " + employee.name + "?" }).then(function () {
       return employee.destroy();

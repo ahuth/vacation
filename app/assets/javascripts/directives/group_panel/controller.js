@@ -9,6 +9,7 @@ angular.module("directives.groupPanel").controller("groupPanelController", ["$sc
       return group.update(attributes);
     });
   };
+
   $scope.removeGroup = function (group) {
     confirmModal.open({ title: "Delete " + group.name + "?"}).then(function () {
       return group.destroy();
