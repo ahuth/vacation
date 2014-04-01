@@ -7,9 +7,11 @@ angular.module("directives.calendarMonth").directive("calendarMonth", function (
     restrict: "AE",
     templateUrl: "directives/calendar_month/template.html",
     controller: "calendarMonthController",
+    transclude: true,
     scope: {
       year: "@",
-      month: "@"
+      month: "@",
+      events: "="
     }
   };
 });

@@ -9,7 +9,7 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     this.id = attributes.id;
     this.date = attributes.date;
     this.approved = attributes.approved;
-    this.employee_id = attributes.employee.id;
+    this.employee_id = attributes.employee_id;
   }
 
   // Convert json data from the server into Request objects.
