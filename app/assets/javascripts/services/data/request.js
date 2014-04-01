@@ -67,6 +67,13 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     return deferred.promise;
   }
 
+  // Get an array of all requests for a given group id.
+  function forGroup(id) {
+    return data.filter(function (request) {
+      return request.group_id === id;
+    });
+  }
+
   // Delete a request from the client and send a server request. Returns a
   // promise indicating if the request was deleted from the server.
   Request.prototype.destroy = function () {
@@ -92,6 +99,7 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
   return {
     all: all,
     find: find,
-    create: create
+    create: create,
+    forGroup: forGroup
   };
 }]);
