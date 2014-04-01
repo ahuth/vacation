@@ -90,6 +90,10 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     });
   }
 
+  $scope.dayClicked = function (day) {
+    $scope.$emit("calendar-day-clicked", day);
+  };
+
   $scope.$watch("month", updateCalendar);
   $scope.$watch("year", updateCalendar);
   $scope.$watch("events", updateEvents);
