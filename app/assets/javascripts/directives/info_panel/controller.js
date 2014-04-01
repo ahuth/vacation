@@ -7,18 +7,16 @@ angular.module("directives.infoPanel").controller("infoPanelController", ["$scop
   $scope.employeeActive = false;
 
   $scope.$watch("group", function (group) {
-    if (!group) {
-      return;
-    }
-    $scope.groupActive = true;
+    // If the group parameter is defined and not null, set groupActive to true.
+    // Otherwise, set it to false.
+    $scope.groupActive = !!group;
     $scope.employeeActive = false;
   });
 
   $scope.$watch("employee", function (employee) {
-    if (!employee) {
-      return;
-    }
+    // If the employee paramter is defined and not null, set employeeActive to
+    // true. Otherwise, set it to false.
+    $scope.employeeActive = !!employee;
     $scope.groupActive = false;
-    $scope.employeeActive = true;
   });
 }]);
