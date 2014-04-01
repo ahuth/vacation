@@ -10,7 +10,7 @@ angular.module("directives.groupPanel", ["services.data", "services.modal"]);
 angular.module("directives.infoPanel", ["directives.employeePanel", "directives.groupPanel"]);
 
 angular.module("pages", ["pages.index"]);
-angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList"]);
+angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList", "directives.infoPanel"]);
 
 angular.module("services.data", []);
 angular.module("services.modal", ["services.utils"]);
