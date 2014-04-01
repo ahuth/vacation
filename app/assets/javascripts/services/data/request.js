@@ -10,6 +10,7 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     this.date = attributes.date;
     this.approved = attributes.approved;
     this.employee_id = attributes.employee_id;
+    this.group_id = attributes.group_id;
   }
 
   // Convert json data from the server into Request objects.
@@ -46,7 +47,7 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
   // Returns a promise indicating if the server action was successful.
   function create(attributes) {
     var deferred = $q.defer();
-    var request = new Request({ date: attributes.date, employee_id: attributes.employee_id });
+    var request = new Request({ date: attributes.date, employee_id: attributes.employee_id, group_id: attributes.group_id });
 
     data.push(request);
 
@@ -64,6 +65,13 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     });
 
     return deferred.promise;
+  }
+
+  // Get an array of all requests for a given group id.
+  function forGroup(id) {
+    return data.filter(function (request) {
+      return request.group_id === id;
+    });
   }
 
   // Delete a request from the client and send a server request. Returns a
@@ -91,6 +99,7 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
   return {
     all: all,
     find: find,
-    create: create
+    create: create,
+    forGroup: forGroup
   };
 }]);
