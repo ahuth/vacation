@@ -94,4 +94,5 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
 
   $scope.$watch("month", updateCalendar);
   $scope.$watch("year", updateCalendar);
+  $scope.$watch("events", updateCalendar);
 }]);
