@@ -16,13 +16,19 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     };
   });
 
-  // When the active group changes, add a `requests` array to each `month`
-  // object.
-  $scope.$watch("group", function (group) {
+  function updateRequests(requests) {
     $scope.months.forEach(function (month) {
-      month.requests = requestData.forGroup(group.id).filter(function (request) {
+      month.requests = requests.filter(function (request) {
         return month.date.isSame(request.date, "month");
       });
     });
+  }
+
+  $scope.$watch("group", function (group) {
+    if (!group) {
+      return;
+    }
+    var groupRequests = requestData.forGroup(group.id);
+    updateRequests(groupRequests);
   });
 }]);
