@@ -10,7 +10,6 @@ angular.module("directives.infoPanel").controller("infoPanelController", ["$scop
     if (!group) {
       return;
     }
-    $scope.active = group;
     $scope.groupActive = true;
     $scope.employeeActive = false;
   });
@@ -19,7 +18,6 @@ angular.module("directives.infoPanel").controller("infoPanelController", ["$scop
     if (!employee) {
       return;
     }
-    $scope.active = employee;
     $scope.groupActive = false;
     $scope.employeeActive = true;
   });
