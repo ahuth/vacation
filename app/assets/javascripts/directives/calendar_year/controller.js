@@ -31,4 +31,12 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     var groupRequests = requestData.forGroup(group.id);
     updateRequests(groupRequests);
   });
+
+  $scope.$watch("employee", function (employee) {
+    if (!employee) {
+      return;
+    }
+    var employeeRequests = requestData.forEmployee(employee.id);
+    updateRequests(employeeRequests);
+  });
 }]);
