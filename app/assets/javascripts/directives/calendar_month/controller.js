@@ -3,8 +3,7 @@
 
 angular.module("directives.calendarMonth").controller("calendarMonthController", ["$scope", "moment", function ($scope, moment) {
   "use strict";
-  // createRange creates an array of dates that are between and include the
-  // start and end dates.
+  // Create an array of dates between and including the start and end dates.
   function createRange(startDate, endDate) {
     // In our loop, we immediately add 1 to the start date, so subtract 1
     // before we start.
@@ -16,15 +15,15 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     return output;
   }
 
-  // findFirstDay calculates the first date we need to show on our calendar.
-  // This could be in the previous month.
+  // Calculate the first date we need to show on our calendar. This could be in
+  // the previous month.
   function findFirstDay(date) {
     var dayOfWeek = date.day();
     return date.clone().subtract("days", dayOfWeek);
   }
 
-  // findLastDay calculates the last date we need to show on our calendar. This
-  // could be in the next month.
+  // Calculate the last date we need to show on our calendar. This could be in
+  // the next month.
   function findLastDay(date) {
     var daysInMonth = date.daysInMonth();
     var lastDayInMonth = date.clone().add("days", daysInMonth - 1);
@@ -33,8 +32,8 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     return date.clone().add("days", daysToDisplay - 1);
   }
 
-  // splitWeeks converts an array of dates into an array of weeks. Each week is
-  // an array of that week's days.
+  // Convert a flat array of dates into an array of weeks. Each week is itself
+  // an array of dates.
   function splitWeeks(dates) {
     var i;
     var output = [];
@@ -44,8 +43,8 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     return output;
   }
 
-  // objectify converts an array of dates into an array of objects, where each
-  // object has pertinent information about the date.
+  // Convert an array of dates into an array of date objects. Each date object
+  // encodes some more information about the date.
   function objectify(dates) {
     return dates.map(function (date) {
       return {
@@ -57,7 +56,7 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     });
   }
 
-  // For each date object, add events that happen on the same date.
+  // Add corresponding events to each date object in an array of date objects.
   function addEvents(objects, events) {
     if (!Array.isArray(events)) {
       return objects;
@@ -70,7 +69,7 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     });
   }
 
-  // buildWeeks creates an array of weeks for the current month.
+  // Build an array of weeks for the current month.
   function buildWeeks(date, events) {
     // The first and last date to display. These may or may not be in the month
     // we're showing.
@@ -86,8 +85,7 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     return splitWeeks(objectsWithEvents);
   }
 
-  // updateCalendar updates the calendar with the current scope variables of
-  // year and month.
+  // Update the calendar with the current month and year scope variables.
   function updateCalendar() {
     $scope.date = moment([$scope.year, $scope.month - 1, 1]);
     $scope.monthName = $scope.date.format("MMM");
