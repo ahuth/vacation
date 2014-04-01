@@ -57,8 +57,18 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     });
   }
 
+  // For each date object, add events that happen on the same date.
+  function addEvents(objects, events) {
+    return objects.map(function (object) {
+      object.events = events.filter(function (event) {
+        return object.date.isSame(event.date, "day");
+      });
+      return object;
+    });
+  }
+
   // buildWeeks creates an array of weeks for the current month.
-  function buildWeeks(date) {
+  function buildWeeks(date, events) {
     // The first and last date to display. These may or may not be in the month
     // we're showing.
     var firstDay = findFirstDay(date);
@@ -67,8 +77,10 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     var dates = createRange(firstDay, lastDay);
     // Convert our dates into objects representing those dates.
     var objects = objectify(dates);
+    // Add any relevant events to the dates.
+    var objectsWithEvents = addEvents(objects, events);
     // Split the array of objects into weeks.
-    return splitWeeks(objects);
+    return splitWeeks(objectsWithEvents);
   }
 
   // updateCalendar updates the calendar with the current scope variables of
@@ -76,7 +88,7 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
   function updateCalendar() {
     $scope.date = moment([$scope.year, $scope.month - 1, 1]);
     $scope.monthName = $scope.date.format("MMM");
-    $scope.weeks = buildWeeks($scope.date);
+    $scope.weeks = buildWeeks($scope.date, $scope.events || []);
   }
 
   $scope.$watch("month", updateCalendar);

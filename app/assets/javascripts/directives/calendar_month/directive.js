@@ -9,7 +9,8 @@ angular.module("directives.calendarMonth").directive("calendarMonth", function (
     controller: "calendarMonthController",
     scope: {
       year: "@",
-      month: "@"
+      month: "@",
+      events: "="
     }
   };
 });
