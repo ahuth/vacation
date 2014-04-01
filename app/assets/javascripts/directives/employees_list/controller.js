@@ -13,7 +13,7 @@ angular.module("directives.employeesList").controller("employeesListController",
   // be used to filter the employees list.
   $scope.isFromGroup = function (employee) {
     // Exit early if there is no active group.
-    if ($scope.group === null) {
+    if (!$scope.group) {
       return false;
     }
     return (employee.group_id === $scope.group.id);
