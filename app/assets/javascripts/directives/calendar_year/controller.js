@@ -11,7 +11,8 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     var date = moment([$scope.year, num - 1]);
     return {
       date: date,
-      month: date.month() + 1
+      month: date.month() + 1,
+      requests: []
     };
   });
 
@@ -19,10 +20,6 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
   // object.
   $scope.$watch("group", function (group) {
     $scope.months.forEach(function (month) {
-      if (!group) {
-        month.requests = [];
-        return;
-      }
       month.requests = requestData.forGroup(group.id).filter(function (request) {
         return month.date.isSame(request.date, "month");
       });
