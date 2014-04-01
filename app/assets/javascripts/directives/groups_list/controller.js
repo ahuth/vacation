@@ -8,6 +8,7 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
   $scope.setGroup = function (group) {
     $scope.active = group;
   };
+
   $scope.newGroup = function () {
     groupModal.open({ title: "New group" }).then(function (attributes) {
       return groupData.create(attributes);
