@@ -12,7 +12,9 @@ angular.module("directives.groupPanel").controller("groupPanelController", ["$sc
 
   $scope.removeGroup = function (group) {
     confirmModal.open({ title: "Delete " + group.name + "?"}).then(function () {
-      return group.destroy();
+      var promise = group.destroy();
+      $scope.group = null;
+      return promise;
     });
   };
 }]);

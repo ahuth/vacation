@@ -5,9 +5,11 @@ angular.module("directives.infoPanel").controller("infoPanelController", ["$scop
   "use strict";
 
   $scope.$watch("group", function (group) {
-    // If the group parameter is defined and not null, set groupActive to true.
-    // Otherwise, set it to false.
-    $scope.groupActive = !!group;
+    if (!group) {
+      $scope.groupActive = false;
+    } else {
+      $scope.groupActive = true;
+    }
     $scope.employeeActive = false;
   });
 
