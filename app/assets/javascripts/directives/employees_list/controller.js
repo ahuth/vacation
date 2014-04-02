@@ -6,7 +6,7 @@ angular.module("directives.employeesList").controller("employeesListController",
   $scope.employees = employeeData.all();
 
   $scope.setEmployee = function (employee) {
-    $scope.employee = employee;
+    $scope.$emit("employee-clicked", employee);
   };
 
   // Determine if an employee is from the currently selected group. This will
