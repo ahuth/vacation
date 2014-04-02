@@ -17,4 +17,9 @@ angular.module("directives.infoPanel").controller("infoPanelController", ["$scop
     $scope.employeeActive = !!employee;
     $scope.groupActive = false;
   });
+
+  $scope.$on("employee-deleted", function (event) {
+    $scope.groupActive = true;
+    $scope.employeeActive = false;
+  });
 }]);
