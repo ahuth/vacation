@@ -10,8 +10,4 @@ angular.module("pages.index").controller("indexController", ["$scope", function 
     $scope.group = group;
     $scope.employee = null;
   });
-
-  $scope.$on("employee-clicked", function (event, employee) {
-    $scope.employee = employee;
-  });
 }]);

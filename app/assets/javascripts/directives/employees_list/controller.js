@@ -6,7 +6,7 @@ angular.module("directives.employeesList").controller("employeesListController",
   $scope.employees = employeeData.all();
 
   $scope.employeeClicked = function (employee) {
-    $scope.$emit("employee-clicked", employee);
+    $scope.employee = employee;
   };
 
   // Determine if an employee is from the currently selected group. This will
@@ -22,7 +22,7 @@ angular.module("directives.employeesList").controller("employeesListController",
     employeeModal.open({ title: "New person" }).then(function (attributes) {
       attributes.group_id = $scope.group.id;
       var promise = employeeData.create(attributes);
-      $scope.$emit("employee-clicked", arrayUtils.lastItem($scope.employees));
+      $scope.employee = arrayUtils.lastItem($scope.employees);
       return promise;
     });
   };
