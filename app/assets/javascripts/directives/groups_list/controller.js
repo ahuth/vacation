@@ -5,7 +5,7 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
   "use strict";
   $scope.groups = groupData.all();
 
-  $scope.setGroup = function (group) {
+  $scope.groupClicked = function (group) {
     $scope.$emit("group-clicked", group);
   };
 

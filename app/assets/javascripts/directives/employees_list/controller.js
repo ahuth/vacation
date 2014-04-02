@@ -5,7 +5,7 @@ angular.module("directives.employeesList").controller("employeesListController",
   "use strict";
   $scope.employees = employeeData.all();
 
-  $scope.setEmployee = function (employee) {
+  $scope.employeeClicked = function (employee) {
     $scope.$emit("employee-clicked", employee);
   };
 
