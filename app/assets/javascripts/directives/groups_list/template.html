@@ -2,6 +2,6 @@
 <button ng-click="newGroup()">New group</button>
 <ul class="groups">
   <li ng-repeat="group in groups | orderBy:'name'">
-    <span ng-click="setGroup(group)">{{ group.name }}</span>
+    <span ng-click="groupClicked(group)">{{ group.name }}</span>
   </li>
 </ul>

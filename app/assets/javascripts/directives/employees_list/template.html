@@ -2,6 +2,6 @@
 <button ng-hide="!group" ng-click="newEmployee()">New person</button>
 <ul class="employees">
   <li ng-repeat="employee in employees | filter:isFromGroup | orderBy:'name'">
-    <span ng-click="setEmployee(employee)">{{ employee.name }}</span>
+    <span ng-click="employeeClicked(employee)">{{ employee.name }}</span>
   </li>
 </ul>
