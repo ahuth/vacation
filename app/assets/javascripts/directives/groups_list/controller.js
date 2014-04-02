@@ -9,9 +9,16 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
     $scope.$emit("group-clicked", group);
   };
 
+  function lastItem(array) {
+    var lastIndex = array.length - 1;
+    return array[lastIndex];
+  }
+
   $scope.newGroup = function () {
     groupModal.open({ title: "New group" }).then(function (attributes) {
-      return groupData.create(attributes);
+      var promise = groupData.create(attributes);
+      $scope.$emit("group-clicked", lastItem($scope.groups));
+      return promise;
     });
   };
 }]);
