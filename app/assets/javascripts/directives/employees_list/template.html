@@ -1,7 +1,7 @@
 <h4 class="heading">People</h4>
 <button ng-hide="!group" ng-click="newEmployee()">New person</button>
 <ul class="employees">
-  <li ng-repeat="employee in employees | filter:isFromGroup">
+  <li ng-repeat="employee in employees | filter:isFromGroup | orderBy:'name'">
     <span ng-click="setEmployee(employee)">{{ employee.name }}</span>
   </li>
 </ul>
