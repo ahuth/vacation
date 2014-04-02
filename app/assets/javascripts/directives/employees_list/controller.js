@@ -9,6 +9,13 @@ angular.module("directives.employeesList").controller("employeesListController",
     $scope.employee = employee;
   };
 
+  $scope.isActive = function (employee) {
+    if (!$scope.employee) {
+      return;
+    }
+    return employee.id === $scope.employee.id;
+  };
+
   // Determine if an employee is from the currently selected group. This will
   // be used to filter the employees list.
   $scope.isFromGroup = function (employee) {
