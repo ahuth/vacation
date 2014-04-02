@@ -18,7 +18,7 @@ angular.module("directives.employeePanel").controller("employeePanelController",
   $scope.removeEmployee = function (employee) {
     confirmModal.open({ title: "Delete " + employee.name + "?" }).then(function () {
       var promise = employee.destroy();
-      $scope.$emit("employee-deleted");
+      $scope.employee = null;
       return promise;
     });
   };

@@ -12,14 +12,12 @@ angular.module("directives.infoPanel").controller("infoPanelController", ["$scop
   });
 
   $scope.$watch("employee", function (employee) {
-    // If the employee paramter is defined and not null, set employeeActive to
-    // true. Otherwise, set it to false.
-    $scope.employeeActive = !!employee;
-    $scope.groupActive = false;
-  });
-
-  $scope.$on("employee-deleted", function (event) {
-    $scope.groupActive = true;
-    $scope.employeeActive = false;
+    if (!employee) {
+      $scope.groupActive = true;
+      $scope.employeeActive = false;
+    } else {
+      $scope.groupActive = false;
+      $scope.employeeActive = true;
+    }
   });
 }]);
