@@ -21,13 +21,13 @@ angular.module("services.modal").factory("confirmModal", ["$modal", "objectUtils
       title: "Are you really really sure?"
     };
 
-    var attributes = objectUtils.merge(defaults, options);
-
     return $modal.open({
       templateUrl: "services/modal/confirm.tmpl.html",
       controller: "confirmModalController",
       resolve: {
-        attributes: function () { return attributes; }
+        attributes: function () {
+          return objectUtils.merge(defaults, options);
+        }
       }
     }).result;
   }

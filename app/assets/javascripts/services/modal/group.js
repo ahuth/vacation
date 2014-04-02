@@ -23,13 +23,13 @@ angular.module("services.modal").factory("groupModal", ["$modal", "objectUtils",
       name: ""
     };
 
-    var attributes = objectUtils.merge(defaults, options);
-
     return $modal.open({
       templateUrl: "services/modal/group.tmpl.html",
       controller: "groupModalController",
       resolve: {
-        attributes: function () { return attributes; }
+        attributes: function () {
+          return objectUtils.merge(defaults, options);
+        }
       }
     }).result;
   }

@@ -24,13 +24,13 @@ angular.module("services.modal").factory("employeeModal", ["$modal", "objectUtil
       hired: ""
     };
 
-    var attributes = objectUtils.merge(defaults, options);
-
     return $modal.open({
       templateUrl: "services/modal/employee.tmpl.html",
       controller: "employeeModalController",
       resolve: {
-        attributes: function () { return attributes; }
+        attributes: function () {
+          return objectUtils.merge(defaults, options);
+        }
       }
     }).result;
   }
