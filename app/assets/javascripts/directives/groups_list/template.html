@@ -1,7 +1,7 @@
 <h4 class="heading">Groups</h4>
 <button ng-click="newGroup()">New group</button>
 <ul class="groups">
-  <li ng-repeat="group in groups">
+  <li ng-repeat="group in groups | orderBy:'name'">
     <span ng-click="setGroup(group)">{{ group.name }}</span>
   </li>
 </ul>
