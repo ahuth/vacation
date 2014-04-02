@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.employeesList").controller("employeesListController", ["$scope", "employeeData", "employeeModal", "confirmModal", function ($scope, employeeData, employeeModal, confirmModal) {
+angular.module("directives.employeesList").controller("employeesListController", ["$scope", "employeeData", "employeeModal", "confirmModal", "arrayUtils", function ($scope, employeeData, employeeModal, confirmModal, arrayUtils) {
   "use strict";
   $scope.employees = employeeData.all();
 
@@ -18,16 +18,11 @@ angular.module("directives.employeesList").controller("employeesListController",
     return (employee.group_id === $scope.group.id);
   };
 
-  function lastItem(array) {
-    var lastIndex = array.length - 1;
-    return array[lastIndex];
-  }
-
   $scope.newEmployee = function () {
     employeeModal.open({ title: "New person" }).then(function (attributes) {
       attributes.group_id = $scope.group.id;
       var promise = employeeData.create(attributes);
-      $scope.$emit("employee-clicked", lastItem($scope.employees));
+      $scope.$emit("employee-clicked", arrayUtils.lastItem($scope.employees));
       return promise;
     });
   };

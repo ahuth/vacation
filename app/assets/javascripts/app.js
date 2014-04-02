@@ -3,9 +3,9 @@
 
 angular.module("directives.calendarMonth", ["services.vendor"]);
 angular.module("directives.calendarYear", ["directives.calendarMonth", "services.data", "services.vendor"]);
-angular.module("directives.employeesList", ["services.data", "services.modal"]);
+angular.module("directives.employeesList", ["services.data", "services.modal", "services.utils"]);
 angular.module("directives.employeePanel", ["services.data", "services.modal"]);
-angular.module("directives.groupsList", ["services.data", "services.modal"]);
+angular.module("directives.groupsList", ["services.data", "services.modal", "services.utils"]);
 angular.module("directives.groupPanel", ["services.data", "services.modal"]);
 angular.module("directives.infoPanel", ["directives.employeePanel", "directives.groupPanel"]);
 
