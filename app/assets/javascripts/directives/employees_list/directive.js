@@ -8,7 +8,7 @@ angular.module("directives.employeesList").directive("employeesList", function (
     templateUrl: "directives/employees_list/template.html",
     controller: "employeesListController",
     scope: {
-      active: "=",
+      employee: "=",
       group: "="
     }
   };
