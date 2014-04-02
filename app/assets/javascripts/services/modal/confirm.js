@@ -1,9 +1,9 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").controller("confirmModalController", ["$scope", "$modalInstance", "title", function ($scope, $modalInstance, title) {
+angular.module("services.modal").controller("confirmModalController", ["$scope", "$modalInstance", "attributes", function ($scope, $modalInstance, attributes) {
   "use strict";
-  $scope.title = title;
+  $scope.title = attributes.title;
 
   $scope.ok = function () {
     $modalInstance.close(true);
@@ -27,7 +27,7 @@ angular.module("services.modal").factory("confirmModal", ["$modal", "objectUtils
       templateUrl: "services/modal/confirm.tmpl.html",
       controller: "confirmModalController",
       resolve: {
-        title: function () { return attributes.title; }
+        attributes: function () { return attributes; }
       }
     }).result;
   }
