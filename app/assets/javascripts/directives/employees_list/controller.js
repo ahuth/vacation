@@ -24,13 +24,4 @@ angular.module("directives.employeesList").controller("employeesListController",
       return employeeData.create(attributes);
     });
   };
-
-  // Set a flag if no group is selected.
-  $scope.$watch("group", function (newValue, oldValue) {
-    if (!newValue) {
-      $scope.noGroup = true;
-    } else {
-      $scope.noGroup = false;
-    }
-  });
 }]);
