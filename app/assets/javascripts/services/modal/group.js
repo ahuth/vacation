@@ -1,10 +1,10 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").controller("groupModalController", ["$scope", "$modalInstance", "title", "name", function ($scope, $modalInstance, title, name) {
+angular.module("services.modal").controller("groupModalController", ["$scope", "$modalInstance", "attributes", function ($scope, $modalInstance, attributes) {
   "use strict";
-  $scope.data = { name: name };
-  $scope.title = title;
+  $scope.data = { name: attributes.name };
+  $scope.title = attributes.title;
   $scope.form = {};
   $scope.ok = function () {
     $modalInstance.close($scope.data);
@@ -29,8 +29,7 @@ angular.module("services.modal").factory("groupModal", ["$modal", "objectUtils",
       templateUrl: "services/modal/group.tmpl.html",
       controller: "groupModalController",
       resolve: {
-        title: function () { return attributes.title; },
-        name: function () { return attributes.name; }
+        attributes: function () { return attributes; }
       }
     }).result;
   }
