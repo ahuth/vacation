@@ -15,10 +15,6 @@ angular.module("directives.infoPanel").controller("infoPanelController", ["$scop
   // is deleted, hide the employee panel and show the group one.
   $scope.$watch("employee", function (employee) {
     $scope.employeeActive = !!employee;
-    if ($scope.group) {
-      $scope.groupActive = !$scope.employeeActive;
-    } else {
-      $scope.groupActive = false;
-    }
+    $scope.groupActive = ($scope.group) ? (!$scope.employeeActive) : false;
   });
 }]);
