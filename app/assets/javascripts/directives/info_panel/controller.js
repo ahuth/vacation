@@ -4,17 +4,16 @@
 angular.module("directives.infoPanel").controller("infoPanelController", ["$scope", function ($scope) {
   "use strict";
 
-  // When the active group changes, show the group panel. If the group is
-  // deleted, don't show any panel.
+  // Show the group panel if a group is active, and hide the employee panel.
   $scope.$watch("group", function (group) {
     $scope.groupActive = !!group;
     $scope.employeeActive = false;
   });
 
-  // When the active employee changes, show the employee panel. If the employee
-  // is deleted, hide the employee panel and show the group one.
+  // Show the employee panel if an employee is active. If none are, show the
+  // group panel if a group is active.
   $scope.$watch("employee", function (employee) {
     $scope.employeeActive = !!employee;
-    $scope.groupActive = !$scope.employeeActive;
+    $scope.groupActive = ($scope.group) ? (!$scope.employeeActive) : false;
   });
 }]);
