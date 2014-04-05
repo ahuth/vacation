@@ -45,11 +45,14 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     assignRequests(employeeRequests);
   });
 
+  // Process our list of captured days and clean up.
   function endCapture() {
     parent.console.log(capturedDays);
     capturedDays = [];
   }
 
+  // Add a date to our list of captured days and return a new timer. If a timer
+  // already exists, cancel it.
   function capture(array, date, delay, timer) {
     if (timer) {
       $timeout.cancel(timer);
@@ -60,6 +63,8 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     }, delay);
   }
 
+  // As days are clicked on, make a list of days that we need to process. Once
+  // a specified time has elapsed without any being clicked, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
     captureTimer = capture(capturedDays, day.date, captureTime, captureTimer);
