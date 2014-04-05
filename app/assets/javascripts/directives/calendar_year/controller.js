@@ -1,8 +1,12 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.calendarYear").controller("calendarYearController", ["$scope", "requestData", "moment", function ($scope, requestData, moment) {
+angular.module("directives.calendarYear").controller("calendarYearController", ["$scope", "$timeout", "requestData", "moment", function ($scope, $timeout, requestData, moment) {
   "use strict";
+  var captureTime = 800;
+  var capturedDays = [];
+  var captureTimer;
+
   $scope.year = moment().year();
 
   // Create an array of months. We will render a <calendar-month> for each of
@@ -39,5 +43,29 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     }
     var employeeRequests = requestData.forEmployee(employee.id);
     assignRequests(employeeRequests);
+  });
+
+  function endCapture() {
+    parent.console.log(capturedDays);
+    capturedDays = [];
+  }
+
+  function startCapture() {
+    return $timeout(function () {
+      return endCapture();
+    }, captureTime);
+  }
+
+  function capture(array, date, timer) {
+    if (timer) {
+      $timeout.cancel(timer);
+    }
+    array.push(date);
+    return startCapture();
+  }
+
+  $scope.$on("calendar-day-clicked", function (event, day) {
+    event.stopPropagation();
+    captureTimer = capture(capturedDays, day.date, captureTimer);
   });
 }]);
