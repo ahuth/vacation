@@ -51,13 +51,11 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     capturedDays = [];
   }
 
-  // Add a date to our list of captured days and return a new timer. If a timer
-  // already exists, cancel it.
-  function capture(array, date, delay, timer) {
+  // Set or reset our timer which ends capturing.
+  function setTimer(delay, timer) {
     if (timer) {
       $timeout.cancel(timer);
     }
-    array.push(date);
     return $timeout(function () {
       return endCapture();
     }, delay);
@@ -67,6 +65,7 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
   // a specified time has elapsed without any being clicked, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
-    captureTimer = capture(capturedDays, day.date, captureTime, captureTimer);
+    capturedDays.push(day.date);
+    captureTimer = setTimer(captureTime, captureTimer);
   });
 }]);
