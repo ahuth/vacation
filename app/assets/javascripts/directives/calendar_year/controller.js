@@ -51,13 +51,13 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     capturedDays = [];
   }
 
-  // Set or reset our timer which ends capturing.
-  function setTimer(delay, timer) {
+  // Set a timer. Passing in an existing timer will cancel that one first.
+  function setTimer(callback, delay, timer) {
     if (timer) {
       $timeout.cancel(timer);
     }
     return $timeout(function () {
-      return endCapture();
+      return callback();
     }, delay);
   }
 
@@ -66,6 +66,6 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
     capturedDays.push(day.date);
-    captureTimer = setTimer(captureTime, captureTimer);
+    captureTimer = setTimer(endCapture, captureTime, captureTimer);
   });
 }]);
