@@ -50,22 +50,18 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     capturedDays = [];
   }
 
-  function startCapture() {
-    return $timeout(function () {
-      return endCapture();
-    }, captureTime);
-  }
-
-  function capture(array, date, timer) {
+  function capture(array, date, delay, timer) {
     if (timer) {
       $timeout.cancel(timer);
     }
     array.push(date);
-    return startCapture();
+    return $timeout(function () {
+      return endCapture();
+    }, delay);
   }
 
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
-    captureTimer = capture(capturedDays, day.date, captureTimer);
+    captureTimer = capture(capturedDays, day.date, captureTime, captureTimer);
   });
 }]);
