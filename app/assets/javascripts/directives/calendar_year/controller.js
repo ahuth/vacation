@@ -68,9 +68,16 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
 
   // As days are clicked on, make a list of days that we need to process. Once
   // a specified time has elapsed without any being clicked, process the list.
-  $scope.$on("calendar-day-clicked", function (event, day) {
-    event.stopPropagation();
+  function employeeDayClicked(day) {
     capturedDays.push(day);
     captureTimer = setTimer(endCapture, captureTime, captureTimer);
+    return captureTimer;
+  }
+
+  $scope.$on("calendar-day-clicked", function (event, day) {
+    event.stopPropagation();
+    if ($scope.employee) {
+      employeeDayClicked(day);
+    }
   });
 }]);
