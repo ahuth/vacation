@@ -1,8 +1,12 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.calendarYear").controller("calendarYearController", ["$scope", "requestData", "moment", function ($scope, requestData, moment) {
+angular.module("directives.calendarYear").controller("calendarYearController", ["$scope", "$timeout", "requestData", "requestModal", "moment", function ($scope, $timeout, requestData, requestModal, moment) {
   "use strict";
+  var captureTime = 800;
+  var capturedDays = [];
+  var captureTimer;
+
   $scope.year = moment().year();
 
   // Create an array of months. We will render a <calendar-month> for each of
@@ -39,5 +43,41 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     }
     var employeeRequests = requestData.forEmployee(employee.id);
     assignRequests(employeeRequests);
+  });
+
+  // Process our list of captured days and clean up.
+  function endCapture() {
+    var dates = capturedDays.map(function (day) {
+      return day.date;
+    });
+    var promise = requestModal.open({ dates: dates }).then(function () {
+    });
+    capturedDays = [];
+    return promise;
+  }
+
+  // Set a timer. Passing in an existing timer will cancel that one first.
+  function setTimer(callback, delay, timer) {
+    if (timer) {
+      $timeout.cancel(timer);
+    }
+    return $timeout(function () {
+      return callback();
+    }, delay);
+  }
+
+  // As days are clicked on, make a list of days that we need to process. Once
+  // a specified time has elapsed without any being clicked, process the list.
+  function employeeDayClicked(day) {
+    capturedDays.push(day);
+    captureTimer = setTimer(endCapture, captureTime, captureTimer);
+    return captureTimer;
+  }
+
+  $scope.$on("calendar-day-clicked", function (event, day) {
+    event.stopPropagation();
+    if ($scope.employee) {
+      employeeDayClicked(day);
+    }
   });
 }]);
