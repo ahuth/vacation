@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.calendarYear").controller("calendarYearController", ["$scope", "$timeout", "requestData", "moment", function ($scope, $timeout, requestData, moment) {
+angular.module("directives.calendarYear").controller("calendarYearController", ["$scope", "$timeout", "requestData", "requestModal", "moment", function ($scope, $timeout, requestData, requestModal, moment) {
   "use strict";
   var captureTime = 800;
   var capturedDays = [];
@@ -47,8 +47,10 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
 
   // Process our list of captured days and clean up.
   function endCapture() {
-    parent.console.log(capturedDays);
+    var promise = requestModal.open({ days: capturedDays }).then(function () {
+    });
     capturedDays = [];
+    return promise;
   }
 
   // Set a timer. Passing in an existing timer will cancel that one first.
