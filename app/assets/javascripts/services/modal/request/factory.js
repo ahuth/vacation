@@ -9,7 +9,7 @@ angular.module("services.modal").factory("requestModal", ["$modal", "objectUtils
       title: "Request these days?"
     };
 
-    return $modal.open({
+    var modal = $modal.open({
       templateUrl: "services/modal/request/template.html",
       controller: "requestModalController",
       resolve: {
@@ -17,7 +17,9 @@ angular.module("services.modal").factory("requestModal", ["$modal", "objectUtils
           return objectUtils.merge(defaults, options);
         }
       }
-    }).result;
+    });
+
+    return modal.result;
   }
 
   return {

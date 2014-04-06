@@ -10,7 +10,7 @@ angular.module("services.modal").factory("groupModal", ["$modal", "objectUtils",
       name: ""
     };
 
-    return $modal.open({
+    var modal = $modal.open({
       templateUrl: "services/modal/group/template.html",
       controller: "groupModalController",
       resolve: {
@@ -18,7 +18,9 @@ angular.module("services.modal").factory("groupModal", ["$modal", "objectUtils",
           return objectUtils.merge(defaults, options);
         }
       }
-    }).result;
+    });
+
+    return modal.result;
   }
 
   return {

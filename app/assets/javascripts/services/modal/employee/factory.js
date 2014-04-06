@@ -11,7 +11,7 @@ angular.module("services.modal").factory("employeeModal", ["$modal", "objectUtil
       hired: ""
     };
 
-    return $modal.open({
+    var modal = $modal.open({
       templateUrl: "services/modal/employee/template.html",
       controller: "employeeModalController",
       resolve: {
@@ -19,7 +19,9 @@ angular.module("services.modal").factory("employeeModal", ["$modal", "objectUtil
           return objectUtils.merge(defaults, options);
         }
       }
-    }).result;
+    });
+
+    return modal.result;
   }
 
   return {

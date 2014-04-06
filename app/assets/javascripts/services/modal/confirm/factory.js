@@ -9,7 +9,7 @@ angular.module("services.modal").factory("confirmModal", ["$modal", "objectUtils
       title: "Are you really really sure?"
     };
 
-    return $modal.open({
+    var modal = $modal.open({
       templateUrl: "services/modal/confirm/template.html",
       controller: "confirmModalController",
       resolve: {
@@ -17,7 +17,9 @@ angular.module("services.modal").factory("confirmModal", ["$modal", "objectUtils
           return objectUtils.merge(defaults, options);
         }
       }
-    }).result;
+    });
+
+    return modal.result;
   }
 
   return {
