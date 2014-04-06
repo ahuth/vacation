@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h4>{{ title }}</h4>
+</div>
+<div class="modal-body">
+  <ol>
+    <li ng-repeat="day in days">
+      <span>{{ day }}</span>
+    </li>
+  </ol>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">Yes</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
