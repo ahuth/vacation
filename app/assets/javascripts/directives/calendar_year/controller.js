@@ -47,7 +47,10 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
 
   // Process our list of captured days and clean up.
   function endCapture() {
-    var promise = requestModal.open({ days: capturedDays }).then(function () {
+    var dates = capturedDays.map(function (day) {
+      return day.date;
+    });
+    var promise = requestModal.open({ dates: dates }).then(function () {
     });
     capturedDays = [];
     return promise;
