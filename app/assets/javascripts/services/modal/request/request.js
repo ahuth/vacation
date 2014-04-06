@@ -47,7 +47,7 @@ angular.module("services.modal").factory("requestModal", ["$modal", "objectUtils
     };
 
     return $modal.open({
-      templateUrl: "services/modal/request.tmpl.html",
+      templateUrl: "services/modal/request/request.tmpl.html",
       controller: "requestModalController",
       resolve: {
         attributes: function () {

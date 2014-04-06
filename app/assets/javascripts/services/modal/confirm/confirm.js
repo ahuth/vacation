@@ -22,7 +22,7 @@ angular.module("services.modal").factory("confirmModal", ["$modal", "objectUtils
     };
 
     return $modal.open({
-      templateUrl: "services/modal/confirm.tmpl.html",
+      templateUrl: "services/modal/confirm/confirm.tmpl.html",
       controller: "confirmModalController",
       resolve: {
         attributes: function () {

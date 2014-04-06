@@ -1,9 +1,9 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").controller("employeeModalController", ["$scope", "$modalInstance", "attributes", function ($scope, $modalInstance, attributes) {
+angular.module("services.modal").controller("groupModalController", ["$scope", "$modalInstance", "attributes", function ($scope, $modalInstance, attributes) {
   "use strict";
-  $scope.data = { name: attributes.name, hired: attributes.hired };
+  $scope.data = { name: attributes.name };
   $scope.title = attributes.title;
   $scope.form = {};
   $scope.ok = function () {
@@ -14,19 +14,18 @@ angular.module("services.modal").controller("employeeModalController", ["$scope"
   };
 }]);
 
-angular.module("services.modal").factory("employeeModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
+angular.module("services.modal").factory("groupModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
   "use strict";
 
   function open(options) {
     var defaults = {
-      title: "Employee",
-      name: "",
-      hired: ""
+      title: "Group",
+      name: ""
     };
 
     return $modal.open({
-      templateUrl: "services/modal/employee.tmpl.html",
-      controller: "employeeModalController",
+      templateUrl: "services/modal/group/group.tmpl.html",
+      controller: "groupModalController",
       resolve: {
         attributes: function () {
           return objectUtils.merge(defaults, options);
