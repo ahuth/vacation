@@ -24,7 +24,7 @@ angular.module("services.modal").factory("groupModal", ["$modal", "objectUtils",
     };
 
     return $modal.open({
-      templateUrl: "services/modal/group/group.tmpl.html",
+      templateUrl: "services/modal/group/template.html",
       controller: "groupModalController",
       resolve: {
         attributes: function () {

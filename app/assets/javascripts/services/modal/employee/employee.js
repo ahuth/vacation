@@ -25,7 +25,7 @@ angular.module("services.modal").factory("employeeModal", ["$modal", "objectUtil
     };
 
     return $modal.open({
-      templateUrl: "services/modal/employee/employee.tmpl.html",
+      templateUrl: "services/modal/employee/template.html",
       controller: "employeeModalController",
       resolve: {
         attributes: function () {
