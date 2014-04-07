@@ -50,7 +50,8 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     var dates = capturedDays.map(function (day) {
       return day.date;
     });
-    var promise = requestModal.open({ dates: dates }).then(function () {
+    var promise = requestModal.open({ dates: dates }).then(function (dates) {
+      return requestData.createMany(dates, $scope.employee.id, $scope.group.id);
     });
     capturedDays = [];
     return promise;
@@ -77,7 +78,10 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
     if ($scope.employee) {
-      employeeDayClicked(day);
+      employeeDayClicked(day).then(function () {
+        var employeeRequests = requestData.forEmployee($scope.employee.id);
+        assignRequests(employeeRequests);
+      });
     }
   });
 }]);
