@@ -77,19 +77,19 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
   function employeeDayClicked(day) {
     capturedDays.push(day);
     captureTimer = setTimer(endCapture, captureTime, captureTimer);
-    return captureTimer;
+    return captureTimer.then(function () {
+      // Re-assign the requests for this employee so that any changes show up
+      // on the calendar.
+      var employeeRequests = requestData.forEmployee($scope.employee.id);
+      assignRequests(employeeRequests);
+    });
   }
 
   // Handle click events from our calendar's days.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
     if ($scope.employee) {
-      employeeDayClicked(day).then(function () {
-        // Re-assign the requests for this employee so that any changes show up
-        // on the calendar.
-        var employeeRequests = requestData.forEmployee($scope.employee.id);
-        assignRequests(employeeRequests);
-      });
+      employeeDayClicked(day);
     }
   });
 }]);
