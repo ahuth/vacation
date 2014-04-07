@@ -47,7 +47,12 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
 
   // Process our list of captured days and clean up.
   function endCapture() {
-    var dates = capturedDays.map(function (day) {
+    // Filter out any days that have already been requested.
+    var unrequested = capturedDays.filter(function (day) {
+      return day.events.length === 0;
+    });
+    // Get just the dates and not the entire day object.
+    var dates = unrequested.map(function (day) {
       return day.date;
     });
     var promise = requestModal.open({ dates: dates }).then(function (dates) {
