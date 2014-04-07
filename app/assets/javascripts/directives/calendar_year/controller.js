@@ -47,7 +47,12 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
 
   // Process our list of captured days and clean up.
   function endCapture() {
-    var dates = capturedDays.map(function (day) {
+    // Filter out any days that have already been requested.
+    var unrequested = capturedDays.filter(function (day) {
+      return day.events.length === 0;
+    });
+    // Get just the dates and not the entire day object.
+    var dates = unrequested.map(function (day) {
       return day.date;
     });
     var promise = requestModal.open({ dates: dates }).then(function (dates) {
@@ -67,24 +72,43 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     }, delay);
   }
 
+  // Delete the request, after a modal confirmation.
+  function deleteDay(day) {
+    var promise = requestModal.open({ title: "Delete request?", dates: [day.date] }).then(function () {
+      return day.events[0].destroy();
+    });
+    capturedDays = [];
+    return promise;
+  }
+
   // As days are clicked on, make a list of days that we need to process. Once
   // a specified time has elapsed without any being clicked, process the list.
   function employeeDayClicked(day) {
+    // If this is the first day clicked on and it's already been requested,
+    // see if we want to delete it.
+    if (capturedDays.length === 0 && day.events.length > 0) {
+      return deleteDay(day).then(function () {
+        // Re-assign the requests for this employee so that any changes show up
+        // on the calendar.
+        var employeeRequests = requestData.forEmployee($scope.employee.id);
+        assignRequests(employeeRequests);
+      });
+    }
     capturedDays.push(day);
     captureTimer = setTimer(endCapture, captureTime, captureTimer);
-    return captureTimer;
+    return captureTimer.then(function () {
+      // Re-assign the requests for this employee so that any changes show up
+      // on the calendar.
+      var employeeRequests = requestData.forEmployee($scope.employee.id);
+      assignRequests(employeeRequests);
+    });
   }
 
   // Handle click events from our calendar's days.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
     if ($scope.employee) {
-      employeeDayClicked(day).then(function () {
-        // Re-assign the requests for this employee so that any changes show up
-        // on the calendar.
-        var employeeRequests = requestData.forEmployee($scope.employee.id);
-        assignRequests(employeeRequests);
-      });
+      employeeDayClicked(day);
     }
   });
 }]);
