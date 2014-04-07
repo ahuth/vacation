@@ -15,7 +15,7 @@ angular.module("services.modal").controller("requestModalController", ["$scope",
     return 0;
   }
 
-  // Process an array of dates by sorting it and removing any duplicates.
+  // Process an array of dates by sorting them and removing any duplicates.
   function processDates(dates) {
     var sorted = dates.sort(dateComparator);
     return sorted.filter(function (element, index, array) {
