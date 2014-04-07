@@ -72,9 +72,28 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     }, delay);
   }
 
+  // Delete the request, after a modal confirmation.
+  function deleteDay(day) {
+    var promise = requestModal.open({ title: "Delete request?", dates: [day.date] }).then(function () {
+      return day.events[0].destroy();
+    });
+    capturedDays = [];
+    return promise;
+  }
+
   // As days are clicked on, make a list of days that we need to process. Once
   // a specified time has elapsed without any being clicked, process the list.
   function employeeDayClicked(day) {
+    // If this is the first day clicked on and it's already been requested,
+    // see if we want to delete it.
+    if (capturedDays.length === 0 && day.events.length > 0) {
+      return deleteDay(day).then(function () {
+        // Re-assign the requests for this employee so that any changes show up
+        // on the calendar.
+        var employeeRequests = requestData.forEmployee($scope.employee.id);
+        assignRequests(employeeRequests);
+      });
+    }
     capturedDays.push(day);
     captureTimer = setTimer(endCapture, captureTime, captureTimer);
     return captureTimer.then(function () {
