@@ -59,6 +59,7 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
       return requestData.createMany(dates, $scope.employee.id, $scope.group.id);
     });
     capturedDays = [];
+    $scope.$broadcast("clear-active-days");
     return promise;
   }
 
@@ -78,6 +79,7 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
       return day.events[0].destroy();
     });
     capturedDays = [];
+    $scope.$broadcast("clear-active-days");
     return promise;
   }
 
