@@ -1,4 +1,4 @@
-<calendar-month year="{{ year }}" month="{{ month.month }}" events="month.requests" ng-repeat="month in months">
+<calendar-month year="{{ year }}" month="{{ month.month }}" events="month.requests" class="month" ng-repeat="month in months">
   <span class="day">{{ day.day }}</span>
   <span class="events" ng-hide="day.events.length === 0">{{ day.events.length }}</span>
 </calendar-month>
