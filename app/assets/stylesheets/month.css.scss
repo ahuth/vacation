@@ -1,0 +1,53 @@
+.month {
+  display: block;
+  width: 24em;
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    font-size: 10px;
+    padding: 6px;
+    border: 1px solid #999;
+  }
+
+  th {
+    background: #ddd;
+    color: #666;
+    text-align: center;
+    width: 14.2857142857143%;
+  }
+
+  td {
+    background: #fff;
+    color: #777;
+    height: 60px;
+    vertical-align: top;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .notmonth {
+    color: #ccc;
+  }
+
+  h3 {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+
+  .events {
+    color: black;
+    font-style: italic;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-right: 6px;
+    padding-bottom: 6px;
+  }
+}
