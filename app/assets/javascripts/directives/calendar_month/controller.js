@@ -104,6 +104,8 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     $scope.$emit("calendar-day-clicked", day);
   };
 
+  $scope.$on("clear-active-days", clearActive);
+
   $scope.$watch("month", updateCalendar);
   $scope.$watch("year", updateCalendar);
   $scope.$watch("events", updateEvents);
