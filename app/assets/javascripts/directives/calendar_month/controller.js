@@ -51,7 +51,8 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
         date: date,
         day: date.date(),
         notmonth: (date.month() !== $scope.date.month()),
-        weekend: (date.day() === 0 || date.day() === 6)
+        weekend: (date.day() === 0 || date.day() === 6),
+        active: false
       };
     });
   }
@@ -90,7 +91,16 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
     });
   }
 
+  function clearActive() {
+    $scope.weeks.forEach(function (week) {
+      week.forEach(function (day) {
+        day.active = false;
+      });
+    });
+  }
+
   $scope.dayClicked = function (day) {
+    day.active = true;
     $scope.$emit("calendar-day-clicked", day);
   };
 
