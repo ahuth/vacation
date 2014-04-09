@@ -44,7 +44,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     var dates = unrequestedDays.map(function (day) {
       return day.date;
     });
-    requestModal.open({ dates: dates });
+    requestModal.open({ dates: dates }).then(function (dates) {
+      return requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+    });
     return days;
   }
 
