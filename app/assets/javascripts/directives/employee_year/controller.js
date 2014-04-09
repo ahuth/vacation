@@ -68,8 +68,14 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
   }
 
+  // Delete a request. The Request modal return an array of days, so delete the
+  // first request of the first day in the array.
   function deleteRequest(days) {
-    parent.console.log(days);
+    if (!Array.isArray(days)) {
+      return;
+    }
+    var request = days[0].events[0];
+    request.destroy();
   }
 
   // Update the calendar with any changes to this employee's requests.
