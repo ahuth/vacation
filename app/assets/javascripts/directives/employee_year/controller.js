@@ -47,8 +47,15 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // that it will be resolved even if the requestModal promise is rejected.
   function displayModal(days) {
     var deferred = $q.defer();
+    var attributes = { days: days};
 
-    requestModal.open({ days: days }).then(function (days) {
+    // If days only has one item and it already has a request, we're deleting
+    // it. So change the title.
+    if (days.length === 1 && days[0].hasEvent) {
+      attributes.title = "Delete request?";
+    }
+
+    requestModal.open(attributes).then(function (days) {
       deferred.resolve(days);
     }, function () {
       deferred.resolve();
