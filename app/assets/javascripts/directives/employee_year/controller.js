@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true, es5: true, nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.employeeYear").controller("employeeYearController", ["$scope", "$timeout", "requestData", "requestModal", "moment", function ($scope, $timeout, requestData, requestModal, moment) {
+angular.module("directives.employeeYear").controller("employeeYearController", ["$scope", "$timeout", "$q", "requestData", "requestModal", "moment", function ($scope, $timeout, $q, requestData, requestModal, moment) {
   "use strict";
   var capturedDays = [];
   var captureDelay = 800;
@@ -27,40 +27,60 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
   }
 
-  // Assign the current employee's requests to the correct months.
-  function assignEmployeeRequests() {
-    if (!$scope.employee) {
+  // When the employee changes, update the calendar with her requests.
+  $scope.$watch("employee", function (employee) {
+    if (!employee) {
       return;
     }
+    var employeeRequests = requestData.forEmployee(employee.id);
+    assignRequests(employeeRequests);
+  });
+
+  // Filter out days that have already been requested.
+  function removeRequested(days) {
+    return days.filter(function (day) {
+      return day.events.length === 0;
+    });
+  }
+
+  // Pull out the MomentJS date from our 'day' objects.
+  function extractDates(days) {
+    return days.map(function (day) {
+      return day.date;
+    });
+  }
+
+  // Show the Request modal with the given dates. Manually return a promise so
+  // that it will be resolved even if the requestModal promise is rejected.
+  function displayModal(dates) {
+    var deferred = $q.defer();
+
+    requestModal.open({ dates: dates }).then(function (dates) {
+      deferred.resolve(dates);
+    }, function () {
+      deferred.resolve();
+    });
+    return deferred.promise;
+  }
+
+  // Create new Requests based on the given dates. Do not return a promise
+  // because we want to immediately proceed after making the server request.
+  function manageRequests(dates) {
+    if (!Array.isArray(dates)) {
+      return;
+    }
+    requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+  }
+
+  // Update the calendar with any changes to this employee's requests.
+  function assignEmployeeRequests() {
     var employeeRequests = requestData.forEmployee($scope.employee.id);
     assignRequests(employeeRequests);
   }
 
-  // When the employee changes, update the calendar with her requests.
-  $scope.$watch("employee", assignEmployeeRequests);
-
-  // Make new requests for each date in the given list.
-  function makeRequests(dates) {
-    return requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
-  }
-
-  // Process the captured days and request them.
-  function processDays(days) {
-    var unrequestedDays = days.filter(function (day) {
-      return day.events.length === 0;
-    });
-    var dates = unrequestedDays.map(function (day) {
-      return day.date;
-    });
-    requestModal.open({ dates: dates })
-                .then(makeRequests)
-                .finally(assignEmployeeRequests);
-    return days;
-  }
-
   // Un-set the active flags on the previously captured days.
-  function cleanupDays(days) {
-    days.forEach(function (day) {
+  function cleanupDays() {
+    capturedDays.forEach(function (day) {
       day.active = false;
     });
   }
@@ -102,8 +122,12 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     day.active = true;
     // Cancel any running timers and set a new one.
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
-    // After this timer resolves, process the list and cleanup.
-    captureTimer.then(processDays)
+
+    captureTimer.then(removeRequested)
+                .then(extractDates)
+                .then(displayModal)
+                .then(manageRequests)
+                .then(assignEmployeeRequests)
                 .then(cleanupDays)
                 .then(resetCapturing);
   });
