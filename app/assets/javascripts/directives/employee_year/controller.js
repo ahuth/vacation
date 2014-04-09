@@ -58,8 +58,8 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   // Un-set the active flags on the previously captured days.
-  function cleanupDays(days) {
-    days.forEach(function (day) {
+  function cleanupDays() {
+    capturedDays.forEach(function (day) {
       day.active = false;
     });
   }
