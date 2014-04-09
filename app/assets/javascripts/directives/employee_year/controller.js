@@ -35,26 +35,47 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     var employeeRequests = requestData.forEmployee(employee.id);
     assignRequests(employeeRequests);
   });
-  }
 
-
-  // Make new requests for each date in the given list.
-  function makeRequests(dates) {
-    return requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
-  }
-
-  // Process the captured days and request them.
-  function processDays(days) {
-    var unrequestedDays = days.filter(function (day) {
+  // Filter out days that have already been requested.
+  function removeRequested(days) {
+    return days.filter(function (day) {
       return day.events.length === 0;
     });
-    var dates = unrequestedDays.map(function (day) {
+  }
+
+  // Pull out the MomentJS date from our 'day' objects.
+  function extractDates(days) {
+    return days.map(function (day) {
       return day.date;
     });
-    requestModal.open({ dates: dates })
-                .then(makeRequests)
-                .finally(assignEmployeeRequests);
-    return days;
+  }
+
+  // Show the Request modal with the given dates. Manually return a promise so
+  // that it will be resolved even if the requestModal promise is rejected.
+  function displayModal(dates) {
+    var deferred = $q.defer();
+
+    requestModal.open({ dates: dates }).then(function (dates) {
+      deferred.resolve(dates);
+    }, function () {
+      deferred.resolve();
+    });
+    return deferred.promise;
+  }
+
+  // Create new Requests based on the given dates. Do not return a promise
+  // because we want to immediately proceed after making the Requests.
+  function manageRequests(dates) {
+    if (!Array.isArray(dates)) {
+      return;
+    }
+    requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+  }
+
+  // Update the calendar with any changes to this employee's requests.
+  function assignEmployeeRequests() {
+    var employeeRequests = requestData.forEmployee($scope.employee.id);
+    assignRequests(employeeRequests);
   }
 
   // Un-set the active flags on the previously captured days.
@@ -101,8 +122,12 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     day.active = true;
     // Cancel any running timers and set a new one.
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
-    // After this timer resolves, process the list and cleanup.
-    captureTimer.then(processDays)
+
+    captureTimer.then(removeRequested)
+                .then(extractDates)
+                .then(displayModal)
+                .then(manageRequests)
+                .then(assignEmployeeRequests)
                 .then(cleanupDays)
                 .then(resetCapturing);
   });
