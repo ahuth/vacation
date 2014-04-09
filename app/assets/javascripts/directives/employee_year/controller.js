@@ -1,4 +1,4 @@
-/*jslint vars: true, browser: true , nomen: true, indent: 2*/
+/*jslint vars: true, browser: true, es5: true, nomen: true, indent: 2*/
 /*global angular */
 
 angular.module("directives.employeeYear").controller("employeeYearController", ["$scope", "$timeout", "requestData", "requestModal", "moment", function ($scope, $timeout, requestData, requestModal, moment) {
@@ -27,18 +27,34 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
   }
 
-  // When the employee changes, update the calendar with her requests.
-  $scope.$watch("employee", function (employee) {
-    if (!employee) {
+  // Assign the current employee's requests to the correct months.
+  function assignEmployeeRequests() {
+    if (!$scope.employee) {
       return;
     }
-    var employeeRequests = requestData.forEmployee(employee.id);
+    var employeeRequests = requestData.forEmployee($scope.employee.id);
     assignRequests(employeeRequests);
-  });
+  }
 
-  // Process the captured days and log them to the console.
+  // When the employee changes, update the calendar with her requests.
+  $scope.$watch("employee", assignEmployeeRequests);
+
+  // Make new requests for each date in the given list.
+  function makeRequests(dates) {
+    return requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+  }
+
+  // Process the captured days and request them.
   function processDays(days) {
-    parent.console.log(days);
+    var unrequestedDays = days.filter(function (day) {
+      return day.events.length === 0;
+    });
+    var dates = unrequestedDays.map(function (day) {
+      return day.date;
+    });
+    requestModal.open({ dates: dates })
+                .then(makeRequests)
+                .finally(assignEmployeeRequests);
     return days;
   }
 
