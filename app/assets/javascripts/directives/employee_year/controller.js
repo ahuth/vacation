@@ -64,7 +64,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   // Create new Requests based on the given dates. Do not return a promise
-  // because we want to immediately proceed after making the Requests.
+  // because we want to immediately proceed after making the server request.
   function manageRequests(dates) {
     if (!Array.isArray(dates)) {
       return;
