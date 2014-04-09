@@ -58,7 +58,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
 
   // Create new Requests based on the given dates. Do not return a promise
   // because we want to immediately proceed after making the server request.
-  function manageRequests(days) {
+  function createRequests(days) {
     if (!Array.isArray(days)) {
       return;
     }
@@ -139,7 +139,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
       promise = captureTimer
         .then(removeRequested)
         .then(displayModal)
-        .then(manageRequests);
+        .then(createRequests);
     }
 
     promise.then(assignEmployeeRequests)
