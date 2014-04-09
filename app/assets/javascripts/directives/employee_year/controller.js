@@ -36,6 +36,25 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     assignRequests(employeeRequests);
   });
 
+  // Process the captured days and log them to the console.
+  function processDays(days) {
+    parent.console.log(days);
+    return days;
+  }
+
+  // Un-set the active flags on the previously captured days.
+  function cleanupDays(days) {
+    days.forEach(function (day) {
+      day.active = false;
+    });
+  }
+
+  // Destroy the current timer and captured days list.
+  function resetCapturing() {
+    capturedDays = [];
+    captureTimer = null;
+  }
+
   // As days are clicked on, create a list of those days. Once a certain amount
   // of time has elapsed without any days being clicked on, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
@@ -58,13 +77,8 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
       return capturedDays;
     }, delay);
     // After this timer gets resolved, process the list and cleanup.
-    captureTimer.then(function (days) {
-      parent.console.log(days);
-      capturedDays.forEach(function (day) {
-        day.active = false;
-      });
-      capturedDays = [];
-      captureTimer = null;
-    });
+    captureTimer.then(processDays)
+                .then(cleanupDays)
+                .then(resetCapturing);
   });
 }]);
