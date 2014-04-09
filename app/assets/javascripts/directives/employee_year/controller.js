@@ -139,18 +139,16 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
 
     if (deleting) {
-      promise = captureTimer
-        .then(displayModal)
-        .then(deleteRequest);
+      promise = captureTimer.then(displayModal)
+                            .then(deleteRequest);
     } else {
-      promise = captureTimer
-        .then(removeRequested)
-        .then(displayModal)
-        .then(createRequests);
+      promise = captureTimer.then(removeRequested)
+                            .then(displayModal)
+                            .then(createRequests);
     }
 
     promise.then(assignEmployeeRequests)
-      .then(cleanupDays)
-      .then(resetCapturing);
+           .then(cleanupDays)
+           .then(resetCapturing);
   });
 }]);
