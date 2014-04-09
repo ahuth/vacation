@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true, es5: true, nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.employeeYear").controller("employeeYearController", ["$scope", "$timeout", "requestData", "requestModal", "moment", function ($scope, $timeout, requestData, requestModal, moment) {
+angular.module("directives.employeeYear").controller("employeeYearController", ["$scope", "$timeout", "$q", "requestData", "requestModal", "moment", function ($scope, $timeout, $q, requestData, requestModal, moment) {
   "use strict";
   var capturedDays = [];
   var captureDelay = 800;
