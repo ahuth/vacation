@@ -39,6 +39,11 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // When the employee changes, update the calendar with her requests.
   $scope.$watch("employee", assignEmployeeRequests);
 
+  // Make new requests for each date in the given list.
+  function makeRequests(dates) {
+    return requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+  }
+
   // Process the captured days and request them.
   function processDays(days) {
     var unrequestedDays = days.filter(function (day) {
@@ -47,9 +52,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     var dates = unrequestedDays.map(function (day) {
       return day.date;
     });
-    requestModal.open({ dates: dates }).then(function (dates) {
-      return requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
-    }).finally(assignEmployeeRequests);
+    requestModal.open({ dates: dates })
+                .then(makeRequests)
+                .finally(assignEmployeeRequests);
     return days;
   }
 
