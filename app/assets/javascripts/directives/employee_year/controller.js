@@ -43,20 +43,20 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
   }
 
-  // Pull out the MomentJS date from our 'day' objects.
-  function extractDates(days) {
-    return days.map(function (day) {
-      return day.date;
-    });
-  }
-
   // Show the Request modal with the given dates. Manually return a promise so
   // that it will be resolved even if the requestModal promise is rejected.
-  function displayModal(dates) {
+  function displayModal(days) {
     var deferred = $q.defer();
+    var attributes = { days: days};
 
-    requestModal.open({ dates: dates }).then(function (dates) {
-      deferred.resolve(dates);
+    // If days only has one item and it already has a request, we're deleting
+    // it. So change the title.
+    if (days.length === 1 && days[0].hasEvent) {
+      attributes.title = "Delete request?";
+    }
+
+    requestModal.open(attributes).then(function (days) {
+      deferred.resolve(days);
     }, function () {
       deferred.resolve();
     });
@@ -65,11 +65,24 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
 
   // Create new Requests based on the given dates. Do not return a promise
   // because we want to immediately proceed after making the server request.
-  function manageRequests(dates) {
-    if (!Array.isArray(dates)) {
+  function createRequests(days) {
+    if (!Array.isArray(days)) {
       return;
     }
+    var dates = days.map(function (day) {
+      return day.date;
+    });
     requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+  }
+
+  // Delete a request. The Request modal return an array of days, so delete the
+  // first request of the first day in the array.
+  function deleteRequest(days) {
+    if (!Array.isArray(days)) {
+      return;
+    }
+    var request = days[0].events[0];
+    request.destroy();
   }
 
   // Update the calendar with any changes to this employee's requests.
@@ -116,19 +129,26 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // time has passed without any more being clicked, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
+    var promise;
     var delay = setDelay(capturedDays, day, captureDelay);
+    var deleting = (delay === 0);
     // Add this day to our list and flag it as 'active'.
     capturedDays.push(day);
     day.active = true;
     // Cancel any running timers and set a new one.
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
 
-    captureTimer.then(removeRequested)
-                .then(extractDates)
-                .then(displayModal)
-                .then(manageRequests)
-                .then(assignEmployeeRequests)
-                .then(cleanupDays)
-                .then(resetCapturing);
+    if (deleting) {
+      promise = captureTimer.then(displayModal)
+                            .then(deleteRequest);
+    } else {
+      promise = captureTimer.then(removeRequested)
+                            .then(displayModal)
+                            .then(createRequests);
+    }
+
+    promise.then(assignEmployeeRequests)
+           .then(cleanupDays)
+           .then(resetCapturing);
   });
 }]);
