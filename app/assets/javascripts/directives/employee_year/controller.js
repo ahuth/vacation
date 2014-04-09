@@ -66,6 +66,13 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     return defaultDelay;
   }
 
+  // Set a new timer.
+  function setTimer(days, delay) {
+    return $timeout(function () {
+      return days;
+    }, delay);
+  }
+
   // As days are clicked on, create a list of those days. Once a certain amount
   // of time has elapsed without any days being clicked on, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
@@ -80,10 +87,8 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     // Add this day to our list and flag it as 'active'.
     capturedDays.push(day);
     day.active = true;
-    // Set a new timer.
-    captureTimer = $timeout(function () {
-      return capturedDays;
-    }, delay);
+    // Set the timer.
+    captureTimer = setTimer(capturedDays, delay);
     // After this timer gets resolved, process the list and cleanup.
     captureTimer.then(processDays)
                 .then(cleanupDays)
