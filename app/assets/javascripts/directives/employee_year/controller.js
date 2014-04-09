@@ -27,14 +27,17 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
   }
 
-  // When the employee changes, update the calendar with her requests.
-  $scope.$watch("employee", function (employee) {
-    if (!employee) {
+  // Assign the current employee's requests to the correct months.
+  function assignEmployeeRequests() {
+    if (!$scope.employee) {
       return;
     }
-    var employeeRequests = requestData.forEmployee(employee.id);
+    var employeeRequests = requestData.forEmployee($scope.employee.id);
     assignRequests(employeeRequests);
-  });
+  }
+
+  // When the employee changes, update the calendar with her requests.
+  $scope.$watch("employee", assignEmployeeRequests);
 
   // Process the captured days and request them.
   function processDays(days) {
@@ -46,10 +49,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
     requestModal.open({ dates: dates }).then(function (dates) {
       return requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
-    }).finally(function () {
-      var employeeRequests = requestData.forEmployee($scope.employee.id);
-      assignRequests(employeeRequests);
-    });
+    }).finally(assignEmployeeRequests);
     return days;
   }
 
