@@ -55,10 +55,20 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     captureTimer = null;
   }
 
+  // Given the current state of day capturing and the next day to be captured,
+  // determine what the delay should be.
+  function setDelay(days, currentDay, defaultDelay) {
+    // If this day is the first to be captured and its already been requested,
+    // set no delay.
+    if (days.length === 0 && currentDay.events.length > 0) {
+      return 0;
+    }
+    return defaultDelay;
+  }
+
   // As days are clicked on, create a list of those days. Once a certain amount
   // of time has elapsed without any days being clicked on, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
-    var delay = captureDelay;
     event.stopPropagation();
     // Cancel the timer if its already activated.
     if (captureTimer) {
@@ -66,9 +76,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     }
     // If the first day clicked has already been requested, stop capturing
     // days and immediately process that day.
-    if (capturedDays.length === 0 && day.events.length > 0) {
-      delay = 0;
-    }
+    var delay = setDelay(capturedDays, day, captureDelay);
     // Add this day to our list and flag it as 'active'.
     capturedDays.push(day);
     day.active = true;
