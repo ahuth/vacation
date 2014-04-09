@@ -36,9 +36,15 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     assignRequests(employeeRequests);
   });
 
-  // Process the captured days and log them to the console.
+  // Process the captured days and request them.
   function processDays(days) {
-    parent.console.log(days);
+    var unrequestedDays = days.filter(function (day) {
+      return day.events.length === 0;
+    });
+    var dates = unrequestedDays.map(function (day) {
+      return day.date;
+    });
+    requestModal.open({ dates: dates });
     return days;
   }
 
