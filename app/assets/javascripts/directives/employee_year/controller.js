@@ -46,7 +46,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
       $timeout.cancel(captureTimer);
     }
     // If the first day clicked has already been requested, stop capturing
-    // days.
+    // days and immediately process that day.
     if (capturedDays.length === 0 && day.events.length > 0) {
       delay = 0;
     }
