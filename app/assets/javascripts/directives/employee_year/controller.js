@@ -4,6 +4,7 @@
 angular.module("directives.employeeYear").controller("employeeYearController", ["$scope", "$timeout", "requestData", "requestModal", "moment", function ($scope, $timeout, requestData, requestModal, moment) {
   "use strict";
   var capturedDays = [];
+  var captureDelay = 800;
   var captureTimer;
 
   // Create an array of months. We will render a <calendar-month> for each of
@@ -38,10 +39,16 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // As days are clicked on, create a list of those days. Once a certain amount
   // of time has elapsed without any days being clicked on, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
+    var delay = captureDelay;
     event.stopPropagation();
     // Cancel the timer if its already activated.
     if (captureTimer) {
       $timeout.cancel(captureTimer);
+    }
+    // If the first day clicked has already been requested, stop capturing
+    // days.
+    if (capturedDays.length === 0 && day.events.length > 0) {
+      delay = 0;
     }
     // Add this day to our list and flag it as 'active'.
     capturedDays.push(day);
@@ -49,7 +56,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     // Set a new timer.
     captureTimer = $timeout(function () {
       return capturedDays;
-    }, 800);
+    }, delay);
     // After this timer gets resolved, process the list and cleanup.
     captureTimer.then(function (days) {
       parent.console.log(days);
