@@ -27,17 +27,16 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
   }
 
-  // Assign the current employee's requests to the correct months.
-  function assignEmployeeRequests() {
-    if (!$scope.employee) {
+  // When the employee changes, update the calendar with her requests.
+  $scope.$watch("employee", function (employee) {
+    if (!employee) {
       return;
     }
-    var employeeRequests = requestData.forEmployee($scope.employee.id);
+    var employeeRequests = requestData.forEmployee(employee.id);
     assignRequests(employeeRequests);
+  });
   }
 
-  // When the employee changes, update the calendar with her requests.
-  $scope.$watch("employee", assignEmployeeRequests);
 
   // Make new requests for each date in the given list.
   function makeRequests(dates) {
