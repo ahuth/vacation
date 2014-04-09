@@ -57,6 +57,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
         day.active = false;
       });
       capturedDays = [];
+      captureTimer = null;
     });
   });
 }]);
