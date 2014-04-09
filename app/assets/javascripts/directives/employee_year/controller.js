@@ -46,6 +46,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
     requestModal.open({ dates: dates }).then(function (dates) {
       return requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+    }).finally(function () {
+      var employeeRequests = requestData.forEmployee($scope.employee.id);
+      assignRequests(employeeRequests);
     });
     return days;
   }
