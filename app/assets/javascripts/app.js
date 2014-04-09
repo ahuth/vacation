@@ -8,6 +8,7 @@ angular.module("directives.employeePanel", ["services.data", "services.modal"]);
 angular.module("directives.employeeYear", ["directives.calendarMonth", "services.data", "services.modal", "services.vendor"]);
 angular.module("directives.groupsList", ["services.data", "services.modal", "services.utils"]);
 angular.module("directives.groupPanel", ["services.data", "services.modal"]);
+angular.module("directives.groupYear", ["directives.calendarMonth", "services.data", "services.modal", "services.vendor"]);
 angular.module("directives.infoPanel", ["directives.employeePanel", "directives.groupPanel"]);
 
 angular.module("pages", ["pages.index"]);
