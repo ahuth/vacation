@@ -51,7 +51,8 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
         date: date,
         day: date.date(),
         notmonth: (date.month() !== $scope.date.month()),
-        weekend: (date.day() === 0 || date.day() === 6)
+        weekend: (date.day() === 0 || date.day() === 6),
+        hasEvent: false
       };
     });
   }
@@ -86,6 +87,7 @@ angular.module("directives.calendarMonth").controller("calendarMonthController",
         day.events = $scope.events.filter(function (event) {
           return day.date.isSame(event.date, "day");
         });
+        day.hasEvent = (day.events.length > 0);
       });
     });
   }
