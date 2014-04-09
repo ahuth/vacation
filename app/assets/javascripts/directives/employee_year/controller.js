@@ -128,8 +128,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     if (deleting) {
       promise = captureTimer
         .then(displayModal)
-        .then(deleteRequest)
-        .then(assignEmployeeRequests);
+        .then(deleteRequest);
     } else {
       promise = captureTimer
         .then(removeRequested)
