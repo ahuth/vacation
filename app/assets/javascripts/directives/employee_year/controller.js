@@ -66,8 +66,11 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     return defaultDelay;
   }
 
-  // Set a new timer.
-  function setTimer(days, delay) {
+  // Set a new timer. If a previous one is set, cancel it first.
+  function setTimer(days, delay, previousTimer, cancelFunction) {
+    if (previousTimer) {
+      cancelFunction(previousTimer);
+    }
     return $timeout(function () {
       return days;
     }, delay);
@@ -77,10 +80,6 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // of time has elapsed without any days being clicked on, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
-    // Cancel the timer if its already activated.
-    if (captureTimer) {
-      $timeout.cancel(captureTimer);
-    }
     // If the first day clicked has already been requested, stop capturing
     // days and immediately process that day.
     var delay = setDelay(capturedDays, day, captureDelay);
@@ -88,7 +87,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     capturedDays.push(day);
     day.active = true;
     // Set the timer.
-    captureTimer = setTimer(capturedDays, delay);
+    captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
     // After this timer gets resolved, process the list and cleanup.
     captureTimer.then(processDays)
                 .then(cleanupDays)
