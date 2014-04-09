@@ -4,8 +4,11 @@
 angular.module("services.modal").controller("requestModalController", ["$scope", "$modalInstance", "attributes", function ($scope, $modalInstance, attributes) {
   "use strict";
 
-  // Compare two dates to determine their sort order.
-  function dateComparator(a, b) {
+  // Compare two days to determine their sort order.
+  function dayComparator(first, second) {
+    var a = first.date;
+    var b = second.date;
+
     if (a.isBefore(b)) {
       return -1;
     }
@@ -15,23 +18,23 @@ angular.module("services.modal").controller("requestModalController", ["$scope",
     return 0;
   }
 
-  // Process an array of dates by sorting them and removing any duplicates.
-  function processDates(dates) {
-    var sorted = dates.sort(dateComparator);
+  // Process an array of days by sorting them and removing any duplicates.
+  function processDays(days) {
+    var sorted = days.sort(dayComparator);
     return sorted.filter(function (element, index, array) {
       return array.indexOf(element) === index;
     });
   }
 
-  var dates = processDates(attributes.dates);
+  var days = processDays(attributes.days);
 
   $scope.title = attributes.title;
-  $scope.days = dates.map(function (date) {
-    return date.format("MMMM Do");
+  $scope.dates = days.map(function (day) {
+    return day.date.format("MMMM Do");
   });
 
   $scope.ok = function () {
-    $modalInstance.close(dates);
+    $modalInstance.close(days);
   };
   $scope.cancel = function () {
     $modalInstance.dismiss(false);

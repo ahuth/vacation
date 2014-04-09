@@ -43,20 +43,13 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
   }
 
-  // Pull out the MomentJS date from our 'day' objects.
-  function extractDates(days) {
-    return days.map(function (day) {
-      return day.date;
-    });
-  }
-
   // Show the Request modal with the given dates. Manually return a promise so
   // that it will be resolved even if the requestModal promise is rejected.
-  function displayModal(dates) {
+  function displayModal(days) {
     var deferred = $q.defer();
 
-    requestModal.open({ dates: dates }).then(function (dates) {
-      deferred.resolve(dates);
+    requestModal.open({ days: days }).then(function (days) {
+      deferred.resolve(days);
     }, function () {
       deferred.resolve();
     });
@@ -65,15 +58,18 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
 
   // Create new Requests based on the given dates. Do not return a promise
   // because we want to immediately proceed after making the server request.
-  function manageRequests(dates) {
-    if (!Array.isArray(dates)) {
+  function manageRequests(days) {
+    if (!Array.isArray(days)) {
       return;
     }
+    var dates = days.map(function (day) {
+      return day.date;
+    });
     requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
   }
 
-  function deleteRequest(dates) {
-    parent.console.log(dates);
+  function deleteRequest(days) {
+    parent.console.log(days);
   }
 
   // Update the calendar with any changes to this employee's requests.
@@ -131,14 +127,12 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
 
     if (deleting) {
       promise = captureTimer
-        .then(extractDates)
         .then(displayModal)
         .then(deleteRequest)
         .then(assignEmployeeRequests);
     } else {
       promise = captureTimer
         .then(removeRequested)
-        .then(extractDates)
         .then(displayModal)
         .then(manageRequests);
     }
