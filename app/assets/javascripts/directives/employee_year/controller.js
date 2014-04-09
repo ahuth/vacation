@@ -76,19 +76,17 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     }, delay);
   }
 
-  // As days are clicked on, create a list of those days. Once a certain amount
-  // of time has elapsed without any days being clicked on, process the list.
+  // As days are clicked, create a list of those days. Once a certain amount of
+  // time has passed without any more being clicked, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
-    // If the first day clicked has already been requested, stop capturing
-    // days and immediately process that day.
     var delay = setDelay(capturedDays, day, captureDelay);
     // Add this day to our list and flag it as 'active'.
     capturedDays.push(day);
     day.active = true;
-    // Set the timer.
+    // Cancel any running timers and set a new one.
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
-    // After this timer gets resolved, process the list and cleanup.
+    // After this timer resolves, process the list and cleanup.
     captureTimer.then(processDays)
                 .then(cleanupDays)
                 .then(resetCapturing);
