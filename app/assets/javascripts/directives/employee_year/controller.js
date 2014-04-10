@@ -126,9 +126,6 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   function handleCreating(day) {
-    capturedDays.push(day);
-    day.active = true;
-    captureTimer = setTimer(capturedDays, captureDelay, captureTimer, $timeout.cancel);
     captureTimer.then(removeRequested)
                 .then(displayModal)
                 .then(createRequests)
@@ -138,9 +135,6 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   function handleDeleting(day) {
-    capturedDays.push(day);
-    day.active = true;
-    captureTimer = setTimer(capturedDays, 0, captureTimer, $timeout.cancel);
     captureTimer.then(displayModal)
                 .then(deleteRequest)
                 .then(assignEmployeeRequests)
@@ -152,10 +146,18 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // time has passed without any more being clicked, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
-    if (capturedDays.length === 0 && day.events.length > 0) {
+    var delay = setDelay(capturedDays, day, captureDelay);
+    var deleting = (delay === 0);
+
+    capturedDays.push(day);
+    day.active = true;
+
+    captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
+
+    if (deleting) {
       handleDeleting(day);
-      return;
+    } else {
+      handleCreating(day);
     }
-    handleCreating(day);
   });
 }]);
