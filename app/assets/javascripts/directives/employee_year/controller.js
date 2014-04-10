@@ -76,7 +76,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   // Delete a request. The Request modal return an array of days, so delete the
-  // first request of the first day in the array.
+  // first request of the first day in the array. Don't return the promise we
+  // get when destroying the request, because we want to immediately proceed
+  // after deleting it.
   function deleteRequest(days) {
     if (!Array.isArray(days)) {
       return;
@@ -126,7 +128,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   // Make a promise chain which will create new requests.
-  function handleCreating(day, timer) {
+  function handleCreating(timer) {
     return timer
       .then(removeRequested)
       .then(displayModal)
@@ -134,7 +136,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   // Make a promise chain that will delete a request.
-  function handleDeleting(day, timer) {
+  function handleDeleting(timer) {
     return timer
       .then(displayModal)
       .then(deleteRequest);
@@ -154,9 +156,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
 
     if (deleting) {
-      promise = handleDeleting(day, captureTimer);
+      promise = handleDeleting(captureTimer);
     } else {
-      promise = handleCreating(day, captureTimer);
+      promise = handleCreating(captureTimer);
     }
 
     promise.then(assignEmployeeRequests)
