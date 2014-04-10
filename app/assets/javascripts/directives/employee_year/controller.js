@@ -125,30 +125,37 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     }, delay);
   }
 
+  function handleCreating(day) {
+    capturedDays.push(day);
+    day.active = true;
+    captureTimer = setTimer(capturedDays, captureDelay, captureTimer, $timeout.cancel);
+    captureTimer.then(removeRequested)
+                .then(displayModal)
+                .then(createRequests)
+                .then(assignEmployeeRequests)
+                .then(cleanupDays)
+                .then(resetCapturing);
+  }
+
+  function handleDeleting(day) {
+    capturedDays.push(day);
+    day.active = true;
+    captureTimer = setTimer(capturedDays, 0, captureTimer, $timeout.cancel);
+    captureTimer.then(displayModal)
+                .then(deleteRequest)
+                .then(assignEmployeeRequests)
+                .then(cleanupDays)
+                .then(resetCapturing);
+  }
+
   // As days are clicked, create a list of those days. Once a certain amount of
   // time has passed without any more being clicked, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
-    var promise;
-    var delay = setDelay(capturedDays, day, captureDelay);
-    var deleting = (delay === 0);
-    // Add this day to our list and flag it as 'active'.
-    capturedDays.push(day);
-    day.active = true;
-    // Cancel any running timers and set a new one.
-    captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
-
-    if (deleting) {
-      promise = captureTimer.then(displayModal)
-                            .then(deleteRequest);
-    } else {
-      promise = captureTimer.then(removeRequested)
-                            .then(displayModal)
-                            .then(createRequests);
+    if (capturedDays.length === 0 && day.events.length > 0) {
+      handleDeleting(day);
+      return;
     }
-
-    promise.then(assignEmployeeRequests)
-           .then(cleanupDays)
-           .then(resetCapturing);
+    handleCreating(day);
   });
 }]);
