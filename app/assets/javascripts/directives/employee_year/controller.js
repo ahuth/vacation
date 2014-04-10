@@ -126,7 +126,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   // Make a promise chain which will create new requests.
-  function handleCreating(day, timer) {
+  function handleCreating(timer) {
     return timer
       .then(removeRequested)
       .then(displayModal)
@@ -134,7 +134,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   // Make a promise chain that will delete a request.
-  function handleDeleting(day, timer) {
+  function handleDeleting(timer) {
     return timer
       .then(displayModal)
       .then(deleteRequest);
@@ -154,9 +154,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
 
     if (deleting) {
-      promise = handleDeleting(day, captureTimer);
+      promise = handleDeleting(captureTimer);
     } else {
-      promise = handleCreating(day, captureTimer);
+      promise = handleCreating(captureTimer);
     }
 
     promise.then(assignEmployeeRequests)
