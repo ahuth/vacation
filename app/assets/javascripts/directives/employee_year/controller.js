@@ -125,21 +125,21 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     }, delay);
   }
 
-  function handleCreating(day) {
-    captureTimer.then(removeRequested)
-                .then(displayModal)
-                .then(createRequests)
-                .then(assignEmployeeRequests)
-                .then(cleanupDays)
-                .then(resetCapturing);
+  function handleCreating(day, timer) {
+    timer.then(removeRequested)
+      .then(displayModal)
+      .then(createRequests)
+      .then(assignEmployeeRequests)
+      .then(cleanupDays)
+      .then(resetCapturing);
   }
 
-  function handleDeleting(day) {
-    captureTimer.then(displayModal)
-                .then(deleteRequest)
-                .then(assignEmployeeRequests)
-                .then(cleanupDays)
-                .then(resetCapturing);
+  function handleDeleting(day, timer) {
+    timer.then(displayModal)
+      .then(deleteRequest)
+      .then(assignEmployeeRequests)
+      .then(cleanupDays)
+      .then(resetCapturing);
   }
 
   // As days are clicked, create a list of those days. Once a certain amount of
@@ -155,9 +155,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
 
     if (deleting) {
-      handleDeleting(day);
+      handleDeleting(day, captureTimer);
     } else {
-      handleCreating(day);
+      handleCreating(day, captureTimer);
     }
   });
 }]);
