@@ -126,20 +126,14 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   function handleCreating(day, timer) {
-    timer.then(removeRequested)
+    return timer.then(removeRequested)
       .then(displayModal)
-      .then(createRequests)
-      .then(assignEmployeeRequests)
-      .then(cleanupDays)
-      .then(resetCapturing);
+      .then(createRequests);
   }
 
   function handleDeleting(day, timer) {
-    timer.then(displayModal)
-      .then(deleteRequest)
-      .then(assignEmployeeRequests)
-      .then(cleanupDays)
-      .then(resetCapturing);
+    return timer.then(displayModal)
+      .then(deleteRequest);
   }
 
   // As days are clicked, create a list of those days. Once a certain amount of
@@ -148,6 +142,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     event.stopPropagation();
     var delay = setDelay(capturedDays, day, captureDelay);
     var deleting = (delay === 0);
+    var promise;
 
     capturedDays.push(day);
     day.active = true;
@@ -155,9 +150,13 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
 
     if (deleting) {
-      handleDeleting(day, captureTimer);
+      promise = handleDeleting(day, captureTimer);
     } else {
-      handleCreating(day, captureTimer);
+      promise = handleCreating(day, captureTimer);
     }
+
+    promise.then(assignEmployeeRequests)
+      .then(cleanupDays)
+      .then(resetCapturing);
   });
 }]);
