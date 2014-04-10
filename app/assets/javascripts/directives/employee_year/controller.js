@@ -76,7 +76,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   // Delete a request. The Request modal return an array of days, so delete the
-  // first request of the first day in the array.
+  // first request of the first day in the array. Don't return the promise we
+  // get when destroying the request, because we want to immediately proceed
+  // after deleting it.
   function deleteRequest(days) {
     if (!Array.isArray(days)) {
       return;
