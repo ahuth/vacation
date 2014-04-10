@@ -125,30 +125,42 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     }, delay);
   }
 
+  // Make a promise chain which will create new requests.
+  function handleCreating(day, timer) {
+    return timer
+      .then(removeRequested)
+      .then(displayModal)
+      .then(createRequests);
+  }
+
+  // Make a promise chain that will delete a request.
+  function handleDeleting(day, timer) {
+    return timer
+      .then(displayModal)
+      .then(deleteRequest);
+  }
+
   // As days are clicked, create a list of those days. Once a certain amount of
   // time has passed without any more being clicked, process the list.
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
-    var promise;
     var delay = setDelay(capturedDays, day, captureDelay);
     var deleting = (delay === 0);
-    // Add this day to our list and flag it as 'active'.
+    var promise;
+
     capturedDays.push(day);
     day.active = true;
-    // Cancel any running timers and set a new one.
+
     captureTimer = setTimer(capturedDays, delay, captureTimer, $timeout.cancel);
 
     if (deleting) {
-      promise = captureTimer.then(displayModal)
-                            .then(deleteRequest);
+      promise = handleDeleting(day, captureTimer);
     } else {
-      promise = captureTimer.then(removeRequested)
-                            .then(displayModal)
-                            .then(createRequests);
+      promise = handleCreating(day, captureTimer);
     }
 
     promise.then(assignEmployeeRequests)
-           .then(cleanupDays)
-           .then(resetCapturing);
+      .then(cleanupDays)
+      .then(resetCapturing);
   });
 }]);
