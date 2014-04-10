@@ -126,13 +126,15 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   }
 
   function handleCreating(day, timer) {
-    return timer.then(removeRequested)
+    return timer
+      .then(removeRequested)
       .then(displayModal)
       .then(createRequests);
   }
 
   function handleDeleting(day, timer) {
-    return timer.then(displayModal)
+    return timer
+      .then(displayModal)
       .then(deleteRequest);
   }
 
