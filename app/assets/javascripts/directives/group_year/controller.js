@@ -1,4 +1,4 @@
-/*jslint vars: true, browser: true , nomen: true, indent: 2*/
+/*jslint vars: true, browser: true, nomen: true, indent: 2*/
 /*global angular */
 
 angular.module("directives.groupYear").controller("groupYearController", ["$scope", "$timeout", "requestData", "requestModal", "moment", function ($scope, $timeout, requestData, requestModal, moment) {
