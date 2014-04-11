@@ -13,6 +13,7 @@ angular.module("directives.infoPanel", ["directives.employeePanel", "directives.
 
 angular.module("modals.approve", ["services.data", "services.utils"]);
 angular.module("modals.confirm", ["services.utils"]);
+angular.module("modals.employee", ["services.utils"]);
 angular.module("pages", ["pages.index"]);
 angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList", "directives.infoPanel"]);
 
