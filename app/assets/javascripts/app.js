@@ -3,12 +3,12 @@
 
 angular.module("directives.calendarMonth", ["services.vendor"]);
 angular.module("directives.calendarYear", ["directives.employeeYear", "directives.groupYear"]);
-angular.module("directives.employeesList", ["services.data", "services.modal", "services.utils"]);
-angular.module("directives.employeePanel", ["services.data", "services.modal"]);
-angular.module("directives.employeeYear", ["directives.calendarMonth", "services.data", "services.modal", "services.vendor"]);
-angular.module("directives.groupsList", ["services.data", "services.modal", "services.utils"]);
-angular.module("directives.groupPanel", ["services.data", "services.modal"]);
-angular.module("directives.groupYear", ["directives.calendarMonth", "services.data", "services.modal", "services.vendor"]);
+angular.module("directives.employeesList", ["modals.employee", "services.data", "services.utils"]);
+angular.module("directives.employeePanel", ["modals.confirm", "modals.employee", "services.data"]);
+angular.module("directives.employeeYear", ["directives.calendarMonth", "modals.request", "services.data", "services.vendor"]);
+angular.module("directives.groupsList", ["modals.group", "services.data", "services.utils"]);
+angular.module("directives.groupPanel", ["modals.confirm", "modals.group", "services.data"]);
+angular.module("directives.groupYear", ["directives.calendarMonth", "modals.approve", "services.data", "services.vendor"]);
 angular.module("directives.infoPanel", ["directives.employeePanel", "directives.groupPanel"]);
 
 angular.module("modals.approve", ["services.data", "services.utils"]);
@@ -21,7 +21,6 @@ angular.module("pages", ["pages.index"]);
 angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList", "directives.infoPanel"]);
 
 angular.module("services.data", []);
-angular.module("services.modal", ["services.data", "services.utils"]);
 angular.module("services.utils", []);
 angular.module("services.vendor", []);
 
