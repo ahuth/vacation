@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").controller("requestModalController", ["$scope", "$modalInstance", "attributes", function ($scope, $modalInstance, attributes) {
+angular.module("modals.request").controller("requestModalController", ["$scope", "$modalInstance", "attributes", function ($scope, $modalInstance, attributes) {
   "use strict";
 
   // Compare two days to determine their sort order.
