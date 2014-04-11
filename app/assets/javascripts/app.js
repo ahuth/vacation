@@ -12,6 +12,7 @@ angular.module("directives.groupYear", ["directives.calendarMonth", "services.da
 angular.module("directives.infoPanel", ["directives.employeePanel", "directives.groupPanel"]);
 
 angular.module("modals.approve", ["services.data", "services.utils"]);
+angular.module("modals.confirm", ["services.utils"]);
 angular.module("pages", ["pages.index"]);
 angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList", "directives.infoPanel"]);
 
