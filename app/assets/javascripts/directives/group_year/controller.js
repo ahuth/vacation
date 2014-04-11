@@ -33,6 +33,8 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     assignRequests(groupRequests);
   });
 
+  // Show the request approval modal. Manually return a promise so that we can
+  // resolve it even if the modal's promise is rejected.
   function displayModal(day) {
     var deferred = $q.defer();
 
@@ -45,6 +47,8 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     return deferred.promise;
   }
 
+  // Update the models for requests that were changed (approved or unapproved)
+  // in the approval modal.
   function toggleDirtyRequests(encodedRequests) {
     if (!encodedRequests) {
       return;
