@@ -45,10 +45,19 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     return deferred.promise;
   }
 
+  function toggleDirtyRequests(encodedRequests) {
+    if (!encodedRequests) {
+      return;
+    }
+    encodedRequests.forEach(function (encodedRequest) {
+      if (encodedRequest.approved !== encodedRequest.request.approved) {
+        encodedRequest.request.toggleApproval();
+      }
+    });
+  }
+
   $scope.$on("calendar-day-clicked", function (event, day) {
     event.stopPropagation();
-    displayModal(day).then(function (encodedRequests) {
-      parent.console.log(encodedRequests);
-    });
+    displayModal(day).then(toggleDirtyRequests);
   });
 }]);
