@@ -132,6 +132,25 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     });
   };
 
+  // Toggle the approval attribute of a request. Returns a promise indicating
+  // if approval was toggled on the server.
+  Request.prototype.toggleApproval = function () {
+    var deferred = $q.defer();
+
+    this.approved = !this.approved;
+
+    $http({
+      method: "PATCH",
+      url: "/api/requests/" + this.id + "/toggle"
+    }).then(function () {
+      deferred.resolve();
+    }, function (response) {
+      deferred.reject(response);
+    });
+
+    return deferred.promise;
+  };
+
   return {
     all: all,
     find: find,
