@@ -15,7 +15,7 @@ angular.module("pages", ["pages.index"]);
 angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList", "directives.infoPanel"]);
 
 angular.module("services.data", []);
-angular.module("services.modal", ["services.utils"]);
+angular.module("services.modal", ["services.data", "services.utils"]);
 angular.module("services.utils", []);
 angular.module("services.vendor", []);
 

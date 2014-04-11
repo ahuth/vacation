@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4>{{ title }}</h4>
+</div>
+<div class="modal-body">
+  <ol>
+    <li ng-repeat="request in encodedRequests">
+      <span>{{ request.employee.name }}</span>
+      <input type="checkbox" ng-model="request.approved">
+    </li>
+  </ol>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="save()">Save</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
