@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true, nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").controller("approveModalController", ["$scope", "$modalInstance", "employeeData", "attributes", function ($scope, $modalInstance, employeeData, attributes) {
+angular.module("modals.approve").controller("approveModalController", ["$scope", "$modalInstance", "employeeData", "attributes", function ($scope, $modalInstance, employeeData, attributes) {
   "use strict";
 
   $scope.title = attributes.title;
