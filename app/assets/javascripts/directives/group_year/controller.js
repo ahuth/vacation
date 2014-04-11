@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true, nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.groupYear").controller("groupYearController", ["$scope", "$timeout", "$q", "requestData", "requestModal", "moment", function ($scope, $timeout, $q, requestData, requestModal, moment) {
+angular.module("directives.groupYear").controller("groupYearController", ["$scope", "$timeout", "$q", "requestData", "approveModal", "moment", function ($scope, $timeout, $q, requestData, approveModal, moment) {
   "use strict";
 
   // Create an array of months. We will render a <calendar-month> for each of
@@ -31,5 +31,24 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     }
     var groupRequests = requestData.forGroup(group.id);
     assignRequests(groupRequests);
+  });
+
+  function displayModal(day) {
+    var deferred = $q.defer();
+
+    approveModal.open({ requests: day.events }).then(function (encodedRequests) {
+      deferred.resolve(encodedRequests);
+    }, function () {
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  }
+
+  $scope.$on("calendar-day-clicked", function (event, day) {
+    event.stopPropagation();
+    displayModal(day).then(function (encodedRequests) {
+      parent.console.log(encodedRequests);
+    });
   });
 }]);
