@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").factory("groupModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
+angular.module("modals.group").factory("groupModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
   "use strict";
 
   function open(options) {

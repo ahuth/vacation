@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("services.modal").factory("confirmModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
+angular.module("modals.confirm").factory("confirmModal", ["$modal", "objectUtils", function ($modal, objectUtils) {
   "use strict";
 
   function open(options) {
