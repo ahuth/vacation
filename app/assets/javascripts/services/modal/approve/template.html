@@ -9,7 +9,7 @@
       <th>Approved?</th>
     </thead>
     <tbody>
-      <tr ng-repeat="request in encodedRequests">
+      <tr ng-repeat="request in encodedRequests | orderBy:'employee.hired'">
         <td>{{ request.employee.name }}</td>
         <td>{{ request.employee.hired }}</td>
         <td><input type="checkbox" ng-model="request.approved"></td>
