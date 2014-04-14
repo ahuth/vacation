@@ -8,7 +8,8 @@ angular.module("directives.groupsList").directive("groupsList", function () {
     templateUrl: "directives/groups_list/template.html",
     controller: "groupsListController",
     scope: {
-      group: "="
+      group: "=",
+      employee: "="
     }
   };
 });
