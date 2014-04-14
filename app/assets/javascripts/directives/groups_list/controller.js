@@ -20,6 +20,7 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
   $scope.newGroup = function () {
     groupModal.open({ title: "New group" }).then(function (attributes) {
       var promise = groupData.create(attributes);
+      // Make the newly created group active.
       $scope.group = arrayUtils.lastItem($scope.groups);
       $scope.employee = null;
       return promise;
