@@ -5,11 +5,13 @@
   <table class="table">
     <thead>
       <th>Name</th>
+      <th>Hired</th>
       <th>Approved?</th>
     </thead>
     <tbody>
       <tr ng-repeat="request in encodedRequests">
         <td>{{ request.employee.name }}</td>
+        <td>{{ request.employee.hired }}</td>
         <td><input type="checkbox" ng-model="request.approved"></td>
       </tr>
     </tbody>
