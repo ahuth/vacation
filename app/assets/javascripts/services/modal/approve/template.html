@@ -2,12 +2,20 @@
   <h4>{{ title }}</h4>
 </div>
 <div class="modal-body">
-  <ol>
-    <li ng-repeat="request in encodedRequests">
-      <span>{{ request.employee.name }}</span>
-      <input type="checkbox" ng-model="request.approved">
-    </li>
-  </ol>
+  <table class="table">
+    <thead>
+      <th>Name</th>
+      <th>Hired</th>
+      <th>Approved?</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="request in encodedRequests | orderBy:'employee.hired'">
+        <td>{{ request.employee.name }}</td>
+        <td>{{ request.employee.hired }}</td>
+        <td><input type="checkbox" ng-model="request.approved"></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="save()">Save</button>
