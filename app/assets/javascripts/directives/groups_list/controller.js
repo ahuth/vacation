@@ -6,7 +6,8 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
   $scope.groups = groupData.all();
 
   $scope.groupClicked = function (group) {
-    $scope.$emit("group-clicked", group);
+    $scope.group = group;
+    $scope.employee = null;
   };
 
   $scope.isActive = function (group) {
@@ -19,7 +20,8 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
   $scope.newGroup = function () {
     groupModal.open({ title: "New group" }).then(function (attributes) {
       var promise = groupData.create(attributes);
-      $scope.$emit("group-clicked", arrayUtils.lastItem($scope.groups));
+      $scope.group = arrayUtils.lastItem($scope.groups);
+      $scope.employee = null;
       return promise;
     });
   };
