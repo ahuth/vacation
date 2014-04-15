@@ -73,6 +73,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
       return day.date;
     });
     requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+    return days;
   }
 
   // Delete a request. The Request modal return an array of days, so delete the
@@ -85,6 +86,16 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     }
     var request = days[0].events[0];
     request.destroy();
+    return days;
+  }
+
+  // Notify other directives that we've made changes to this employee's
+  // requests.
+  function signalDirty(days) {
+    if (!Array.isArray(days)) {
+      return;
+    }
+    $scope.$emit("requests-dirty");
   }
 
   // Update the calendar with any changes to this employee's requests.
@@ -161,7 +172,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
       promise = handleCreating(captureTimer);
     }
 
-    promise.then(assignEmployeeRequests)
+    promise
+      .then(signalDirty)
+      .then(assignEmployeeRequests)
       .then(cleanupDays)
       .then(resetCapturing);
   });

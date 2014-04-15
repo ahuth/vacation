@@ -33,6 +33,14 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     assignRequests(groupRequests);
   });
 
+  // If the requests for this group changes, update the calendar.
+  $scope.$on("requests-dirtied", function (event) {
+    event.preventDefault();
+
+    var groupRequests = requestData.forGroup($scope.group.id);
+    assignRequests(groupRequests);
+  });
+
   // Show the request approval modal. Manually return a promise so that we can
   // resolve it even if the modal's promise is rejected.
   function displayModal(day) {
