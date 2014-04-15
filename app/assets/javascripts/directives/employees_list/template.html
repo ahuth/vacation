@@ -1,3 +1,6 @@
-<select ng-model="employee"
-        ng-options="e.name for e in employees | filter:isFromGroup | orderBy:'name'">
-</select>
+<label>
+  <span>People</span>
+  <select ng-model="employee"
+          ng-options="e.name for e in employees | filter:isFromGroup | orderBy:'name'">
+  </select>
+</label>

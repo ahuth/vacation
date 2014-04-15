@@ -1,3 +1,6 @@
-<select ng-model="group"
-        ng-options="g.name for g in groups | orderBy:'name'">
-</select>
+<label>
+  <span>Groups</span>
+  <select ng-model="group"
+          ng-options="g.name for g in groups | orderBy:'name'">
+  </select>
+</label>
