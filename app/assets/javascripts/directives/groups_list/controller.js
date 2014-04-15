@@ -5,11 +5,6 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
   "use strict";
   $scope.groups = groupData.all();
 
-  $scope.groupClicked = function (group) {
-    $scope.group = group;
-    $scope.employee = null;
-  };
-
   $scope.newGroup = function () {
     groupModal.open({ title: "New group" }).then(function (attributes) {
       var promise = groupData.create(attributes);
