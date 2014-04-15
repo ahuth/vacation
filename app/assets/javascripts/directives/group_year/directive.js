@@ -9,6 +9,7 @@ angular.module("directives.groupYear").directive("groupYear", function () {
     controller: "groupYearController",
     scope: {
       year: "@",
+      requestsDirty: "=",
       group: "="
     }
   };
