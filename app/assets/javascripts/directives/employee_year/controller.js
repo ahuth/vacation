@@ -95,7 +95,6 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     if (!Array.isArray(days)) {
       return;
     }
-    $scope.requestsDirty = true;
   }
 
   // Update the calendar with any changes to this employee's requests.

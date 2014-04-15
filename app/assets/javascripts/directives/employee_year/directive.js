@@ -9,7 +9,6 @@ angular.module("directives.employeeYear").directive("employeeYear", function () 
     controller: "employeeYearController",
     scope: {
       year: "@",
-      requestsDirty: "=",
       employee: "="
     }
   };
