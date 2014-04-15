@@ -89,6 +89,15 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     return days;
   }
 
+  // Notify other directives that we've made changes to this employee's
+  // requests.
+  function signalDirty(days) {
+    if (!Array.isArray(days)) {
+      return;
+    }
+    $scope.requestsDirty = true;
+  }
+
   // Update the calendar with any changes to this employee's requests.
   function assignEmployeeRequests() {
     var employeeRequests = requestData.forEmployee($scope.employee.id);
@@ -163,7 +172,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
       promise = handleCreating(captureTimer);
     }
 
-    promise.then(assignEmployeeRequests)
+    promise
+      .then(signalDirty)
+      .then(assignEmployeeRequests)
       .then(cleanupDays)
       .then(resetCapturing);
   });
