@@ -1,7 +1,3 @@
-<h4 class="heading">Groups</h4>
-<button ng-click="newGroup()">New group</button>
-<ul class="groups">
-  <li ng-class="{active: isActive(group)}" ng-repeat="group in groups | orderBy:'name'">
-    <span ng-click="groupClicked(group)">{{ group.name }}</span>
-  </li>
-</ul>
+<select ng-model="group"
+        ng-options="g.name for g in groups | orderBy:'name'">
+</select>

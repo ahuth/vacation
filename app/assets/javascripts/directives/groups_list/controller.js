@@ -10,13 +10,6 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
     $scope.employee = null;
   };
 
-  $scope.isActive = function (group) {
-    if (!$scope.group) {
-      return;
-    }
-    return group.id === $scope.group.id;
-  };
-
   $scope.newGroup = function () {
     groupModal.open({ title: "New group" }).then(function (attributes) {
       var promise = groupData.create(attributes);

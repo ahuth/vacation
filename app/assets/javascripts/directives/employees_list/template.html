@@ -1,7 +1,3 @@
-<h4 class="heading">People</h4>
-<button ng-hide="!group" ng-click="newEmployee()">New person</button>
-<ul class="employees">
-  <li ng-class="{active: isActive(employee)}"ng-repeat="employee in employees | filter:isFromGroup | orderBy:'name'">
-    <span ng-click="employeeClicked(employee)">{{ employee.name }}</span>
-  </li>
-</ul>
+<select ng-model="employee"
+        ng-options="e.name for e in employees | filter:isFromGroup | orderBy:'name'">
+</select>
