@@ -86,6 +86,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     }
     var request = days[0].events[0];
     request.destroy();
+    return days;
   }
 
   // Update the calendar with any changes to this employee's requests.
