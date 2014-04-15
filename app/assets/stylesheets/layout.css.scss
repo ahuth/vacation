@@ -1,5 +1,7 @@
 .flex {
   display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
 }
 
 .flex-item-1 {
