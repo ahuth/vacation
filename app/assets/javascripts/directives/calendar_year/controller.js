@@ -5,6 +5,8 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
   "use strict";
   $scope.year = new Date().getFullYear();
 
+  // When the <employee-year> updates an employee's requests, notify the
+  // <group-year> so it can update as well.
   $scope.$on("requests-dirty", function (event) {
     event.stopPropagation();
     $scope.$broadcast("requests-dirtied");
