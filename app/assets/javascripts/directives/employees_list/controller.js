@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.employeesList").controller("employeesListController", ["$scope", "employeeData", "employeeModal", "confirmModal", "arrayUtils", function ($scope, employeeData, employeeModal, confirmModal, arrayUtils) {
+angular.module("directives.employeesList").controller("employeesListController", ["$scope", "employeeData", "employeeModal", "arrayUtils", function ($scope, employeeData, employeeModal, arrayUtils) {
   "use strict";
   $scope.employees = employeeData.all();
 
