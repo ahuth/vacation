@@ -73,6 +73,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
       return day.date;
     });
     requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+    return days;
   }
 
   // Delete a request. The Request modal return an array of days, so delete the
