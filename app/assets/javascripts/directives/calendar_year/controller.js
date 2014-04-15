@@ -5,6 +5,11 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
   "use strict";
   $scope.year = new Date().getFullYear();
 
+  $scope.$on("requests-dirty", function (event) {
+    event.stopPropagation();
+    $scope.$broadcast("requests-dirtied");
+  });
+
   // Show the group calendar if a group is active, and hide the employee panel.
   $scope.$watch("group", function (group) {
     $scope.groupActive = !!group;
