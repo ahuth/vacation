@@ -33,6 +33,16 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     assignRequests(groupRequests);
   });
 
+  $scope.$watch("requestsDirty", function (dirty) {
+    if (!dirty) {
+      return;
+    }
+    var groupRequests = requestData.forGroup($scope.group.id);
+    assignRequests(groupRequests);
+
+    $scope.dirty = false;
+  });
+
   // Show the request approval modal. Manually return a promise so that we can
   // resolve it even if the modal's promise is rejected.
   function displayModal(day) {
