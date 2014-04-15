@@ -1,20 +1,9 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.employeesList").controller("employeesListController", ["$scope", "employeeData", "employeeModal", "confirmModal", "arrayUtils", function ($scope, employeeData, employeeModal, confirmModal, arrayUtils) {
+angular.module("directives.employeesList").controller("employeesListController", ["$scope", "employeeData", "employeeModal", "arrayUtils", function ($scope, employeeData, employeeModal, arrayUtils) {
   "use strict";
   $scope.employees = employeeData.all();
-
-  $scope.employeeClicked = function (employee) {
-    $scope.employee = employee;
-  };
-
-  $scope.isActive = function (employee) {
-    if (!$scope.employee) {
-      return;
-    }
-    return employee.id === $scope.employee.id;
-  };
 
   // Determine if an employee is from the currently selected group. This will
   // be used to filter the employees list.
