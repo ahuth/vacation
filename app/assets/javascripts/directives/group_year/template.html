@@ -1,6 +1,8 @@
-<calendar-month year="{{ year }}" month="{{ month.month }}" events="month.requests" class="month" ng-repeat="month in months">
-  <div ng-class="{notmonth: day.notmonth, weekend: day.weekend}">
-    <span class="number">{{ day.day }}</span>
-    <span class="events" ng-show="day.hasEvent">{{ day.events.length }}</span>
-  </div>
-</calendar-month>
+<div class="col-md-4" ng-repeat="month in months">
+  <calendar-month year="{{ year }}" month="{{ month.month }}" events="month.requests" class="month">
+    <div ng-class="{notmonth: day.notmonth, weekend: day.weekend}">
+      <span class="number">{{ day.day }}</span>
+      <span class="events" ng-show="day.hasEvent">{{ day.events.length }}</span>
+    </div>
+  </calendar-month>
+</div>
