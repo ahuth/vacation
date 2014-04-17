@@ -107,7 +107,7 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", "request
       request.remove();
     });
 
-    // Remove the group from the data array.
+    // Remove this employee from the data array.
     data.splice(index, 1);
 
     return $http({
