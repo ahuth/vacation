@@ -1,11 +1,18 @@
-<h4>{{ group.name }}</h4>
-<button ng-click="editGroup(group)">Edit</button>
-<button ng-click="removeGroup(group)">Delete</button>
-<table>
-  <tbody>
-    <tr>
-      <td>Employees</td>
-      <td>{{ group.employee_ids.length }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="panel-heading">
+  <h4 class="panel-title inline-block">{{ group.name }}</h4>
+  <span class="pull-right">
+    <button ng-click="editGroup(group)">Edit</button>
+    <button ng-click="removeGroup(group)">Delete</button>
+  </span>
+</div>
+
+<div class="panel-body">
+  <table>
+    <tbody>
+      <tr>
+        <td>Employees</td>
+        <td>{{ group.employee_ids.length }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
