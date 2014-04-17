@@ -1,15 +1,22 @@
-<h4>{{ employee.name }}</h4>
-<button ng-click="editEmployee(employee)">Edit</button>
-<button ng-click="removeEmployee(employee)">Delete</button>
-<table>
-  <tbody>
-    <tr>
-      <td>Hired</td>
-      <td>{{ employee.hired }}</td>
-    </tr>
-    <tr>
-      <td>Vacation days used</td>
-      <td>{{ employee.request_ids.length }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="panel-heading">
+  <h4 class="panel-title inline-block">{{ employee.name }}</h4>
+  <span class="pull-right">
+    <button ng-click="editEmployee(employee)">Edit</button>
+    <button ng-click="removeEmployee(employee)">Delete</button>
+  </span>
+</div>
+
+<div class="panel-body">
+  <table>
+    <tbody>
+      <tr>
+        <td>Hired</td>
+        <td>{{ employee.hired }}</td>
+      </tr>
+      <tr>
+        <td>Vacation days used</td>
+        <td>{{ employee.request_ids.length }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
