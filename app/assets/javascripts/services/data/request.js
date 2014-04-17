@@ -132,6 +132,18 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     });
   };
 
+  // Delete a request. Does NOT send a request to the server to delete it.
+  Request.prototype.remove = function () {
+    var index = data.indexOf(this);
+
+    // If index is -1, this request is not in the data array.
+    if (index < 0) {
+      return;
+    }
+
+    data.splice(index, 1);
+  };
+
   // Toggle the approval attribute of a request. Returns a promise indicating
   // if approval was toggled on the server.
   Request.prototype.toggleApproval = function () {
