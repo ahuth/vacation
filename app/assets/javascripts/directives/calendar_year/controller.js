@@ -9,7 +9,7 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
   // <group-year> so it can update as well.
   $scope.$on("requests-dirty", function (event) {
     event.stopPropagation();
-    $scope.$broadcast("requests-dirtied");
+    $scope.$broadcast("update-calendar");
   });
 
   // Show the group calendar if a group is active, and hide the employee panel.
@@ -31,6 +31,6 @@ angular.module("directives.calendarYear").controller("calendarYearController", [
     if (newValue || newValue === oldValue) {
       return;
     }
-    $scope.$broadcast("requests-dirtied");
+    $scope.$broadcast("update-calendar");
   });
 }]);
