@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular, App */
 
-angular.module("services.data").factory("employeeData", ["$http", "$q", function ($http, $q) {
+angular.module("services.data").factory("employeeData", ["$http", "$q", "requestData", function ($http, $q, requestData) {
   "use strict";
 
   // Constructor for our Employee objects.
@@ -100,6 +100,12 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", function
       deferred.reject({ errors: ["Employee does not exist"] });
       return deferred.promise;
     }
+
+    // Remove this employee's requests from the requests array, but don't send
+    // server requests to delete them.
+    requestData.forEmployee(this.id).forEach(function (request) {
+      request.remove();
+    });
 
     // Remove the group from the data array.
     data.splice(index, 1);
