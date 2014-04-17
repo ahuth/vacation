@@ -4,6 +4,10 @@
 angular.module("directives.employeePanel").controller("employeePanelController", ["$scope", "employeeData", "employeeModal", "confirmModal", function ($scope, employeeData, employeeModal, confirmModal) {
   "use strict";
 
+  $scope.backToGroup = function () {
+    $scope.employee = null;
+  };
+
   $scope.editEmployee = function (employee) {
     var options = {
       title: "Edit " + employee.name,
