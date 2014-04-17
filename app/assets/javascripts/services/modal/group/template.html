@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-success" ng-click="ok()" ng-disabled="form.group.$invalid">OK</button>
+    <button type="submit" class="btn btn-success" ng-click="ok()" ng-disabled="form.group.$invalid || form.group.$pristine">OK</button>
     <button class="btn btn-default" ng-click="cancel()">Cancel</button>
   </div>
 </form>
