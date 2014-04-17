@@ -32,4 +32,12 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
       return promise;
     });
   };
+
+  // When the group changes, unselect the active employee.
+  $scope.$watch("group", function (group) {
+    if (!(group)) {
+      return;
+    }
+    $scope.employee = null;
+  });
 }]);
