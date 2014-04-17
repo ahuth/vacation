@@ -132,7 +132,8 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     });
   };
 
-  // Delete a request. Does NOT send a request to the server to delete it.
+  // Remove a request from the internal data array, but do NOT send a server
+  // request to delete it.
   Request.prototype.remove = function () {
     var index = data.indexOf(this);
 
