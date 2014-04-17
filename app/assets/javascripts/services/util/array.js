@@ -6,7 +6,7 @@ angular.module("services.utils").factory("arrayUtils", function () {
 
   // Return the last item in an array.
   function lastItem(array) {
-    if (array.length === 0) {
+    if (array.length < 1) {
       return;
     }
     var lastIndex = array.length - 1;
