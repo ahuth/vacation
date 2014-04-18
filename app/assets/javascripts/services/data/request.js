@@ -67,35 +67,6 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     return deferred.promise;
   }
 
-  // Create several new Requests at once.
-  function createMany(dates, employee_id, group_id) {
-    var deferred = $q.defer();
-    var requests = dates.map(function (date) {
-      return new Request({ date: date.format("YYYY-MM-DD"), employee_id: employee_id, group_id: group_id, approved: true });
-    });
-
-    requests.forEach(function (request) {
-      data.push(request);
-    });
-
-    $http({
-      method: "POST",
-      url: "/api/employees/" + employee_id + "/requests/many",
-      data: { requests: dates }
-    }).then(function (response) {
-      // Assign the correct ids from the server.
-      requests.forEach(function (request, index) {
-        request.id = response.data.requests[index].id;
-      });
-
-      deferred.resolve();
-    }, function (response) {
-      deferred.reject(response);
-    });
-
-    return deferred.promise;
-  }
-
   // Get an array of all requests for a given employee id.
   function forEmployee(id) {
     return data.filter(function (request) {
@@ -168,7 +139,6 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
     all: all,
     find: find,
     create: create,
-    createMany: createMany,
     forEmployee: forEmployee,
     forGroup: forGroup
   };
