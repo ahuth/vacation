@@ -11,6 +11,8 @@ angular.module("directives.groupPanel", ["modals.confirm", "modals.group", "serv
 angular.module("directives.groupYear", ["directives.calendarMonth", "modals.approve", "services.data", "services.vendor"]);
 angular.module("directives.infoPanel", ["directives.employeePanel", "directives.groupPanel"]);
 
+angular.module("filters.moment", []);
+
 angular.module("modals.approve", ["services.data", "services.utils"]);
 angular.module("modals.confirm", ["services.utils"]);
 angular.module("modals.employee", ["services.utils"]);
