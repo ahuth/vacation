@@ -61,11 +61,13 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     if (!encodedRequests) {
       return;
     }
-    encodedRequests.forEach(function (encodedRequest) {
-      if (encodedRequest.approved !== encodedRequest.request.approved) {
-        encodedRequest.request.toggleApproval();
-      }
+    var dirtyRequests = encodedRequests.filter(function (encodedRequest) {
+      return encodedRequest.approved !== encodedRequest.request.approved;
     });
+    var promises = dirtyRequests.map(function (dirtyRequest) {
+      return dirtyRequest.request.toggleApproval();
+    });
+    return $q.all(promises);
   }
 
   $scope.$on("calendar-day-clicked", function (event, day) {
