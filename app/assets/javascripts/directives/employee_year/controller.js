@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true, es5: true, nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("directives.employeeYear").controller("employeeYearController", ["$scope", "$timeout", "$q", "requestData", "requestModal", "moment", function ($scope, $timeout, $q, requestData, requestModal, moment) {
+angular.module("directives.employeeYear").controller("employeeYearController", ["$scope", "$timeout", "$q", "requestData", "requestModal", "confirmModal", "moment", function ($scope, $timeout, $q, requestData, requestModal, confirmModal, moment) {
   "use strict";
   var capturedDays = [];
   var captureDelay = 800;
@@ -49,17 +49,27 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     var deferred = $q.defer();
     var attributes = { days: days};
 
-    // If days only has one item and it already has a request, we're deleting
-    // it. So change the title.
-    if (days.length === 1 && days[0].hasEvent) {
-      attributes.title = "Delete request?";
-    }
-
     requestModal.open(attributes).then(function (days) {
       deferred.resolve(days);
     }, function () {
       deferred.resolve();
     });
+    return deferred.promise;
+  }
+
+  // Show the confirm modal for the given dates. Manually return a promise so
+  // it will be resolved even if the confirmModal promise is rejected.
+  function displayConfirm(days) {
+    var deferred = $q.defer();
+    var date = days[0].date.format("MMMM Do");
+    var attributes = { title: "Delete request on " + date + "?" };
+
+    confirmModal.open(attributes).then(function () {
+      deferred.resolve(days);
+    }, function () {
+      deferred.resolve();
+    });
+
     return deferred.promise;
   }
 
@@ -151,7 +161,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // Make a promise chain that will delete a request.
   function handleDeleting(timer) {
     return timer
-      .then(displayModal)
+      .then(displayConfirm)
       .then(deleteRequest);
   }
 
