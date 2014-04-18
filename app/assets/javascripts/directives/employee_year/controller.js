@@ -45,7 +45,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
 
   // Show the requests modal with the given dates. Manually return a promise so
   // that it will be resolved even if the requestModal promise is rejected.
-  function displayModal(days) {
+  function displayRequests(days) {
     var deferred = $q.defer();
     var attributes = { days: days };
 
@@ -155,7 +155,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   function handleCreating(timer) {
     return timer
       .then(removeRequested)
-      .then(displayModal)
+      .then(displayRequests)
       .then(createRequests);
   }
 
