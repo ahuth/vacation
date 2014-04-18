@@ -1,7 +1,7 @@
 class Api::RequestsController < ApplicationController
   respond_to :json
   before_filter :authenticate_user!
-  before_filter :set_employee, only: [:index, :create, :create_many]
+  before_filter :set_employee, only: [:index, :create]
   before_filter :set_request, only: [:destroy, :toggle]
 
   def index
@@ -37,27 +37,6 @@ class Api::RequestsController < ApplicationController
     else
       render json: { errors: @request.errors.full_messages }, status: :bad_request
     end
-  end
-
-  def create_many
-    authorize! :read, @employee
-    @dates = params[:requests]
-    @requests = []
-
-    if @dates.empty?
-      raise ActionController::ParameterMissing, "Requests parameter missing"
-    end
-
-    Request.transaction do
-      @dates.each do |date|
-        @requests << Request.new(date: date, employee_id: @employee.id)
-        # To cause this transaction block to rollback the database, we need to
-        # throw an exception if validations fail, so use .save!.
-        @requests.last.save!
-      end
-    end
-
-    render json: @requests
   end
 
   private
