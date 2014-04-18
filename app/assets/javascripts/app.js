@@ -4,7 +4,7 @@
 angular.module("directives.calendarMonth", ["services.vendor"]);
 angular.module("directives.calendarYear", ["directives.employeeYear", "directives.groupYear"]);
 angular.module("directives.employeesList", ["modals.employee", "services.data", "services.utils"]);
-angular.module("directives.employeePanel", ["modals.confirm", "modals.employee", "services.data"]);
+angular.module("directives.employeePanel", ["filters.moment", "modals.confirm", "modals.employee", "services.data"]);
 angular.module("directives.employeeYear", ["directives.calendarMonth", "modals.request", "services.data", "services.vendor"]);
 angular.module("directives.groupsList", ["modals.group", "services.data", "services.utils"]);
 angular.module("directives.groupPanel", ["modals.confirm", "modals.group", "services.data"]);
