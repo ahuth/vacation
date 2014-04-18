@@ -61,10 +61,11 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     if (!encodedRequests) {
       return;
     }
-    encodedRequests.forEach(function (encodedRequest) {
-      if (encodedRequest.approved !== encodedRequest.request.approved) {
-        encodedRequest.request.toggleApproval();
-      }
+    var dirtyRequests = encodedRequests.filter(function (encodedRequest) {
+      return encodedRequest.approved !== encodedRequest.request.approved;
+    });
+    dirtyRequests.forEach(function (encodedRequest) {
+      encodedRequest.request.toggleApproval();
     });
   }
 
