@@ -17,7 +17,7 @@ angular.module("modals.approve", ["services.data", "services.utils"]);
 angular.module("modals.confirm", ["services.utils"]);
 angular.module("modals.employee", ["services.utils"]);
 angular.module("modals.group", ["services.utils"]);
-angular.module("modals.request", ["services.utils"]);
+angular.module("modals.request", ["filters.moment", "services.utils"]);
 
 angular.module("pages", ["pages.index"]);
 angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList", "directives.infoPanel"]);

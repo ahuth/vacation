@@ -26,15 +26,11 @@ angular.module("modals.request").controller("requestModalController", ["$scope",
     });
   }
 
-  var days = processDays(attributes.days);
-
+  $scope.days = processDays(attributes.days);
   $scope.title = attributes.title;
-  $scope.dates = days.map(function (day) {
-    return day.date.format("MMMM Do");
-  });
 
   $scope.ok = function () {
-    $modalInstance.close(days);
+    $modalInstance.close($scope.days);
   };
   $scope.cancel = function () {
     $modalInstance.dismiss(false);
