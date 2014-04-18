@@ -64,9 +64,10 @@ angular.module("directives.groupYear").controller("groupYearController", ["$scop
     var dirtyRequests = encodedRequests.filter(function (encodedRequest) {
       return encodedRequest.approved !== encodedRequest.request.approved;
     });
-    dirtyRequests.forEach(function (encodedRequest) {
-      encodedRequest.request.toggleApproval();
+    var promises = dirtyRequests.map(function (dirtyRequest) {
+      return dirtyRequest.request.toggleApproval();
     });
+    return $q.all(promises);
   }
 
   $scope.$on("calendar-day-clicked", function (event, day) {
