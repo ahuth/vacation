@@ -47,13 +47,14 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // that it will be resolved even if the requestModal promise is rejected.
   function displayModal(days) {
     var deferred = $q.defer();
-    var attributes = { days: days};
+    var attributes = { days: days };
 
     requestModal.open(attributes).then(function (days) {
       deferred.resolve(days);
     }, function () {
       deferred.resolve();
     });
+
     return deferred.promise;
   }
 
