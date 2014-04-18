@@ -72,7 +72,9 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     var dates = days.map(function (day) {
       return day.date;
     });
-    requestData.createMany(dates, $scope.employee.id, $scope.employee.group_id);
+    var promises = dates.map(function (date) {
+      return requestData.create({ date: date, employee_id: $scope.employee.id, group_id: $scope.employee.group_id });
+    });
     return days;
   }
 
