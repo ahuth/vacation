@@ -43,7 +43,7 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     });
   }
 
-  // Show the Request modal with the given dates. Manually return a promise so
+  // Show the requests modal with the given dates. Manually return a promise so
   // that it will be resolved even if the requestModal promise is rejected.
   function displayModal(days) {
     var deferred = $q.defer();
