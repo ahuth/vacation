@@ -47,7 +47,7 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
   // Returns a promise indicating if the server action was successful.
   function create(attributes) {
     var deferred = $q.defer();
-    var request = new Request({ date: attributes.date, employee_id: attributes.employee_id, group_id: attributes.group_id });
+    var request = new Request({ date: attributes.date, employee_id: attributes.employee_id, group_id: attributes.group_id, approved: true });
 
     data.push(request);
 
@@ -71,7 +71,7 @@ angular.module("services.data").factory("requestData", ["$http", "$q", function 
   function createMany(dates, employee_id, group_id) {
     var deferred = $q.defer();
     var requests = dates.map(function (date) {
-      return new Request({ date: date.format("YYYY-MM-DD"), employee_id: employee_id, group_id: group_id });
+      return new Request({ date: date.format("YYYY-MM-DD"), employee_id: employee_id, group_id: group_id, approved: true });
     });
 
     requests.forEach(function (request) {
