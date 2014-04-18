@@ -61,11 +61,13 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
   // it will be resolved even if the confirmModal promise is rejected.
   function displayConfirm(days) {
     var deferred = $q.defer();
-    var date = days[0].date.format("MMMM Do");
-    var attributes = { title: "Delete request on " + date + "?" };
+    // When deleting, the days array will only have 1 element.
+    var day = days[0];
+    var formattedDate = day.date.format("MMMM Do");
+    var attributes = { title: "Delete request on " + formattedDate + "?" };
 
     confirmModal.open(attributes).then(function () {
-      deferred.resolve(days);
+      deferred.resolve(day);
     }, function () {
       deferred.resolve();
     });
@@ -88,23 +90,21 @@ angular.module("directives.employeeYear").controller("employeeYearController", [
     return days;
   }
 
-  // Delete a request. The Request modal return an array of days, so delete the
-  // first request of the first day in the array. Don't return the promise we
-  // get when destroying the request, because we want to immediately proceed
-  // after deleting it.
-  function deleteRequest(days) {
-    if (!Array.isArray(days)) {
+  // Delete a request. Does not return the promise we get when destroying the
+  // request because we want to immediately proceed from there.
+  function deleteRequest(day) {
+    if (!day) {
       return;
     }
-    var request = days[0].events[0];
+    var request = day.events[0];
     request.destroy();
-    return days;
+    return day;
   }
 
   // Notify other directives that we've made changes to this employee's
   // requests.
   function signalDirty(days) {
-    if (!Array.isArray(days)) {
+    if (!days) {
       return;
     }
     $scope.$emit("requests-dirty");
