@@ -1,4 +1,4 @@
-<div>
+<div class="small-width center-margins">
   <h2>Sign in</h2>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -18,7 +18,7 @@
     <%= f.submit "Sign in", class: "btn btn-primary" %>
   <% end %>
 
-  <div>
+  <div class="small-margin-top">
     <%= render "devise/shared/links" %>
   </div>
 </div>
