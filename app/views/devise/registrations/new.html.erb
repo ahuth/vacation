@@ -1,4 +1,4 @@
-<div>
+<div class="small-width center-margins">
   <h2>Sign up</h2>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -19,7 +19,7 @@
     <%= f.submit "Sign up", class: "btn btn-primary" %>
   <% end %>
 
-  <div>
+  <div class="small-margin-top">
     <%= render "devise/shared/links" %>
   </div>
 </div>
