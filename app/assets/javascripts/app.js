@@ -6,6 +6,7 @@ angular.module("directives.calendarYear", ["directives.employeeYear", "directive
 angular.module("directives.employeesList", ["modals.employee", "services.data", "services.utils"]);
 angular.module("directives.employeePanel", ["filters.moment", "modals.confirm", "modals.employee", "services.data"]);
 angular.module("directives.employeeYear", ["directives.calendarMonth", "modals.confirm", "modals.request", "services.data", "services.vendor"]);
+angular.module("directives.forceReload", []);
 angular.module("directives.groupsList", ["modals.group", "services.data", "services.utils"]);
 angular.module("directives.groupPanel", ["modals.confirm", "modals.group", "services.data"]);
 angular.module("directives.groupYear", ["directives.calendarMonth", "modals.approve", "services.data", "services.vendor"]);
@@ -26,4 +27,4 @@ angular.module("services.data", []);
 angular.module("services.utils", []);
 angular.module("services.vendor", []);
 
-angular.module("app", ["templates", "ngRoute", "ui.bootstrap", "pages"]);
+angular.module("app", ["templates", "ngRoute", "ui.bootstrap", "pages", "directives.forceReload"]);
