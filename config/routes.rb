@@ -10,7 +10,5 @@ Vacation::Application.routes.draw do
         end
       end
     end
-
-    post "/employees/:employee_id/requests/many", to: "requests#create_many", as: nil
   end
 end
