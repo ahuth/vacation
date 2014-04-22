@@ -7,5 +7,13 @@ angular.module("app").config(["$routeProvider", function ($routeProvider) {
     .when("/", {
       templateUrl: "pages/index/template.html",
       controller: "indexController"
+    })
+    .when("/groups/:group_id", {
+      templateUrl: "pages/index/template.html",
+      controller: "indexController"
+    })
+    .when("/employees/:employee_id", {
+      templateUrl: "pages/index/template.html",
+      controller: "indexController"
     });
 }]);
