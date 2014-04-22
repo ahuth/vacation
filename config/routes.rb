@@ -12,6 +12,6 @@ Vacation::Application.routes.draw do
     end
   end
 
-  get "groups/:id", to: "welcome#index"
-  get "employees/:id", to: "welcome#index"
+  get "groups/:id", to: "main#index"
+  get "employees/:id", to: "main#index"
 end
