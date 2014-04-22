@@ -11,4 +11,7 @@ Vacation::Application.routes.draw do
       end
     end
   end
+
+  get "groups/:id", to: "welcome#index"
+  get "employees/:id", to: "welcome#index"
 end
