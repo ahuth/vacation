@@ -3,6 +3,5 @@ class MainController < ApplicationController
 
   def index
     @preload = PreloadSerializer.new(current_user, root: false).to_json
-    render "welcome/show"
   end
 end
