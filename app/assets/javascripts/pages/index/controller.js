@@ -17,9 +17,8 @@ angular.module("pages.index").controller("indexController", ["$scope", "$locatio
       return;
     }
     var path = (newValue) ? ("/groups/" + newValue.id) : "";
-    // The second parameter we send here to `$location.path` is a non-standard
-    // one that we've added. When set to false, it causes the app to NOT reload
-    // the views/controllers when the route changes.
+    // We've modified `$location.path` to take a second parameter which prevents
+    // the path change from reloading the views/controllers.
     $location.path(path, false);
   });
 
@@ -36,9 +35,8 @@ angular.module("pages.index").controller("indexController", ["$scope", "$locatio
     } else {
       path = "";
     }
-    // The second parameter we send here to `$location.path` is a non-standard
-    // one that we've added. When set to false, it causes the app to NOT reload
-    // the views/controllers when the route changes.
+    // We've modified `$location.path` to take a second parameter which prevents
+    // the path change from reloading the views/controllers.
     $location.path(path, false);
   });
 }]);
