@@ -16,8 +16,8 @@ angular.module("directives.groupsList").controller("groupsListController", ["$sc
   };
 
   // When the group changes, unselect the active employee.
-  $scope.$watch("group", function (group) {
-    if (!(group)) {
+  $scope.$watch("group", function (newValue, oldValue) {
+    if (newValue === oldValue) {
       return;
     }
     $scope.employee = null;
