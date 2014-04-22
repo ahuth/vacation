@@ -29,6 +29,8 @@ angular.module("services.data").factory("groupData", ["$http", "$q", function ($
   // Search for and return a Group by id.
   function find(id) {
     var output;
+    // Ensure that the id is a number.
+    id = Number(id);
     // Use .every() instead of .forEach() so that we can break out of the loop
     // early.
     data.every(function (group) {

@@ -31,6 +31,8 @@ angular.module("services.data").factory("employeeData", ["$http", "$q", "request
   // Search for and return an Employee by id.
   function find(id) {
     var output;
+    // Ensure that the id is a number.
+    id = Number(id);
     // Use .every() instead of .forEach() so that we can break out of the loop
     // early.
     data.every(function (employee) {
