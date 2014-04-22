@@ -21,7 +21,7 @@ angular.module("modals.group", ["services.utils"]);
 angular.module("modals.request", ["filters.moment", "services.utils"]);
 
 angular.module("pages", ["pages.index"]);
-angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList", "directives.infoPanel"]);
+angular.module("pages.index", ["directives.calendarYear", "directives.employeesList", "directives.groupsList", "directives.infoPanel", "services.data"]);
 
 angular.module("services.data", []);
 angular.module("services.utils", []);
