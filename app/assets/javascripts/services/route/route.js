@@ -8,6 +8,9 @@ angular.module("services.route").factory("route", ["$route", "$rootScope", "$loc
   // location change.
   function skipNextReload() {
     var lastRoute = $route.current;
+    // `$rootScope.$on` returns an un-binding function. Make sure it's called
+    // after preventing the next reload so that we don't affect subsequent url
+    // changes or cause memory leaks.
     var unbind = $rootScope.$on("$locationChangeSuccess", function () {
       $route.current = lastRoute;
       unbind();
