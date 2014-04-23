@@ -1,7 +1,7 @@
 /*jslint vars: true, browser: true , nomen: true, indent: 2*/
 /*global angular */
 
-angular.module("pages.index").controller("indexController", ["$scope", "$location", "$routeParams", "groupData", "employeeData", function ($scope, $location, $routeParams, groupData, employeeData) {
+angular.module("pages.index").controller("indexController", ["$scope", "$location", "$routeParams", "groupData", "employeeData", "route", function ($scope, $location, $routeParams, groupData, employeeData, route) {
   "use strict";
   // If route parameters are present, set the group and employee variables.
   if ($routeParams.group_id) {
@@ -17,9 +17,10 @@ angular.module("pages.index").controller("indexController", ["$scope", "$locatio
       return;
     }
     var path = (newValue) ? ("/groups/" + newValue.id) : "";
-    // We've modified `$location.path` to take a second parameter which prevents
-    // the path change from reloading the views/controllers.
-    $location.path(path, false);
+    // Because our data is already completely loaded, don't refresh the view or
+    // controller after this next url change.
+    route.skipNextReload();
+    $location.path(path);
   });
 
   // Change the url when the employee changes.
@@ -35,8 +36,9 @@ angular.module("pages.index").controller("indexController", ["$scope", "$locatio
     } else {
       path = "";
     }
-    // We've modified `$location.path` to take a second parameter which prevents
-    // the path change from reloading the views/controllers.
-    $location.path(path, false);
+    // Because our data is already completely loaded, don't refresh the view or
+    // controller after this next url change.
+    route.skipNextReload();
+    $location.path(path);
   });
 }]);
