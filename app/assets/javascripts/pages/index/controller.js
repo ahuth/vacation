@@ -41,4 +41,13 @@ angular.module("pages.index").controller("indexController", ["$scope", "$locatio
     route.skipNextReload();
     $location.path(path);
   });
+
+  // Apply the 'active' class to the root nav item. The class may not be on the
+  // nav item if we've reloaded the page.
+  (function (rootLink) {
+    var parent = rootLink.parent();
+    if (!parent.hasClass("active")) {
+      parent.addClass("active");
+    }
+  }(angular.element("#root-link")));
 }]);
