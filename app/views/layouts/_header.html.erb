@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <% if user_signed_in? %>
       <ul class="nav navbar-nav">
-        <%= nav_link "Calendar", root_path %>
+        <%= nav_link "Calendar", root_path, id: "root-link" %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <%= nav_link "Account", edit_user_registration_path, "force-reload" => true %>
