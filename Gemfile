@@ -19,3 +19,8 @@ gem 'angular-rails-templates'
 
 gem 'bootstrap-sass'
 gem 'angular-ui-bootstrap-rails'
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
