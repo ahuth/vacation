@@ -16,5 +16,6 @@
 //= require angular
 //= require angular-route
 //= require angular-ui-bootstrap-tpls
+//= require angular-rails-templates
 //= require app
 //= require_tree .
