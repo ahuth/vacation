@@ -29,9 +29,10 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    angular-rails-templates (0.0.7)
+    angular-rails-templates (0.1.1)
       railties (>= 3.1)
       sprockets
+      tilt
     angular-ui-bootstrap-rails (0.10.0)
     angularjs-rails (1.2.16)
     arel (5.0.1.20140414130214)
