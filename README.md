@@ -82,4 +82,5 @@ This lets us load the app into the correct state from a bookmark or page refresh
 
 ## Tests
 
+Vacation uses tests to speed up development and to app more likely to be correct.
 To run tests, go to the project directory and run `rake test`.
