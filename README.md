@@ -1,8 +1,12 @@
 # Vacation
 
 An employee vacation day tracking web app. It is a single-page webapp that uses
-[Rails](http://rubyonrails.org/) and [AngularJS](https://angularjs.org/). Code is
-organized in a modular way and makes heavy use of unit tests.
+[Rails](http://rubyonrails.org/) and [AngularJS](https://angularjs.org/). The Rails
+part is a server API and handles authentication/authorization.
+
+The AngularJS part is the user interface that allows the user to manage vacation days
+by interacting directly with a calendar. And the best part is, because the Angular app
+never waits on the server, it is very fast and responsive.
 
 ![Screenshot](https://cloud.githubusercontent.com/assets/2503289/3176158/4504421e-ec02-11e3-88af-caa91f2f9997.png)
 
