@@ -45,7 +45,7 @@ a given day are as simple as clicking on a calendar.
 
 When the app loads, Rails [creates a data preload](https://github.com/ahuth/vacation/blob/master/app/controllers/main_controller.rb).
 This preload is [inserted](https://github.com/ahuth/vacation/blob/master/app/views/main/index.html.erb)
-AngularJS app, which it uses to populate its own data models.
+into the AngularJS app. AngularJS uses this preload to create its own [data models](https://github.com/ahuth/vacation/blob/master/app/assets/javascripts/services/data/group.js#L22).
 
 ### Code organization
 
