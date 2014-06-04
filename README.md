@@ -15,6 +15,7 @@ never waits on the server, it is very fast and responsive.
 * [Installation](#installation)
 * [Goals](#goals)
 * [Concepts](#concepts)
+  * [Preloading data](#preloading-data)
   * [Code organization](#code-organization)
   * [Selecting dates](#selecting-dates)
   * [Updating the url](#updating-the-url)
@@ -39,6 +40,12 @@ directly with a calendar. Adding days, removing days, or managing the requests f
 a given day are as simple as clicking on a calendar.
 
 ## Concepts
+
+### Preloading data
+
+When the app loads, Rails [creates a data preload](https://github.com/ahuth/vacation/blob/master/app/controllers/main_controller.rb).
+This preload is [inserted](https://github.com/ahuth/vacation/blob/master/app/views/main/index.html.erb)
+AngularJS app, which it uses to populate its own data models.
 
 ### Code organization
 
