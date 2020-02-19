@@ -1,5 +1,5 @@
 # Vacation
-
+[![Run on Repl.it](https://repl.it/badge/github/ahuth/vacation)](https://repl.it/github/ahuth/vacation)
 An employee vacation day tracking web app. It is a single-page webapp that uses
 [Rails](http://rubyonrails.org/) and [AngularJS](https://angularjs.org/). The Rails
 part is a server API and handles authentication/authorization.
